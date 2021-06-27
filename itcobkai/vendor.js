@@ -24895,6 +24895,198 @@ dom.importCssString(exports.cssText, exports.cssClass);
 
 /***/ }),
 
+/***/ "./node_modules/bail/index.js":
+/*!************************************!*\
+  !*** ./node_modules/bail/index.js ***!
+  \************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = bail
+
+function bail(err) {
+  if (err) {
+    throw err
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/ccount/index.js":
+/*!**************************************!*\
+  !*** ./node_modules/ccount/index.js ***!
+  \**************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = ccount
+
+function ccount(source, character) {
+  var value = String(source)
+  var count = 0
+  var index
+
+  if (typeof character !== 'string') {
+    throw new Error('Expected character')
+  }
+
+  index = value.indexOf(character)
+
+  while (index !== -1) {
+    count++
+    index = value.indexOf(character, index + character.length)
+  }
+
+  return count
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/comma-separated-tokens/index.js":
+/*!******************************************************!*\
+  !*** ./node_modules/comma-separated-tokens/index.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+exports.parse = parse
+exports.stringify = stringify
+
+var comma = ','
+var space = ' '
+var empty = ''
+
+// Parse comma-separated tokens to an array.
+function parse(value) {
+  var values = []
+  var input = String(value || empty)
+  var index = input.indexOf(comma)
+  var lastIndex = 0
+  var end = false
+  var val
+
+  while (!end) {
+    if (index === -1) {
+      index = input.length
+      end = true
+    }
+
+    val = input.slice(lastIndex, index).trim()
+
+    if (val || !end) {
+      values.push(val)
+    }
+
+    lastIndex = index + 1
+    index = input.indexOf(comma, lastIndex)
+  }
+
+  return values
+}
+
+// Compile an array to comma-separated tokens.
+// `options.padLeft` (default: `true`) pads a space left of each token, and
+// `options.padRight` (default: `false`) pads a space to the right of each token.
+function stringify(values, options) {
+  var settings = options || {}
+  var left = settings.padLeft === false ? empty : space
+  var right = settings.padRight ? space : empty
+
+  // Ensure the last empty entry is seen.
+  if (values[values.length - 1] === empty) {
+    values = values.concat(empty)
+  }
+
+  return values.join(right + comma + left).trim()
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/runtime/api.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/css-loader/dist/runtime/api.js ***!
+  \*****************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+// eslint-disable-next-line func-names
+module.exports = function (cssWithMappingToString) {
+  var list = []; // return the list of modules as css string
+
+  list.toString = function toString() {
+    return this.map(function (item) {
+      var content = cssWithMappingToString(item);
+
+      if (item[2]) {
+        return "@media ".concat(item[2], " {").concat(content, "}");
+      }
+
+      return content;
+    }).join("");
+  }; // import a list of modules into the list
+  // eslint-disable-next-line func-names
+
+
+  list.i = function (modules, mediaQuery, dedupe) {
+    if (typeof modules === "string") {
+      // eslint-disable-next-line no-param-reassign
+      modules = [[null, modules, ""]];
+    }
+
+    var alreadyImportedModules = {};
+
+    if (dedupe) {
+      for (var i = 0; i < this.length; i++) {
+        // eslint-disable-next-line prefer-destructuring
+        var id = this[i][0];
+
+        if (id != null) {
+          alreadyImportedModules[id] = true;
+        }
+      }
+    }
+
+    for (var _i = 0; _i < modules.length; _i++) {
+      var item = [].concat(modules[_i]);
+
+      if (dedupe && alreadyImportedModules[item[0]]) {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+
+      if (mediaQuery) {
+        if (!item[2]) {
+          item[2] = mediaQuery;
+        } else {
+          item[2] = "".concat(mediaQuery, " and ").concat(item[2]);
+        }
+      }
+
+      list.push(item);
+    }
+  };
+
+  return list;
+};
+
+/***/ }),
+
 /***/ "./node_modules/dayjs/dayjs.min.js":
 /*!*****************************************!*\
   !*** ./node_modules/dayjs/dayjs.min.js ***!
@@ -24902,6 +25094,19141 @@ dom.importCssString(exports.cssText, exports.cssClass);
 /***/ (function(module) {
 
 !function(t,e){ true?module.exports=e():0}(this,(function(){"use strict";var t=1e3,e=6e4,n=36e5,r="millisecond",i="second",s="minute",u="hour",a="day",o="week",f="month",h="quarter",c="year",d="date",$="Invalid Date",l=/^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[^0-9]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/,y=/\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g,M={name:"en",weekdays:"Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"),months:"January_February_March_April_May_June_July_August_September_October_November_December".split("_")},m=function(t,e,n){var r=String(t);return!r||r.length>=e?t:""+Array(e+1-r.length).join(n)+t},g={s:m,z:function(t){var e=-t.utcOffset(),n=Math.abs(e),r=Math.floor(n/60),i=n%60;return(e<=0?"+":"-")+m(r,2,"0")+":"+m(i,2,"0")},m:function t(e,n){if(e.date()<n.date())return-t(n,e);var r=12*(n.year()-e.year())+(n.month()-e.month()),i=e.clone().add(r,f),s=n-i<0,u=e.clone().add(r+(s?-1:1),f);return+(-(r+(n-i)/(s?i-u:u-i))||0)},a:function(t){return t<0?Math.ceil(t)||0:Math.floor(t)},p:function(t){return{M:f,y:c,w:o,d:a,D:d,h:u,m:s,s:i,ms:r,Q:h}[t]||String(t||"").toLowerCase().replace(/s$/,"")},u:function(t){return void 0===t}},D="en",v={};v[D]=M;var p=function(t){return t instanceof _},S=function(t,e,n){var r;if(!t)return D;if("string"==typeof t)v[t]&&(r=t),e&&(v[t]=e,r=t);else{var i=t.name;v[i]=t,r=i}return!n&&r&&(D=r),r||!n&&D},w=function(t,e){if(p(t))return t.clone();var n="object"==typeof e?e:{};return n.date=t,n.args=arguments,new _(n)},O=g;O.l=S,O.i=p,O.w=function(t,e){return w(t,{locale:e.$L,utc:e.$u,x:e.$x,$offset:e.$offset})};var _=function(){function M(t){this.$L=S(t.locale,null,!0),this.parse(t)}var m=M.prototype;return m.parse=function(t){this.$d=function(t){var e=t.date,n=t.utc;if(null===e)return new Date(NaN);if(O.u(e))return new Date;if(e instanceof Date)return new Date(e);if("string"==typeof e&&!/Z$/i.test(e)){var r=e.match(l);if(r){var i=r[2]-1||0,s=(r[7]||"0").substring(0,3);return n?new Date(Date.UTC(r[1],i,r[3]||1,r[4]||0,r[5]||0,r[6]||0,s)):new Date(r[1],i,r[3]||1,r[4]||0,r[5]||0,r[6]||0,s)}}return new Date(e)}(t),this.$x=t.x||{},this.init()},m.init=function(){var t=this.$d;this.$y=t.getFullYear(),this.$M=t.getMonth(),this.$D=t.getDate(),this.$W=t.getDay(),this.$H=t.getHours(),this.$m=t.getMinutes(),this.$s=t.getSeconds(),this.$ms=t.getMilliseconds()},m.$utils=function(){return O},m.isValid=function(){return!(this.$d.toString()===$)},m.isSame=function(t,e){var n=w(t);return this.startOf(e)<=n&&n<=this.endOf(e)},m.isAfter=function(t,e){return w(t)<this.startOf(e)},m.isBefore=function(t,e){return this.endOf(e)<w(t)},m.$g=function(t,e,n){return O.u(t)?this[e]:this.set(n,t)},m.unix=function(){return Math.floor(this.valueOf()/1e3)},m.valueOf=function(){return this.$d.getTime()},m.startOf=function(t,e){var n=this,r=!!O.u(e)||e,h=O.p(t),$=function(t,e){var i=O.w(n.$u?Date.UTC(n.$y,e,t):new Date(n.$y,e,t),n);return r?i:i.endOf(a)},l=function(t,e){return O.w(n.toDate()[t].apply(n.toDate("s"),(r?[0,0,0,0]:[23,59,59,999]).slice(e)),n)},y=this.$W,M=this.$M,m=this.$D,g="set"+(this.$u?"UTC":"");switch(h){case c:return r?$(1,0):$(31,11);case f:return r?$(1,M):$(0,M+1);case o:var D=this.$locale().weekStart||0,v=(y<D?y+7:y)-D;return $(r?m-v:m+(6-v),M);case a:case d:return l(g+"Hours",0);case u:return l(g+"Minutes",1);case s:return l(g+"Seconds",2);case i:return l(g+"Milliseconds",3);default:return this.clone()}},m.endOf=function(t){return this.startOf(t,!1)},m.$set=function(t,e){var n,o=O.p(t),h="set"+(this.$u?"UTC":""),$=(n={},n[a]=h+"Date",n[d]=h+"Date",n[f]=h+"Month",n[c]=h+"FullYear",n[u]=h+"Hours",n[s]=h+"Minutes",n[i]=h+"Seconds",n[r]=h+"Milliseconds",n)[o],l=o===a?this.$D+(e-this.$W):e;if(o===f||o===c){var y=this.clone().set(d,1);y.$d[$](l),y.init(),this.$d=y.set(d,Math.min(this.$D,y.daysInMonth())).$d}else $&&this.$d[$](l);return this.init(),this},m.set=function(t,e){return this.clone().$set(t,e)},m.get=function(t){return this[O.p(t)]()},m.add=function(r,h){var d,$=this;r=Number(r);var l=O.p(h),y=function(t){var e=w($);return O.w(e.date(e.date()+Math.round(t*r)),$)};if(l===f)return this.set(f,this.$M+r);if(l===c)return this.set(c,this.$y+r);if(l===a)return y(1);if(l===o)return y(7);var M=(d={},d[s]=e,d[u]=n,d[i]=t,d)[l]||1,m=this.$d.getTime()+r*M;return O.w(m,this)},m.subtract=function(t,e){return this.add(-1*t,e)},m.format=function(t){var e=this;if(!this.isValid())return $;var n=t||"YYYY-MM-DDTHH:mm:ssZ",r=O.z(this),i=this.$locale(),s=this.$H,u=this.$m,a=this.$M,o=i.weekdays,f=i.months,h=function(t,r,i,s){return t&&(t[r]||t(e,n))||i[r].substr(0,s)},c=function(t){return O.s(s%12||12,t,"0")},d=i.meridiem||function(t,e,n){var r=t<12?"AM":"PM";return n?r.toLowerCase():r},l={YY:String(this.$y).slice(-2),YYYY:this.$y,M:a+1,MM:O.s(a+1,2,"0"),MMM:h(i.monthsShort,a,f,3),MMMM:h(f,a),D:this.$D,DD:O.s(this.$D,2,"0"),d:String(this.$W),dd:h(i.weekdaysMin,this.$W,o,2),ddd:h(i.weekdaysShort,this.$W,o,3),dddd:o[this.$W],H:String(s),HH:O.s(s,2,"0"),h:c(1),hh:c(2),a:d(s,u,!0),A:d(s,u,!1),m:String(u),mm:O.s(u,2,"0"),s:String(this.$s),ss:O.s(this.$s,2,"0"),SSS:O.s(this.$ms,3,"0"),Z:r};return n.replace(y,(function(t,e){return e||l[t]||r.replace(":","")}))},m.utcOffset=function(){return 15*-Math.round(this.$d.getTimezoneOffset()/15)},m.diff=function(r,d,$){var l,y=O.p(d),M=w(r),m=(M.utcOffset()-this.utcOffset())*e,g=this-M,D=O.m(this,M);return D=(l={},l[c]=D/12,l[f]=D,l[h]=D/3,l[o]=(g-m)/6048e5,l[a]=(g-m)/864e5,l[u]=g/n,l[s]=g/e,l[i]=g/t,l)[y]||g,$?D:O.a(D)},m.daysInMonth=function(){return this.endOf(f).$D},m.$locale=function(){return v[this.$L]},m.locale=function(t,e){if(!t)return this.$L;var n=this.clone(),r=S(t,e,!0);return r&&(n.$L=r),n},m.clone=function(){return O.w(this.$d,this)},m.toDate=function(){return new Date(this.valueOf())},m.toJSON=function(){return this.isValid()?this.toISOString():null},m.toISOString=function(){return this.$d.toISOString()},m.toString=function(){return this.$d.toUTCString()},M}(),b=_.prototype;return w.prototype=b,[["$ms",r],["$s",i],["$m",s],["$H",u],["$W",a],["$M",f],["$y",c],["$D",d]].forEach((function(t){b[t[1]]=function(e){return this.$g(e,t[0],t[1])}})),w.extend=function(t,e){return t.$i||(t(e,_,w),t.$i=!0),w},w.locale=S,w.isDayjs=p,w.unix=function(t){return w(1e3*t)},w.en=v[D],w.Ls=v,w.p={},w}));
+
+/***/ }),
+
+/***/ "./node_modules/diff-match-patch/index.js":
+/*!************************************************!*\
+  !*** ./node_modules/diff-match-patch/index.js ***!
+  \************************************************/
+/***/ ((module) => {
+
+/**
+ * Diff Match and Patch
+ * Copyright 2018 The diff-match-patch Authors.
+ * https://github.com/google/diff-match-patch
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * @fileoverview Computes the difference between two texts to create a patch.
+ * Applies the patch onto another text, allowing for errors.
+ * @author fraser@google.com (Neil Fraser)
+ */
+
+/**
+ * Class containing the diff, match and patch methods.
+ * @constructor
+ */
+var diff_match_patch = function() {
+
+  // Defaults.
+  // Redefine these in your program to override the defaults.
+
+  // Number of seconds to map a diff before giving up (0 for infinity).
+  this.Diff_Timeout = 1.0;
+  // Cost of an empty edit operation in terms of edit characters.
+  this.Diff_EditCost = 4;
+  // At what point is no match declared (0.0 = perfection, 1.0 = very loose).
+  this.Match_Threshold = 0.5;
+  // How far to search for a match (0 = exact location, 1000+ = broad match).
+  // A match this many characters away from the expected location will add
+  // 1.0 to the score (0.0 is a perfect match).
+  this.Match_Distance = 1000;
+  // When deleting a large block of text (over ~64 characters), how close do
+  // the contents have to be to match the expected contents. (0.0 = perfection,
+  // 1.0 = very loose).  Note that Match_Threshold controls how closely the
+  // end points of a delete need to match.
+  this.Patch_DeleteThreshold = 0.5;
+  // Chunk size for context length.
+  this.Patch_Margin = 4;
+
+  // The number of bits in an int.
+  this.Match_MaxBits = 32;
+};
+
+
+//  DIFF FUNCTIONS
+
+
+/**
+ * The data structure representing a diff is an array of tuples:
+ * [[DIFF_DELETE, 'Hello'], [DIFF_INSERT, 'Goodbye'], [DIFF_EQUAL, ' world.']]
+ * which means: delete 'Hello', add 'Goodbye' and keep ' world.'
+ */
+var DIFF_DELETE = -1;
+var DIFF_INSERT = 1;
+var DIFF_EQUAL = 0;
+
+/**
+ * Class representing one diff tuple.
+ * ~Attempts to look like a two-element array (which is what this used to be).~
+ * Constructor returns an actual two-element array, to allow destructing @JackuB
+ * See https://github.com/JackuB/diff-match-patch/issues/14 for details
+ * @param {number} op Operation, one of: DIFF_DELETE, DIFF_INSERT, DIFF_EQUAL.
+ * @param {string} text Text to be deleted, inserted, or retained.
+ * @constructor
+ */
+diff_match_patch.Diff = function(op, text) {
+  return [op, text];
+};
+
+/**
+ * Find the differences between two texts.  Simplifies the problem by stripping
+ * any common prefix or suffix off the texts before diffing.
+ * @param {string} text1 Old string to be diffed.
+ * @param {string} text2 New string to be diffed.
+ * @param {boolean=} opt_checklines Optional speedup flag. If present and false,
+ *     then don't run a line-level diff first to identify the changed areas.
+ *     Defaults to true, which does a faster, slightly less optimal diff.
+ * @param {number=} opt_deadline Optional time when the diff should be complete
+ *     by.  Used internally for recursive calls.  Users should set DiffTimeout
+ *     instead.
+ * @return {!Array.<!diff_match_patch.Diff>} Array of diff tuples.
+ */
+diff_match_patch.prototype.diff_main = function(text1, text2, opt_checklines,
+    opt_deadline) {
+  // Set a deadline by which time the diff must be complete.
+  if (typeof opt_deadline == 'undefined') {
+    if (this.Diff_Timeout <= 0) {
+      opt_deadline = Number.MAX_VALUE;
+    } else {
+      opt_deadline = (new Date).getTime() + this.Diff_Timeout * 1000;
+    }
+  }
+  var deadline = opt_deadline;
+
+  // Check for null inputs.
+  if (text1 == null || text2 == null) {
+    throw new Error('Null input. (diff_main)');
+  }
+
+  // Check for equality (speedup).
+  if (text1 == text2) {
+    if (text1) {
+      return [new diff_match_patch.Diff(DIFF_EQUAL, text1)];
+    }
+    return [];
+  }
+
+  if (typeof opt_checklines == 'undefined') {
+    opt_checklines = true;
+  }
+  var checklines = opt_checklines;
+
+  // Trim off common prefix (speedup).
+  var commonlength = this.diff_commonPrefix(text1, text2);
+  var commonprefix = text1.substring(0, commonlength);
+  text1 = text1.substring(commonlength);
+  text2 = text2.substring(commonlength);
+
+  // Trim off common suffix (speedup).
+  commonlength = this.diff_commonSuffix(text1, text2);
+  var commonsuffix = text1.substring(text1.length - commonlength);
+  text1 = text1.substring(0, text1.length - commonlength);
+  text2 = text2.substring(0, text2.length - commonlength);
+
+  // Compute the diff on the middle block.
+  var diffs = this.diff_compute_(text1, text2, checklines, deadline);
+
+  // Restore the prefix and suffix.
+  if (commonprefix) {
+    diffs.unshift(new diff_match_patch.Diff(DIFF_EQUAL, commonprefix));
+  }
+  if (commonsuffix) {
+    diffs.push(new diff_match_patch.Diff(DIFF_EQUAL, commonsuffix));
+  }
+  this.diff_cleanupMerge(diffs);
+  return diffs;
+};
+
+
+/**
+ * Find the differences between two texts.  Assumes that the texts do not
+ * have any common prefix or suffix.
+ * @param {string} text1 Old string to be diffed.
+ * @param {string} text2 New string to be diffed.
+ * @param {boolean} checklines Speedup flag.  If false, then don't run a
+ *     line-level diff first to identify the changed areas.
+ *     If true, then run a faster, slightly less optimal diff.
+ * @param {number} deadline Time when the diff should be complete by.
+ * @return {!Array.<!diff_match_patch.Diff>} Array of diff tuples.
+ * @private
+ */
+diff_match_patch.prototype.diff_compute_ = function(text1, text2, checklines,
+    deadline) {
+  var diffs;
+
+  if (!text1) {
+    // Just add some text (speedup).
+    return [new diff_match_patch.Diff(DIFF_INSERT, text2)];
+  }
+
+  if (!text2) {
+    // Just delete some text (speedup).
+    return [new diff_match_patch.Diff(DIFF_DELETE, text1)];
+  }
+
+  var longtext = text1.length > text2.length ? text1 : text2;
+  var shorttext = text1.length > text2.length ? text2 : text1;
+  var i = longtext.indexOf(shorttext);
+  if (i != -1) {
+    // Shorter text is inside the longer text (speedup).
+    diffs = [new diff_match_patch.Diff(DIFF_INSERT, longtext.substring(0, i)),
+             new diff_match_patch.Diff(DIFF_EQUAL, shorttext),
+             new diff_match_patch.Diff(DIFF_INSERT,
+                 longtext.substring(i + shorttext.length))];
+    // Swap insertions for deletions if diff is reversed.
+    if (text1.length > text2.length) {
+      diffs[0][0] = diffs[2][0] = DIFF_DELETE;
+    }
+    return diffs;
+  }
+
+  if (shorttext.length == 1) {
+    // Single character string.
+    // After the previous speedup, the character can't be an equality.
+    return [new diff_match_patch.Diff(DIFF_DELETE, text1),
+            new diff_match_patch.Diff(DIFF_INSERT, text2)];
+  }
+
+  // Check to see if the problem can be split in two.
+  var hm = this.diff_halfMatch_(text1, text2);
+  if (hm) {
+    // A half-match was found, sort out the return data.
+    var text1_a = hm[0];
+    var text1_b = hm[1];
+    var text2_a = hm[2];
+    var text2_b = hm[3];
+    var mid_common = hm[4];
+    // Send both pairs off for separate processing.
+    var diffs_a = this.diff_main(text1_a, text2_a, checklines, deadline);
+    var diffs_b = this.diff_main(text1_b, text2_b, checklines, deadline);
+    // Merge the results.
+    return diffs_a.concat([new diff_match_patch.Diff(DIFF_EQUAL, mid_common)],
+                          diffs_b);
+  }
+
+  if (checklines && text1.length > 100 && text2.length > 100) {
+    return this.diff_lineMode_(text1, text2, deadline);
+  }
+
+  return this.diff_bisect_(text1, text2, deadline);
+};
+
+
+/**
+ * Do a quick line-level diff on both strings, then rediff the parts for
+ * greater accuracy.
+ * This speedup can produce non-minimal diffs.
+ * @param {string} text1 Old string to be diffed.
+ * @param {string} text2 New string to be diffed.
+ * @param {number} deadline Time when the diff should be complete by.
+ * @return {!Array.<!diff_match_patch.Diff>} Array of diff tuples.
+ * @private
+ */
+diff_match_patch.prototype.diff_lineMode_ = function(text1, text2, deadline) {
+  // Scan the text on a line-by-line basis first.
+  var a = this.diff_linesToChars_(text1, text2);
+  text1 = a.chars1;
+  text2 = a.chars2;
+  var linearray = a.lineArray;
+
+  var diffs = this.diff_main(text1, text2, false, deadline);
+
+  // Convert the diff back to original text.
+  this.diff_charsToLines_(diffs, linearray);
+  // Eliminate freak matches (e.g. blank lines)
+  this.diff_cleanupSemantic(diffs);
+
+  // Rediff any replacement blocks, this time character-by-character.
+  // Add a dummy entry at the end.
+  diffs.push(new diff_match_patch.Diff(DIFF_EQUAL, ''));
+  var pointer = 0;
+  var count_delete = 0;
+  var count_insert = 0;
+  var text_delete = '';
+  var text_insert = '';
+  while (pointer < diffs.length) {
+    switch (diffs[pointer][0]) {
+      case DIFF_INSERT:
+        count_insert++;
+        text_insert += diffs[pointer][1];
+        break;
+      case DIFF_DELETE:
+        count_delete++;
+        text_delete += diffs[pointer][1];
+        break;
+      case DIFF_EQUAL:
+        // Upon reaching an equality, check for prior redundancies.
+        if (count_delete >= 1 && count_insert >= 1) {
+          // Delete the offending records and add the merged ones.
+          diffs.splice(pointer - count_delete - count_insert,
+                       count_delete + count_insert);
+          pointer = pointer - count_delete - count_insert;
+          var subDiff =
+              this.diff_main(text_delete, text_insert, false, deadline);
+          for (var j = subDiff.length - 1; j >= 0; j--) {
+            diffs.splice(pointer, 0, subDiff[j]);
+          }
+          pointer = pointer + subDiff.length;
+        }
+        count_insert = 0;
+        count_delete = 0;
+        text_delete = '';
+        text_insert = '';
+        break;
+    }
+    pointer++;
+  }
+  diffs.pop();  // Remove the dummy entry at the end.
+
+  return diffs;
+};
+
+
+/**
+ * Find the 'middle snake' of a diff, split the problem in two
+ * and return the recursively constructed diff.
+ * See Myers 1986 paper: An O(ND) Difference Algorithm and Its Variations.
+ * @param {string} text1 Old string to be diffed.
+ * @param {string} text2 New string to be diffed.
+ * @param {number} deadline Time at which to bail if not yet complete.
+ * @return {!Array.<!diff_match_patch.Diff>} Array of diff tuples.
+ * @private
+ */
+diff_match_patch.prototype.diff_bisect_ = function(text1, text2, deadline) {
+  // Cache the text lengths to prevent multiple calls.
+  var text1_length = text1.length;
+  var text2_length = text2.length;
+  var max_d = Math.ceil((text1_length + text2_length) / 2);
+  var v_offset = max_d;
+  var v_length = 2 * max_d;
+  var v1 = new Array(v_length);
+  var v2 = new Array(v_length);
+  // Setting all elements to -1 is faster in Chrome & Firefox than mixing
+  // integers and undefined.
+  for (var x = 0; x < v_length; x++) {
+    v1[x] = -1;
+    v2[x] = -1;
+  }
+  v1[v_offset + 1] = 0;
+  v2[v_offset + 1] = 0;
+  var delta = text1_length - text2_length;
+  // If the total number of characters is odd, then the front path will collide
+  // with the reverse path.
+  var front = (delta % 2 != 0);
+  // Offsets for start and end of k loop.
+  // Prevents mapping of space beyond the grid.
+  var k1start = 0;
+  var k1end = 0;
+  var k2start = 0;
+  var k2end = 0;
+  for (var d = 0; d < max_d; d++) {
+    // Bail out if deadline is reached.
+    if ((new Date()).getTime() > deadline) {
+      break;
+    }
+
+    // Walk the front path one step.
+    for (var k1 = -d + k1start; k1 <= d - k1end; k1 += 2) {
+      var k1_offset = v_offset + k1;
+      var x1;
+      if (k1 == -d || (k1 != d && v1[k1_offset - 1] < v1[k1_offset + 1])) {
+        x1 = v1[k1_offset + 1];
+      } else {
+        x1 = v1[k1_offset - 1] + 1;
+      }
+      var y1 = x1 - k1;
+      while (x1 < text1_length && y1 < text2_length &&
+             text1.charAt(x1) == text2.charAt(y1)) {
+        x1++;
+        y1++;
+      }
+      v1[k1_offset] = x1;
+      if (x1 > text1_length) {
+        // Ran off the right of the graph.
+        k1end += 2;
+      } else if (y1 > text2_length) {
+        // Ran off the bottom of the graph.
+        k1start += 2;
+      } else if (front) {
+        var k2_offset = v_offset + delta - k1;
+        if (k2_offset >= 0 && k2_offset < v_length && v2[k2_offset] != -1) {
+          // Mirror x2 onto top-left coordinate system.
+          var x2 = text1_length - v2[k2_offset];
+          if (x1 >= x2) {
+            // Overlap detected.
+            return this.diff_bisectSplit_(text1, text2, x1, y1, deadline);
+          }
+        }
+      }
+    }
+
+    // Walk the reverse path one step.
+    for (var k2 = -d + k2start; k2 <= d - k2end; k2 += 2) {
+      var k2_offset = v_offset + k2;
+      var x2;
+      if (k2 == -d || (k2 != d && v2[k2_offset - 1] < v2[k2_offset + 1])) {
+        x2 = v2[k2_offset + 1];
+      } else {
+        x2 = v2[k2_offset - 1] + 1;
+      }
+      var y2 = x2 - k2;
+      while (x2 < text1_length && y2 < text2_length &&
+             text1.charAt(text1_length - x2 - 1) ==
+             text2.charAt(text2_length - y2 - 1)) {
+        x2++;
+        y2++;
+      }
+      v2[k2_offset] = x2;
+      if (x2 > text1_length) {
+        // Ran off the left of the graph.
+        k2end += 2;
+      } else if (y2 > text2_length) {
+        // Ran off the top of the graph.
+        k2start += 2;
+      } else if (!front) {
+        var k1_offset = v_offset + delta - k2;
+        if (k1_offset >= 0 && k1_offset < v_length && v1[k1_offset] != -1) {
+          var x1 = v1[k1_offset];
+          var y1 = v_offset + x1 - k1_offset;
+          // Mirror x2 onto top-left coordinate system.
+          x2 = text1_length - x2;
+          if (x1 >= x2) {
+            // Overlap detected.
+            return this.diff_bisectSplit_(text1, text2, x1, y1, deadline);
+          }
+        }
+      }
+    }
+  }
+  // Diff took too long and hit the deadline or
+  // number of diffs equals number of characters, no commonality at all.
+  return [new diff_match_patch.Diff(DIFF_DELETE, text1),
+          new diff_match_patch.Diff(DIFF_INSERT, text2)];
+};
+
+
+/**
+ * Given the location of the 'middle snake', split the diff in two parts
+ * and recurse.
+ * @param {string} text1 Old string to be diffed.
+ * @param {string} text2 New string to be diffed.
+ * @param {number} x Index of split point in text1.
+ * @param {number} y Index of split point in text2.
+ * @param {number} deadline Time at which to bail if not yet complete.
+ * @return {!Array.<!diff_match_patch.Diff>} Array of diff tuples.
+ * @private
+ */
+diff_match_patch.prototype.diff_bisectSplit_ = function(text1, text2, x, y,
+    deadline) {
+  var text1a = text1.substring(0, x);
+  var text2a = text2.substring(0, y);
+  var text1b = text1.substring(x);
+  var text2b = text2.substring(y);
+
+  // Compute both diffs serially.
+  var diffs = this.diff_main(text1a, text2a, false, deadline);
+  var diffsb = this.diff_main(text1b, text2b, false, deadline);
+
+  return diffs.concat(diffsb);
+};
+
+
+/**
+ * Split two texts into an array of strings.  Reduce the texts to a string of
+ * hashes where each Unicode character represents one line.
+ * @param {string} text1 First string.
+ * @param {string} text2 Second string.
+ * @return {{chars1: string, chars2: string, lineArray: !Array.<string>}}
+ *     An object containing the encoded text1, the encoded text2 and
+ *     the array of unique strings.
+ *     The zeroth element of the array of unique strings is intentionally blank.
+ * @private
+ */
+diff_match_patch.prototype.diff_linesToChars_ = function(text1, text2) {
+  var lineArray = [];  // e.g. lineArray[4] == 'Hello\n'
+  var lineHash = {};   // e.g. lineHash['Hello\n'] == 4
+
+  // '\x00' is a valid character, but various debuggers don't like it.
+  // So we'll insert a junk entry to avoid generating a null character.
+  lineArray[0] = '';
+
+  /**
+   * Split a text into an array of strings.  Reduce the texts to a string of
+   * hashes where each Unicode character represents one line.
+   * Modifies linearray and linehash through being a closure.
+   * @param {string} text String to encode.
+   * @return {string} Encoded string.
+   * @private
+   */
+  function diff_linesToCharsMunge_(text) {
+    var chars = '';
+    // Walk the text, pulling out a substring for each line.
+    // text.split('\n') would would temporarily double our memory footprint.
+    // Modifying text would create many large strings to garbage collect.
+    var lineStart = 0;
+    var lineEnd = -1;
+    // Keeping our own length variable is faster than looking it up.
+    var lineArrayLength = lineArray.length;
+    while (lineEnd < text.length - 1) {
+      lineEnd = text.indexOf('\n', lineStart);
+      if (lineEnd == -1) {
+        lineEnd = text.length - 1;
+      }
+      var line = text.substring(lineStart, lineEnd + 1);
+
+      if (lineHash.hasOwnProperty ? lineHash.hasOwnProperty(line) :
+          (lineHash[line] !== undefined)) {
+        chars += String.fromCharCode(lineHash[line]);
+      } else {
+        if (lineArrayLength == maxLines) {
+          // Bail out at 65535 because
+          // String.fromCharCode(65536) == String.fromCharCode(0)
+          line = text.substring(lineStart);
+          lineEnd = text.length;
+        }
+        chars += String.fromCharCode(lineArrayLength);
+        lineHash[line] = lineArrayLength;
+        lineArray[lineArrayLength++] = line;
+      }
+      lineStart = lineEnd + 1;
+    }
+    return chars;
+  }
+  // Allocate 2/3rds of the space for text1, the rest for text2.
+  var maxLines = 40000;
+  var chars1 = diff_linesToCharsMunge_(text1);
+  maxLines = 65535;
+  var chars2 = diff_linesToCharsMunge_(text2);
+  return {chars1: chars1, chars2: chars2, lineArray: lineArray};
+};
+
+
+/**
+ * Rehydrate the text in a diff from a string of line hashes to real lines of
+ * text.
+ * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
+ * @param {!Array.<string>} lineArray Array of unique strings.
+ * @private
+ */
+diff_match_patch.prototype.diff_charsToLines_ = function(diffs, lineArray) {
+  for (var i = 0; i < diffs.length; i++) {
+    var chars = diffs[i][1];
+    var text = [];
+    for (var j = 0; j < chars.length; j++) {
+      text[j] = lineArray[chars.charCodeAt(j)];
+    }
+    diffs[i][1] = text.join('');
+  }
+};
+
+
+/**
+ * Determine the common prefix of two strings.
+ * @param {string} text1 First string.
+ * @param {string} text2 Second string.
+ * @return {number} The number of characters common to the start of each
+ *     string.
+ */
+diff_match_patch.prototype.diff_commonPrefix = function(text1, text2) {
+  // Quick check for common null cases.
+  if (!text1 || !text2 || text1.charAt(0) != text2.charAt(0)) {
+    return 0;
+  }
+  // Binary search.
+  // Performance analysis: https://neil.fraser.name/news/2007/10/09/
+  var pointermin = 0;
+  var pointermax = Math.min(text1.length, text2.length);
+  var pointermid = pointermax;
+  var pointerstart = 0;
+  while (pointermin < pointermid) {
+    if (text1.substring(pointerstart, pointermid) ==
+        text2.substring(pointerstart, pointermid)) {
+      pointermin = pointermid;
+      pointerstart = pointermin;
+    } else {
+      pointermax = pointermid;
+    }
+    pointermid = Math.floor((pointermax - pointermin) / 2 + pointermin);
+  }
+  return pointermid;
+};
+
+
+/**
+ * Determine the common suffix of two strings.
+ * @param {string} text1 First string.
+ * @param {string} text2 Second string.
+ * @return {number} The number of characters common to the end of each string.
+ */
+diff_match_patch.prototype.diff_commonSuffix = function(text1, text2) {
+  // Quick check for common null cases.
+  if (!text1 || !text2 ||
+      text1.charAt(text1.length - 1) != text2.charAt(text2.length - 1)) {
+    return 0;
+  }
+  // Binary search.
+  // Performance analysis: https://neil.fraser.name/news/2007/10/09/
+  var pointermin = 0;
+  var pointermax = Math.min(text1.length, text2.length);
+  var pointermid = pointermax;
+  var pointerend = 0;
+  while (pointermin < pointermid) {
+    if (text1.substring(text1.length - pointermid, text1.length - pointerend) ==
+        text2.substring(text2.length - pointermid, text2.length - pointerend)) {
+      pointermin = pointermid;
+      pointerend = pointermin;
+    } else {
+      pointermax = pointermid;
+    }
+    pointermid = Math.floor((pointermax - pointermin) / 2 + pointermin);
+  }
+  return pointermid;
+};
+
+
+/**
+ * Determine if the suffix of one string is the prefix of another.
+ * @param {string} text1 First string.
+ * @param {string} text2 Second string.
+ * @return {number} The number of characters common to the end of the first
+ *     string and the start of the second string.
+ * @private
+ */
+diff_match_patch.prototype.diff_commonOverlap_ = function(text1, text2) {
+  // Cache the text lengths to prevent multiple calls.
+  var text1_length = text1.length;
+  var text2_length = text2.length;
+  // Eliminate the null case.
+  if (text1_length == 0 || text2_length == 0) {
+    return 0;
+  }
+  // Truncate the longer string.
+  if (text1_length > text2_length) {
+    text1 = text1.substring(text1_length - text2_length);
+  } else if (text1_length < text2_length) {
+    text2 = text2.substring(0, text1_length);
+  }
+  var text_length = Math.min(text1_length, text2_length);
+  // Quick check for the worst case.
+  if (text1 == text2) {
+    return text_length;
+  }
+
+  // Start by looking for a single character match
+  // and increase length until no match is found.
+  // Performance analysis: https://neil.fraser.name/news/2010/11/04/
+  var best = 0;
+  var length = 1;
+  while (true) {
+    var pattern = text1.substring(text_length - length);
+    var found = text2.indexOf(pattern);
+    if (found == -1) {
+      return best;
+    }
+    length += found;
+    if (found == 0 || text1.substring(text_length - length) ==
+        text2.substring(0, length)) {
+      best = length;
+      length++;
+    }
+  }
+};
+
+
+/**
+ * Do the two texts share a substring which is at least half the length of the
+ * longer text?
+ * This speedup can produce non-minimal diffs.
+ * @param {string} text1 First string.
+ * @param {string} text2 Second string.
+ * @return {Array.<string>} Five element Array, containing the prefix of
+ *     text1, the suffix of text1, the prefix of text2, the suffix of
+ *     text2 and the common middle.  Or null if there was no match.
+ * @private
+ */
+diff_match_patch.prototype.diff_halfMatch_ = function(text1, text2) {
+  if (this.Diff_Timeout <= 0) {
+    // Don't risk returning a non-optimal diff if we have unlimited time.
+    return null;
+  }
+  var longtext = text1.length > text2.length ? text1 : text2;
+  var shorttext = text1.length > text2.length ? text2 : text1;
+  if (longtext.length < 4 || shorttext.length * 2 < longtext.length) {
+    return null;  // Pointless.
+  }
+  var dmp = this;  // 'this' becomes 'window' in a closure.
+
+  /**
+   * Does a substring of shorttext exist within longtext such that the substring
+   * is at least half the length of longtext?
+   * Closure, but does not reference any external variables.
+   * @param {string} longtext Longer string.
+   * @param {string} shorttext Shorter string.
+   * @param {number} i Start index of quarter length substring within longtext.
+   * @return {Array.<string>} Five element Array, containing the prefix of
+   *     longtext, the suffix of longtext, the prefix of shorttext, the suffix
+   *     of shorttext and the common middle.  Or null if there was no match.
+   * @private
+   */
+  function diff_halfMatchI_(longtext, shorttext, i) {
+    // Start with a 1/4 length substring at position i as a seed.
+    var seed = longtext.substring(i, i + Math.floor(longtext.length / 4));
+    var j = -1;
+    var best_common = '';
+    var best_longtext_a, best_longtext_b, best_shorttext_a, best_shorttext_b;
+    while ((j = shorttext.indexOf(seed, j + 1)) != -1) {
+      var prefixLength = dmp.diff_commonPrefix(longtext.substring(i),
+                                               shorttext.substring(j));
+      var suffixLength = dmp.diff_commonSuffix(longtext.substring(0, i),
+                                               shorttext.substring(0, j));
+      if (best_common.length < suffixLength + prefixLength) {
+        best_common = shorttext.substring(j - suffixLength, j) +
+            shorttext.substring(j, j + prefixLength);
+        best_longtext_a = longtext.substring(0, i - suffixLength);
+        best_longtext_b = longtext.substring(i + prefixLength);
+        best_shorttext_a = shorttext.substring(0, j - suffixLength);
+        best_shorttext_b = shorttext.substring(j + prefixLength);
+      }
+    }
+    if (best_common.length * 2 >= longtext.length) {
+      return [best_longtext_a, best_longtext_b,
+              best_shorttext_a, best_shorttext_b, best_common];
+    } else {
+      return null;
+    }
+  }
+
+  // First check if the second quarter is the seed for a half-match.
+  var hm1 = diff_halfMatchI_(longtext, shorttext,
+                             Math.ceil(longtext.length / 4));
+  // Check again based on the third quarter.
+  var hm2 = diff_halfMatchI_(longtext, shorttext,
+                             Math.ceil(longtext.length / 2));
+  var hm;
+  if (!hm1 && !hm2) {
+    return null;
+  } else if (!hm2) {
+    hm = hm1;
+  } else if (!hm1) {
+    hm = hm2;
+  } else {
+    // Both matched.  Select the longest.
+    hm = hm1[4].length > hm2[4].length ? hm1 : hm2;
+  }
+
+  // A half-match was found, sort out the return data.
+  var text1_a, text1_b, text2_a, text2_b;
+  if (text1.length > text2.length) {
+    text1_a = hm[0];
+    text1_b = hm[1];
+    text2_a = hm[2];
+    text2_b = hm[3];
+  } else {
+    text2_a = hm[0];
+    text2_b = hm[1];
+    text1_a = hm[2];
+    text1_b = hm[3];
+  }
+  var mid_common = hm[4];
+  return [text1_a, text1_b, text2_a, text2_b, mid_common];
+};
+
+
+/**
+ * Reduce the number of edits by eliminating semantically trivial equalities.
+ * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
+ */
+diff_match_patch.prototype.diff_cleanupSemantic = function(diffs) {
+  var changes = false;
+  var equalities = [];  // Stack of indices where equalities are found.
+  var equalitiesLength = 0;  // Keeping our own length var is faster in JS.
+  /** @type {?string} */
+  var lastEquality = null;
+  // Always equal to diffs[equalities[equalitiesLength - 1]][1]
+  var pointer = 0;  // Index of current position.
+  // Number of characters that changed prior to the equality.
+  var length_insertions1 = 0;
+  var length_deletions1 = 0;
+  // Number of characters that changed after the equality.
+  var length_insertions2 = 0;
+  var length_deletions2 = 0;
+  while (pointer < diffs.length) {
+    if (diffs[pointer][0] == DIFF_EQUAL) {  // Equality found.
+      equalities[equalitiesLength++] = pointer;
+      length_insertions1 = length_insertions2;
+      length_deletions1 = length_deletions2;
+      length_insertions2 = 0;
+      length_deletions2 = 0;
+      lastEquality = diffs[pointer][1];
+    } else {  // An insertion or deletion.
+      if (diffs[pointer][0] == DIFF_INSERT) {
+        length_insertions2 += diffs[pointer][1].length;
+      } else {
+        length_deletions2 += diffs[pointer][1].length;
+      }
+      // Eliminate an equality that is smaller or equal to the edits on both
+      // sides of it.
+      if (lastEquality && (lastEquality.length <=
+          Math.max(length_insertions1, length_deletions1)) &&
+          (lastEquality.length <= Math.max(length_insertions2,
+                                           length_deletions2))) {
+        // Duplicate record.
+        diffs.splice(equalities[equalitiesLength - 1], 0,
+                     new diff_match_patch.Diff(DIFF_DELETE, lastEquality));
+        // Change second copy to insert.
+        diffs[equalities[equalitiesLength - 1] + 1][0] = DIFF_INSERT;
+        // Throw away the equality we just deleted.
+        equalitiesLength--;
+        // Throw away the previous equality (it needs to be reevaluated).
+        equalitiesLength--;
+        pointer = equalitiesLength > 0 ? equalities[equalitiesLength - 1] : -1;
+        length_insertions1 = 0;  // Reset the counters.
+        length_deletions1 = 0;
+        length_insertions2 = 0;
+        length_deletions2 = 0;
+        lastEquality = null;
+        changes = true;
+      }
+    }
+    pointer++;
+  }
+
+  // Normalize the diff.
+  if (changes) {
+    this.diff_cleanupMerge(diffs);
+  }
+  this.diff_cleanupSemanticLossless(diffs);
+
+  // Find any overlaps between deletions and insertions.
+  // e.g: <del>abcxxx</del><ins>xxxdef</ins>
+  //   -> <del>abc</del>xxx<ins>def</ins>
+  // e.g: <del>xxxabc</del><ins>defxxx</ins>
+  //   -> <ins>def</ins>xxx<del>abc</del>
+  // Only extract an overlap if it is as big as the edit ahead or behind it.
+  pointer = 1;
+  while (pointer < diffs.length) {
+    if (diffs[pointer - 1][0] == DIFF_DELETE &&
+        diffs[pointer][0] == DIFF_INSERT) {
+      var deletion = diffs[pointer - 1][1];
+      var insertion = diffs[pointer][1];
+      var overlap_length1 = this.diff_commonOverlap_(deletion, insertion);
+      var overlap_length2 = this.diff_commonOverlap_(insertion, deletion);
+      if (overlap_length1 >= overlap_length2) {
+        if (overlap_length1 >= deletion.length / 2 ||
+            overlap_length1 >= insertion.length / 2) {
+          // Overlap found.  Insert an equality and trim the surrounding edits.
+          diffs.splice(pointer, 0, new diff_match_patch.Diff(DIFF_EQUAL,
+              insertion.substring(0, overlap_length1)));
+          diffs[pointer - 1][1] =
+              deletion.substring(0, deletion.length - overlap_length1);
+          diffs[pointer + 1][1] = insertion.substring(overlap_length1);
+          pointer++;
+        }
+      } else {
+        if (overlap_length2 >= deletion.length / 2 ||
+            overlap_length2 >= insertion.length / 2) {
+          // Reverse overlap found.
+          // Insert an equality and swap and trim the surrounding edits.
+          diffs.splice(pointer, 0, new diff_match_patch.Diff(DIFF_EQUAL,
+              deletion.substring(0, overlap_length2)));
+          diffs[pointer - 1][0] = DIFF_INSERT;
+          diffs[pointer - 1][1] =
+              insertion.substring(0, insertion.length - overlap_length2);
+          diffs[pointer + 1][0] = DIFF_DELETE;
+          diffs[pointer + 1][1] =
+              deletion.substring(overlap_length2);
+          pointer++;
+        }
+      }
+      pointer++;
+    }
+    pointer++;
+  }
+};
+
+
+/**
+ * Look for single edits surrounded on both sides by equalities
+ * which can be shifted sideways to align the edit to a word boundary.
+ * e.g: The c<ins>at c</ins>ame. -> The <ins>cat </ins>came.
+ * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
+ */
+diff_match_patch.prototype.diff_cleanupSemanticLossless = function(diffs) {
+  /**
+   * Given two strings, compute a score representing whether the internal
+   * boundary falls on logical boundaries.
+   * Scores range from 6 (best) to 0 (worst).
+   * Closure, but does not reference any external variables.
+   * @param {string} one First string.
+   * @param {string} two Second string.
+   * @return {number} The score.
+   * @private
+   */
+  function diff_cleanupSemanticScore_(one, two) {
+    if (!one || !two) {
+      // Edges are the best.
+      return 6;
+    }
+
+    // Each port of this function behaves slightly differently due to
+    // subtle differences in each language's definition of things like
+    // 'whitespace'.  Since this function's purpose is largely cosmetic,
+    // the choice has been made to use each language's native features
+    // rather than force total conformity.
+    var char1 = one.charAt(one.length - 1);
+    var char2 = two.charAt(0);
+    var nonAlphaNumeric1 = char1.match(diff_match_patch.nonAlphaNumericRegex_);
+    var nonAlphaNumeric2 = char2.match(diff_match_patch.nonAlphaNumericRegex_);
+    var whitespace1 = nonAlphaNumeric1 &&
+        char1.match(diff_match_patch.whitespaceRegex_);
+    var whitespace2 = nonAlphaNumeric2 &&
+        char2.match(diff_match_patch.whitespaceRegex_);
+    var lineBreak1 = whitespace1 &&
+        char1.match(diff_match_patch.linebreakRegex_);
+    var lineBreak2 = whitespace2 &&
+        char2.match(diff_match_patch.linebreakRegex_);
+    var blankLine1 = lineBreak1 &&
+        one.match(diff_match_patch.blanklineEndRegex_);
+    var blankLine2 = lineBreak2 &&
+        two.match(diff_match_patch.blanklineStartRegex_);
+
+    if (blankLine1 || blankLine2) {
+      // Five points for blank lines.
+      return 5;
+    } else if (lineBreak1 || lineBreak2) {
+      // Four points for line breaks.
+      return 4;
+    } else if (nonAlphaNumeric1 && !whitespace1 && whitespace2) {
+      // Three points for end of sentences.
+      return 3;
+    } else if (whitespace1 || whitespace2) {
+      // Two points for whitespace.
+      return 2;
+    } else if (nonAlphaNumeric1 || nonAlphaNumeric2) {
+      // One point for non-alphanumeric.
+      return 1;
+    }
+    return 0;
+  }
+
+  var pointer = 1;
+  // Intentionally ignore the first and last element (don't need checking).
+  while (pointer < diffs.length - 1) {
+    if (diffs[pointer - 1][0] == DIFF_EQUAL &&
+        diffs[pointer + 1][0] == DIFF_EQUAL) {
+      // This is a single edit surrounded by equalities.
+      var equality1 = diffs[pointer - 1][1];
+      var edit = diffs[pointer][1];
+      var equality2 = diffs[pointer + 1][1];
+
+      // First, shift the edit as far left as possible.
+      var commonOffset = this.diff_commonSuffix(equality1, edit);
+      if (commonOffset) {
+        var commonString = edit.substring(edit.length - commonOffset);
+        equality1 = equality1.substring(0, equality1.length - commonOffset);
+        edit = commonString + edit.substring(0, edit.length - commonOffset);
+        equality2 = commonString + equality2;
+      }
+
+      // Second, step character by character right, looking for the best fit.
+      var bestEquality1 = equality1;
+      var bestEdit = edit;
+      var bestEquality2 = equality2;
+      var bestScore = diff_cleanupSemanticScore_(equality1, edit) +
+          diff_cleanupSemanticScore_(edit, equality2);
+      while (edit.charAt(0) === equality2.charAt(0)) {
+        equality1 += edit.charAt(0);
+        edit = edit.substring(1) + equality2.charAt(0);
+        equality2 = equality2.substring(1);
+        var score = diff_cleanupSemanticScore_(equality1, edit) +
+            diff_cleanupSemanticScore_(edit, equality2);
+        // The >= encourages trailing rather than leading whitespace on edits.
+        if (score >= bestScore) {
+          bestScore = score;
+          bestEquality1 = equality1;
+          bestEdit = edit;
+          bestEquality2 = equality2;
+        }
+      }
+
+      if (diffs[pointer - 1][1] != bestEquality1) {
+        // We have an improvement, save it back to the diff.
+        if (bestEquality1) {
+          diffs[pointer - 1][1] = bestEquality1;
+        } else {
+          diffs.splice(pointer - 1, 1);
+          pointer--;
+        }
+        diffs[pointer][1] = bestEdit;
+        if (bestEquality2) {
+          diffs[pointer + 1][1] = bestEquality2;
+        } else {
+          diffs.splice(pointer + 1, 1);
+          pointer--;
+        }
+      }
+    }
+    pointer++;
+  }
+};
+
+// Define some regex patterns for matching boundaries.
+diff_match_patch.nonAlphaNumericRegex_ = /[^a-zA-Z0-9]/;
+diff_match_patch.whitespaceRegex_ = /\s/;
+diff_match_patch.linebreakRegex_ = /[\r\n]/;
+diff_match_patch.blanklineEndRegex_ = /\n\r?\n$/;
+diff_match_patch.blanklineStartRegex_ = /^\r?\n\r?\n/;
+
+/**
+ * Reduce the number of edits by eliminating operationally trivial equalities.
+ * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
+ */
+diff_match_patch.prototype.diff_cleanupEfficiency = function(diffs) {
+  var changes = false;
+  var equalities = [];  // Stack of indices where equalities are found.
+  var equalitiesLength = 0;  // Keeping our own length var is faster in JS.
+  /** @type {?string} */
+  var lastEquality = null;
+  // Always equal to diffs[equalities[equalitiesLength - 1]][1]
+  var pointer = 0;  // Index of current position.
+  // Is there an insertion operation before the last equality.
+  var pre_ins = false;
+  // Is there a deletion operation before the last equality.
+  var pre_del = false;
+  // Is there an insertion operation after the last equality.
+  var post_ins = false;
+  // Is there a deletion operation after the last equality.
+  var post_del = false;
+  while (pointer < diffs.length) {
+    if (diffs[pointer][0] == DIFF_EQUAL) {  // Equality found.
+      if (diffs[pointer][1].length < this.Diff_EditCost &&
+          (post_ins || post_del)) {
+        // Candidate found.
+        equalities[equalitiesLength++] = pointer;
+        pre_ins = post_ins;
+        pre_del = post_del;
+        lastEquality = diffs[pointer][1];
+      } else {
+        // Not a candidate, and can never become one.
+        equalitiesLength = 0;
+        lastEquality = null;
+      }
+      post_ins = post_del = false;
+    } else {  // An insertion or deletion.
+      if (diffs[pointer][0] == DIFF_DELETE) {
+        post_del = true;
+      } else {
+        post_ins = true;
+      }
+      /*
+       * Five types to be split:
+       * <ins>A</ins><del>B</del>XY<ins>C</ins><del>D</del>
+       * <ins>A</ins>X<ins>C</ins><del>D</del>
+       * <ins>A</ins><del>B</del>X<ins>C</ins>
+       * <ins>A</del>X<ins>C</ins><del>D</del>
+       * <ins>A</ins><del>B</del>X<del>C</del>
+       */
+      if (lastEquality && ((pre_ins && pre_del && post_ins && post_del) ||
+                           ((lastEquality.length < this.Diff_EditCost / 2) &&
+                            (pre_ins + pre_del + post_ins + post_del) == 3))) {
+        // Duplicate record.
+        diffs.splice(equalities[equalitiesLength - 1], 0,
+                     new diff_match_patch.Diff(DIFF_DELETE, lastEquality));
+        // Change second copy to insert.
+        diffs[equalities[equalitiesLength - 1] + 1][0] = DIFF_INSERT;
+        equalitiesLength--;  // Throw away the equality we just deleted;
+        lastEquality = null;
+        if (pre_ins && pre_del) {
+          // No changes made which could affect previous entry, keep going.
+          post_ins = post_del = true;
+          equalitiesLength = 0;
+        } else {
+          equalitiesLength--;  // Throw away the previous equality.
+          pointer = equalitiesLength > 0 ?
+              equalities[equalitiesLength - 1] : -1;
+          post_ins = post_del = false;
+        }
+        changes = true;
+      }
+    }
+    pointer++;
+  }
+
+  if (changes) {
+    this.diff_cleanupMerge(diffs);
+  }
+};
+
+
+/**
+ * Reorder and merge like edit sections.  Merge equalities.
+ * Any edit section can move as long as it doesn't cross an equality.
+ * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
+ */
+diff_match_patch.prototype.diff_cleanupMerge = function(diffs) {
+  // Add a dummy entry at the end.
+  diffs.push(new diff_match_patch.Diff(DIFF_EQUAL, ''));
+  var pointer = 0;
+  var count_delete = 0;
+  var count_insert = 0;
+  var text_delete = '';
+  var text_insert = '';
+  var commonlength;
+  while (pointer < diffs.length) {
+    switch (diffs[pointer][0]) {
+      case DIFF_INSERT:
+        count_insert++;
+        text_insert += diffs[pointer][1];
+        pointer++;
+        break;
+      case DIFF_DELETE:
+        count_delete++;
+        text_delete += diffs[pointer][1];
+        pointer++;
+        break;
+      case DIFF_EQUAL:
+        // Upon reaching an equality, check for prior redundancies.
+        if (count_delete + count_insert > 1) {
+          if (count_delete !== 0 && count_insert !== 0) {
+            // Factor out any common prefixies.
+            commonlength = this.diff_commonPrefix(text_insert, text_delete);
+            if (commonlength !== 0) {
+              if ((pointer - count_delete - count_insert) > 0 &&
+                  diffs[pointer - count_delete - count_insert - 1][0] ==
+                  DIFF_EQUAL) {
+                diffs[pointer - count_delete - count_insert - 1][1] +=
+                    text_insert.substring(0, commonlength);
+              } else {
+                diffs.splice(0, 0, new diff_match_patch.Diff(DIFF_EQUAL,
+                    text_insert.substring(0, commonlength)));
+                pointer++;
+              }
+              text_insert = text_insert.substring(commonlength);
+              text_delete = text_delete.substring(commonlength);
+            }
+            // Factor out any common suffixies.
+            commonlength = this.diff_commonSuffix(text_insert, text_delete);
+            if (commonlength !== 0) {
+              diffs[pointer][1] = text_insert.substring(text_insert.length -
+                  commonlength) + diffs[pointer][1];
+              text_insert = text_insert.substring(0, text_insert.length -
+                  commonlength);
+              text_delete = text_delete.substring(0, text_delete.length -
+                  commonlength);
+            }
+          }
+          // Delete the offending records and add the merged ones.
+          pointer -= count_delete + count_insert;
+          diffs.splice(pointer, count_delete + count_insert);
+          if (text_delete.length) {
+            diffs.splice(pointer, 0,
+                new diff_match_patch.Diff(DIFF_DELETE, text_delete));
+            pointer++;
+          }
+          if (text_insert.length) {
+            diffs.splice(pointer, 0,
+                new diff_match_patch.Diff(DIFF_INSERT, text_insert));
+            pointer++;
+          }
+          pointer++;
+        } else if (pointer !== 0 && diffs[pointer - 1][0] == DIFF_EQUAL) {
+          // Merge this equality with the previous one.
+          diffs[pointer - 1][1] += diffs[pointer][1];
+          diffs.splice(pointer, 1);
+        } else {
+          pointer++;
+        }
+        count_insert = 0;
+        count_delete = 0;
+        text_delete = '';
+        text_insert = '';
+        break;
+    }
+  }
+  if (diffs[diffs.length - 1][1] === '') {
+    diffs.pop();  // Remove the dummy entry at the end.
+  }
+
+  // Second pass: look for single edits surrounded on both sides by equalities
+  // which can be shifted sideways to eliminate an equality.
+  // e.g: A<ins>BA</ins>C -> <ins>AB</ins>AC
+  var changes = false;
+  pointer = 1;
+  // Intentionally ignore the first and last element (don't need checking).
+  while (pointer < diffs.length - 1) {
+    if (diffs[pointer - 1][0] == DIFF_EQUAL &&
+        diffs[pointer + 1][0] == DIFF_EQUAL) {
+      // This is a single edit surrounded by equalities.
+      if (diffs[pointer][1].substring(diffs[pointer][1].length -
+          diffs[pointer - 1][1].length) == diffs[pointer - 1][1]) {
+        // Shift the edit over the previous equality.
+        diffs[pointer][1] = diffs[pointer - 1][1] +
+            diffs[pointer][1].substring(0, diffs[pointer][1].length -
+                                        diffs[pointer - 1][1].length);
+        diffs[pointer + 1][1] = diffs[pointer - 1][1] + diffs[pointer + 1][1];
+        diffs.splice(pointer - 1, 1);
+        changes = true;
+      } else if (diffs[pointer][1].substring(0, diffs[pointer + 1][1].length) ==
+          diffs[pointer + 1][1]) {
+        // Shift the edit over the next equality.
+        diffs[pointer - 1][1] += diffs[pointer + 1][1];
+        diffs[pointer][1] =
+            diffs[pointer][1].substring(diffs[pointer + 1][1].length) +
+            diffs[pointer + 1][1];
+        diffs.splice(pointer + 1, 1);
+        changes = true;
+      }
+    }
+    pointer++;
+  }
+  // If shifts were made, the diff needs reordering and another shift sweep.
+  if (changes) {
+    this.diff_cleanupMerge(diffs);
+  }
+};
+
+
+/**
+ * loc is a location in text1, compute and return the equivalent location in
+ * text2.
+ * e.g. 'The cat' vs 'The big cat', 1->1, 5->8
+ * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
+ * @param {number} loc Location within text1.
+ * @return {number} Location within text2.
+ */
+diff_match_patch.prototype.diff_xIndex = function(diffs, loc) {
+  var chars1 = 0;
+  var chars2 = 0;
+  var last_chars1 = 0;
+  var last_chars2 = 0;
+  var x;
+  for (x = 0; x < diffs.length; x++) {
+    if (diffs[x][0] !== DIFF_INSERT) {  // Equality or deletion.
+      chars1 += diffs[x][1].length;
+    }
+    if (diffs[x][0] !== DIFF_DELETE) {  // Equality or insertion.
+      chars2 += diffs[x][1].length;
+    }
+    if (chars1 > loc) {  // Overshot the location.
+      break;
+    }
+    last_chars1 = chars1;
+    last_chars2 = chars2;
+  }
+  // Was the location was deleted?
+  if (diffs.length != x && diffs[x][0] === DIFF_DELETE) {
+    return last_chars2;
+  }
+  // Add the remaining character length.
+  return last_chars2 + (loc - last_chars1);
+};
+
+
+/**
+ * Convert a diff array into a pretty HTML report.
+ * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
+ * @return {string} HTML representation.
+ */
+diff_match_patch.prototype.diff_prettyHtml = function(diffs) {
+  var html = [];
+  var pattern_amp = /&/g;
+  var pattern_lt = /</g;
+  var pattern_gt = />/g;
+  var pattern_para = /\n/g;
+  for (var x = 0; x < diffs.length; x++) {
+    var op = diffs[x][0];    // Operation (insert, delete, equal)
+    var data = diffs[x][1];  // Text of change.
+    var text = data.replace(pattern_amp, '&amp;').replace(pattern_lt, '&lt;')
+        .replace(pattern_gt, '&gt;').replace(pattern_para, '&para;<br>');
+    switch (op) {
+      case DIFF_INSERT:
+        html[x] = '<ins style="background:#e6ffe6;">' + text + '</ins>';
+        break;
+      case DIFF_DELETE:
+        html[x] = '<del style="background:#ffe6e6;">' + text + '</del>';
+        break;
+      case DIFF_EQUAL:
+        html[x] = '<span>' + text + '</span>';
+        break;
+    }
+  }
+  return html.join('');
+};
+
+
+/**
+ * Compute and return the source text (all equalities and deletions).
+ * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
+ * @return {string} Source text.
+ */
+diff_match_patch.prototype.diff_text1 = function(diffs) {
+  var text = [];
+  for (var x = 0; x < diffs.length; x++) {
+    if (diffs[x][0] !== DIFF_INSERT) {
+      text[x] = diffs[x][1];
+    }
+  }
+  return text.join('');
+};
+
+
+/**
+ * Compute and return the destination text (all equalities and insertions).
+ * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
+ * @return {string} Destination text.
+ */
+diff_match_patch.prototype.diff_text2 = function(diffs) {
+  var text = [];
+  for (var x = 0; x < diffs.length; x++) {
+    if (diffs[x][0] !== DIFF_DELETE) {
+      text[x] = diffs[x][1];
+    }
+  }
+  return text.join('');
+};
+
+
+/**
+ * Compute the Levenshtein distance; the number of inserted, deleted or
+ * substituted characters.
+ * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
+ * @return {number} Number of changes.
+ */
+diff_match_patch.prototype.diff_levenshtein = function(diffs) {
+  var levenshtein = 0;
+  var insertions = 0;
+  var deletions = 0;
+  for (var x = 0; x < diffs.length; x++) {
+    var op = diffs[x][0];
+    var data = diffs[x][1];
+    switch (op) {
+      case DIFF_INSERT:
+        insertions += data.length;
+        break;
+      case DIFF_DELETE:
+        deletions += data.length;
+        break;
+      case DIFF_EQUAL:
+        // A deletion and an insertion is one substitution.
+        levenshtein += Math.max(insertions, deletions);
+        insertions = 0;
+        deletions = 0;
+        break;
+    }
+  }
+  levenshtein += Math.max(insertions, deletions);
+  return levenshtein;
+};
+
+
+/**
+ * Crush the diff into an encoded string which describes the operations
+ * required to transform text1 into text2.
+ * E.g. =3\t-2\t+ing  -> Keep 3 chars, delete 2 chars, insert 'ing'.
+ * Operations are tab-separated.  Inserted text is escaped using %xx notation.
+ * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
+ * @return {string} Delta text.
+ */
+diff_match_patch.prototype.diff_toDelta = function(diffs) {
+  var text = [];
+  for (var x = 0; x < diffs.length; x++) {
+    switch (diffs[x][0]) {
+      case DIFF_INSERT:
+        text[x] = '+' + encodeURI(diffs[x][1]);
+        break;
+      case DIFF_DELETE:
+        text[x] = '-' + diffs[x][1].length;
+        break;
+      case DIFF_EQUAL:
+        text[x] = '=' + diffs[x][1].length;
+        break;
+    }
+  }
+  return text.join('\t').replace(/%20/g, ' ');
+};
+
+
+/**
+ * Given the original text1, and an encoded string which describes the
+ * operations required to transform text1 into text2, compute the full diff.
+ * @param {string} text1 Source string for the diff.
+ * @param {string} delta Delta text.
+ * @return {!Array.<!diff_match_patch.Diff>} Array of diff tuples.
+ * @throws {!Error} If invalid input.
+ */
+diff_match_patch.prototype.diff_fromDelta = function(text1, delta) {
+  var diffs = [];
+  var diffsLength = 0;  // Keeping our own length var is faster in JS.
+  var pointer = 0;  // Cursor in text1
+  var tokens = delta.split(/\t/g);
+  for (var x = 0; x < tokens.length; x++) {
+    // Each token begins with a one character parameter which specifies the
+    // operation of this token (delete, insert, equality).
+    var param = tokens[x].substring(1);
+    switch (tokens[x].charAt(0)) {
+      case '+':
+        try {
+          diffs[diffsLength++] =
+              new diff_match_patch.Diff(DIFF_INSERT, decodeURI(param));
+        } catch (ex) {
+          // Malformed URI sequence.
+          throw new Error('Illegal escape in diff_fromDelta: ' + param);
+        }
+        break;
+      case '-':
+        // Fall through.
+      case '=':
+        var n = parseInt(param, 10);
+        if (isNaN(n) || n < 0) {
+          throw new Error('Invalid number in diff_fromDelta: ' + param);
+        }
+        var text = text1.substring(pointer, pointer += n);
+        if (tokens[x].charAt(0) == '=') {
+          diffs[diffsLength++] = new diff_match_patch.Diff(DIFF_EQUAL, text);
+        } else {
+          diffs[diffsLength++] = new diff_match_patch.Diff(DIFF_DELETE, text);
+        }
+        break;
+      default:
+        // Blank tokens are ok (from a trailing \t).
+        // Anything else is an error.
+        if (tokens[x]) {
+          throw new Error('Invalid diff operation in diff_fromDelta: ' +
+                          tokens[x]);
+        }
+    }
+  }
+  if (pointer != text1.length) {
+    throw new Error('Delta length (' + pointer +
+        ') does not equal source text length (' + text1.length + ').');
+  }
+  return diffs;
+};
+
+
+//  MATCH FUNCTIONS
+
+
+/**
+ * Locate the best instance of 'pattern' in 'text' near 'loc'.
+ * @param {string} text The text to search.
+ * @param {string} pattern The pattern to search for.
+ * @param {number} loc The location to search around.
+ * @return {number} Best match index or -1.
+ */
+diff_match_patch.prototype.match_main = function(text, pattern, loc) {
+  // Check for null inputs.
+  if (text == null || pattern == null || loc == null) {
+    throw new Error('Null input. (match_main)');
+  }
+
+  loc = Math.max(0, Math.min(loc, text.length));
+  if (text == pattern) {
+    // Shortcut (potentially not guaranteed by the algorithm)
+    return 0;
+  } else if (!text.length) {
+    // Nothing to match.
+    return -1;
+  } else if (text.substring(loc, loc + pattern.length) == pattern) {
+    // Perfect match at the perfect spot!  (Includes case of null pattern)
+    return loc;
+  } else {
+    // Do a fuzzy compare.
+    return this.match_bitap_(text, pattern, loc);
+  }
+};
+
+
+/**
+ * Locate the best instance of 'pattern' in 'text' near 'loc' using the
+ * Bitap algorithm.
+ * @param {string} text The text to search.
+ * @param {string} pattern The pattern to search for.
+ * @param {number} loc The location to search around.
+ * @return {number} Best match index or -1.
+ * @private
+ */
+diff_match_patch.prototype.match_bitap_ = function(text, pattern, loc) {
+  if (pattern.length > this.Match_MaxBits) {
+    throw new Error('Pattern too long for this browser.');
+  }
+
+  // Initialise the alphabet.
+  var s = this.match_alphabet_(pattern);
+
+  var dmp = this;  // 'this' becomes 'window' in a closure.
+
+  /**
+   * Compute and return the score for a match with e errors and x location.
+   * Accesses loc and pattern through being a closure.
+   * @param {number} e Number of errors in match.
+   * @param {number} x Location of match.
+   * @return {number} Overall score for match (0.0 = good, 1.0 = bad).
+   * @private
+   */
+  function match_bitapScore_(e, x) {
+    var accuracy = e / pattern.length;
+    var proximity = Math.abs(loc - x);
+    if (!dmp.Match_Distance) {
+      // Dodge divide by zero error.
+      return proximity ? 1.0 : accuracy;
+    }
+    return accuracy + (proximity / dmp.Match_Distance);
+  }
+
+  // Highest score beyond which we give up.
+  var score_threshold = this.Match_Threshold;
+  // Is there a nearby exact match? (speedup)
+  var best_loc = text.indexOf(pattern, loc);
+  if (best_loc != -1) {
+    score_threshold = Math.min(match_bitapScore_(0, best_loc), score_threshold);
+    // What about in the other direction? (speedup)
+    best_loc = text.lastIndexOf(pattern, loc + pattern.length);
+    if (best_loc != -1) {
+      score_threshold =
+          Math.min(match_bitapScore_(0, best_loc), score_threshold);
+    }
+  }
+
+  // Initialise the bit arrays.
+  var matchmask = 1 << (pattern.length - 1);
+  best_loc = -1;
+
+  var bin_min, bin_mid;
+  var bin_max = pattern.length + text.length;
+  var last_rd;
+  for (var d = 0; d < pattern.length; d++) {
+    // Scan for the best match; each iteration allows for one more error.
+    // Run a binary search to determine how far from 'loc' we can stray at this
+    // error level.
+    bin_min = 0;
+    bin_mid = bin_max;
+    while (bin_min < bin_mid) {
+      if (match_bitapScore_(d, loc + bin_mid) <= score_threshold) {
+        bin_min = bin_mid;
+      } else {
+        bin_max = bin_mid;
+      }
+      bin_mid = Math.floor((bin_max - bin_min) / 2 + bin_min);
+    }
+    // Use the result from this iteration as the maximum for the next.
+    bin_max = bin_mid;
+    var start = Math.max(1, loc - bin_mid + 1);
+    var finish = Math.min(loc + bin_mid, text.length) + pattern.length;
+
+    var rd = Array(finish + 2);
+    rd[finish + 1] = (1 << d) - 1;
+    for (var j = finish; j >= start; j--) {
+      // The alphabet (s) is a sparse hash, so the following line generates
+      // warnings.
+      var charMatch = s[text.charAt(j - 1)];
+      if (d === 0) {  // First pass: exact match.
+        rd[j] = ((rd[j + 1] << 1) | 1) & charMatch;
+      } else {  // Subsequent passes: fuzzy match.
+        rd[j] = (((rd[j + 1] << 1) | 1) & charMatch) |
+                (((last_rd[j + 1] | last_rd[j]) << 1) | 1) |
+                last_rd[j + 1];
+      }
+      if (rd[j] & matchmask) {
+        var score = match_bitapScore_(d, j - 1);
+        // This match will almost certainly be better than any existing match.
+        // But check anyway.
+        if (score <= score_threshold) {
+          // Told you so.
+          score_threshold = score;
+          best_loc = j - 1;
+          if (best_loc > loc) {
+            // When passing loc, don't exceed our current distance from loc.
+            start = Math.max(1, 2 * loc - best_loc);
+          } else {
+            // Already passed loc, downhill from here on in.
+            break;
+          }
+        }
+      }
+    }
+    // No hope for a (better) match at greater error levels.
+    if (match_bitapScore_(d + 1, loc) > score_threshold) {
+      break;
+    }
+    last_rd = rd;
+  }
+  return best_loc;
+};
+
+
+/**
+ * Initialise the alphabet for the Bitap algorithm.
+ * @param {string} pattern The text to encode.
+ * @return {!Object} Hash of character locations.
+ * @private
+ */
+diff_match_patch.prototype.match_alphabet_ = function(pattern) {
+  var s = {};
+  for (var i = 0; i < pattern.length; i++) {
+    s[pattern.charAt(i)] = 0;
+  }
+  for (var i = 0; i < pattern.length; i++) {
+    s[pattern.charAt(i)] |= 1 << (pattern.length - i - 1);
+  }
+  return s;
+};
+
+
+//  PATCH FUNCTIONS
+
+
+/**
+ * Increase the context until it is unique,
+ * but don't let the pattern expand beyond Match_MaxBits.
+ * @param {!diff_match_patch.patch_obj} patch The patch to grow.
+ * @param {string} text Source text.
+ * @private
+ */
+diff_match_patch.prototype.patch_addContext_ = function(patch, text) {
+  if (text.length == 0) {
+    return;
+  }
+  if (patch.start2 === null) {
+    throw Error('patch not initialized');
+  }
+  var pattern = text.substring(patch.start2, patch.start2 + patch.length1);
+  var padding = 0;
+
+  // Look for the first and last matches of pattern in text.  If two different
+  // matches are found, increase the pattern length.
+  while (text.indexOf(pattern) != text.lastIndexOf(pattern) &&
+         pattern.length < this.Match_MaxBits - this.Patch_Margin -
+         this.Patch_Margin) {
+    padding += this.Patch_Margin;
+    pattern = text.substring(patch.start2 - padding,
+                             patch.start2 + patch.length1 + padding);
+  }
+  // Add one chunk for good luck.
+  padding += this.Patch_Margin;
+
+  // Add the prefix.
+  var prefix = text.substring(patch.start2 - padding, patch.start2);
+  if (prefix) {
+    patch.diffs.unshift(new diff_match_patch.Diff(DIFF_EQUAL, prefix));
+  }
+  // Add the suffix.
+  var suffix = text.substring(patch.start2 + patch.length1,
+                              patch.start2 + patch.length1 + padding);
+  if (suffix) {
+    patch.diffs.push(new diff_match_patch.Diff(DIFF_EQUAL, suffix));
+  }
+
+  // Roll back the start points.
+  patch.start1 -= prefix.length;
+  patch.start2 -= prefix.length;
+  // Extend the lengths.
+  patch.length1 += prefix.length + suffix.length;
+  patch.length2 += prefix.length + suffix.length;
+};
+
+
+/**
+ * Compute a list of patches to turn text1 into text2.
+ * Use diffs if provided, otherwise compute it ourselves.
+ * There are four ways to call this function, depending on what data is
+ * available to the caller:
+ * Method 1:
+ * a = text1, b = text2
+ * Method 2:
+ * a = diffs
+ * Method 3 (optimal):
+ * a = text1, b = diffs
+ * Method 4 (deprecated, use method 3):
+ * a = text1, b = text2, c = diffs
+ *
+ * @param {string|!Array.<!diff_match_patch.Diff>} a text1 (methods 1,3,4) or
+ * Array of diff tuples for text1 to text2 (method 2).
+ * @param {string|!Array.<!diff_match_patch.Diff>=} opt_b text2 (methods 1,4) or
+ * Array of diff tuples for text1 to text2 (method 3) or undefined (method 2).
+ * @param {string|!Array.<!diff_match_patch.Diff>=} opt_c Array of diff tuples
+ * for text1 to text2 (method 4) or undefined (methods 1,2,3).
+ * @return {!Array.<!diff_match_patch.patch_obj>} Array of Patch objects.
+ */
+diff_match_patch.prototype.patch_make = function(a, opt_b, opt_c) {
+  var text1, diffs;
+  if (typeof a == 'string' && typeof opt_b == 'string' &&
+      typeof opt_c == 'undefined') {
+    // Method 1: text1, text2
+    // Compute diffs from text1 and text2.
+    text1 = /** @type {string} */(a);
+    diffs = this.diff_main(text1, /** @type {string} */(opt_b), true);
+    if (diffs.length > 2) {
+      this.diff_cleanupSemantic(diffs);
+      this.diff_cleanupEfficiency(diffs);
+    }
+  } else if (a && typeof a == 'object' && typeof opt_b == 'undefined' &&
+      typeof opt_c == 'undefined') {
+    // Method 2: diffs
+    // Compute text1 from diffs.
+    diffs = /** @type {!Array.<!diff_match_patch.Diff>} */(a);
+    text1 = this.diff_text1(diffs);
+  } else if (typeof a == 'string' && opt_b && typeof opt_b == 'object' &&
+      typeof opt_c == 'undefined') {
+    // Method 3: text1, diffs
+    text1 = /** @type {string} */(a);
+    diffs = /** @type {!Array.<!diff_match_patch.Diff>} */(opt_b);
+  } else if (typeof a == 'string' && typeof opt_b == 'string' &&
+      opt_c && typeof opt_c == 'object') {
+    // Method 4: text1, text2, diffs
+    // text2 is not used.
+    text1 = /** @type {string} */(a);
+    diffs = /** @type {!Array.<!diff_match_patch.Diff>} */(opt_c);
+  } else {
+    throw new Error('Unknown call format to patch_make.');
+  }
+
+  if (diffs.length === 0) {
+    return [];  // Get rid of the null case.
+  }
+  var patches = [];
+  var patch = new diff_match_patch.patch_obj();
+  var patchDiffLength = 0;  // Keeping our own length var is faster in JS.
+  var char_count1 = 0;  // Number of characters into the text1 string.
+  var char_count2 = 0;  // Number of characters into the text2 string.
+  // Start with text1 (prepatch_text) and apply the diffs until we arrive at
+  // text2 (postpatch_text).  We recreate the patches one by one to determine
+  // context info.
+  var prepatch_text = text1;
+  var postpatch_text = text1;
+  for (var x = 0; x < diffs.length; x++) {
+    var diff_type = diffs[x][0];
+    var diff_text = diffs[x][1];
+
+    if (!patchDiffLength && diff_type !== DIFF_EQUAL) {
+      // A new patch starts here.
+      patch.start1 = char_count1;
+      patch.start2 = char_count2;
+    }
+
+    switch (diff_type) {
+      case DIFF_INSERT:
+        patch.diffs[patchDiffLength++] = diffs[x];
+        patch.length2 += diff_text.length;
+        postpatch_text = postpatch_text.substring(0, char_count2) + diff_text +
+                         postpatch_text.substring(char_count2);
+        break;
+      case DIFF_DELETE:
+        patch.length1 += diff_text.length;
+        patch.diffs[patchDiffLength++] = diffs[x];
+        postpatch_text = postpatch_text.substring(0, char_count2) +
+                         postpatch_text.substring(char_count2 +
+                             diff_text.length);
+        break;
+      case DIFF_EQUAL:
+        if (diff_text.length <= 2 * this.Patch_Margin &&
+            patchDiffLength && diffs.length != x + 1) {
+          // Small equality inside a patch.
+          patch.diffs[patchDiffLength++] = diffs[x];
+          patch.length1 += diff_text.length;
+          patch.length2 += diff_text.length;
+        } else if (diff_text.length >= 2 * this.Patch_Margin) {
+          // Time for a new patch.
+          if (patchDiffLength) {
+            this.patch_addContext_(patch, prepatch_text);
+            patches.push(patch);
+            patch = new diff_match_patch.patch_obj();
+            patchDiffLength = 0;
+            // Unlike Unidiff, our patch lists have a rolling context.
+            // https://github.com/google/diff-match-patch/wiki/Unidiff
+            // Update prepatch text & pos to reflect the application of the
+            // just completed patch.
+            prepatch_text = postpatch_text;
+            char_count1 = char_count2;
+          }
+        }
+        break;
+    }
+
+    // Update the current character count.
+    if (diff_type !== DIFF_INSERT) {
+      char_count1 += diff_text.length;
+    }
+    if (diff_type !== DIFF_DELETE) {
+      char_count2 += diff_text.length;
+    }
+  }
+  // Pick up the leftover patch if not empty.
+  if (patchDiffLength) {
+    this.patch_addContext_(patch, prepatch_text);
+    patches.push(patch);
+  }
+
+  return patches;
+};
+
+
+/**
+ * Given an array of patches, return another array that is identical.
+ * @param {!Array.<!diff_match_patch.patch_obj>} patches Array of Patch objects.
+ * @return {!Array.<!diff_match_patch.patch_obj>} Array of Patch objects.
+ */
+diff_match_patch.prototype.patch_deepCopy = function(patches) {
+  // Making deep copies is hard in JavaScript.
+  var patchesCopy = [];
+  for (var x = 0; x < patches.length; x++) {
+    var patch = patches[x];
+    var patchCopy = new diff_match_patch.patch_obj();
+    patchCopy.diffs = [];
+    for (var y = 0; y < patch.diffs.length; y++) {
+      patchCopy.diffs[y] =
+          new diff_match_patch.Diff(patch.diffs[y][0], patch.diffs[y][1]);
+    }
+    patchCopy.start1 = patch.start1;
+    patchCopy.start2 = patch.start2;
+    patchCopy.length1 = patch.length1;
+    patchCopy.length2 = patch.length2;
+    patchesCopy[x] = patchCopy;
+  }
+  return patchesCopy;
+};
+
+
+/**
+ * Merge a set of patches onto the text.  Return a patched text, as well
+ * as a list of true/false values indicating which patches were applied.
+ * @param {!Array.<!diff_match_patch.patch_obj>} patches Array of Patch objects.
+ * @param {string} text Old text.
+ * @return {!Array.<string|!Array.<boolean>>} Two element Array, containing the
+ *      new text and an array of boolean values.
+ */
+diff_match_patch.prototype.patch_apply = function(patches, text) {
+  if (patches.length == 0) {
+    return [text, []];
+  }
+
+  // Deep copy the patches so that no changes are made to originals.
+  patches = this.patch_deepCopy(patches);
+
+  var nullPadding = this.patch_addPadding(patches);
+  text = nullPadding + text + nullPadding;
+
+  this.patch_splitMax(patches);
+  // delta keeps track of the offset between the expected and actual location
+  // of the previous patch.  If there are patches expected at positions 10 and
+  // 20, but the first patch was found at 12, delta is 2 and the second patch
+  // has an effective expected position of 22.
+  var delta = 0;
+  var results = [];
+  for (var x = 0; x < patches.length; x++) {
+    var expected_loc = patches[x].start2 + delta;
+    var text1 = this.diff_text1(patches[x].diffs);
+    var start_loc;
+    var end_loc = -1;
+    if (text1.length > this.Match_MaxBits) {
+      // patch_splitMax will only provide an oversized pattern in the case of
+      // a monster delete.
+      start_loc = this.match_main(text, text1.substring(0, this.Match_MaxBits),
+                                  expected_loc);
+      if (start_loc != -1) {
+        end_loc = this.match_main(text,
+            text1.substring(text1.length - this.Match_MaxBits),
+            expected_loc + text1.length - this.Match_MaxBits);
+        if (end_loc == -1 || start_loc >= end_loc) {
+          // Can't find valid trailing context.  Drop this patch.
+          start_loc = -1;
+        }
+      }
+    } else {
+      start_loc = this.match_main(text, text1, expected_loc);
+    }
+    if (start_loc == -1) {
+      // No match found.  :(
+      results[x] = false;
+      // Subtract the delta for this failed patch from subsequent patches.
+      delta -= patches[x].length2 - patches[x].length1;
+    } else {
+      // Found a match.  :)
+      results[x] = true;
+      delta = start_loc - expected_loc;
+      var text2;
+      if (end_loc == -1) {
+        text2 = text.substring(start_loc, start_loc + text1.length);
+      } else {
+        text2 = text.substring(start_loc, end_loc + this.Match_MaxBits);
+      }
+      if (text1 == text2) {
+        // Perfect match, just shove the replacement text in.
+        text = text.substring(0, start_loc) +
+               this.diff_text2(patches[x].diffs) +
+               text.substring(start_loc + text1.length);
+      } else {
+        // Imperfect match.  Run a diff to get a framework of equivalent
+        // indices.
+        var diffs = this.diff_main(text1, text2, false);
+        if (text1.length > this.Match_MaxBits &&
+            this.diff_levenshtein(diffs) / text1.length >
+            this.Patch_DeleteThreshold) {
+          // The end points match, but the content is unacceptably bad.
+          results[x] = false;
+        } else {
+          this.diff_cleanupSemanticLossless(diffs);
+          var index1 = 0;
+          var index2;
+          for (var y = 0; y < patches[x].diffs.length; y++) {
+            var mod = patches[x].diffs[y];
+            if (mod[0] !== DIFF_EQUAL) {
+              index2 = this.diff_xIndex(diffs, index1);
+            }
+            if (mod[0] === DIFF_INSERT) {  // Insertion
+              text = text.substring(0, start_loc + index2) + mod[1] +
+                     text.substring(start_loc + index2);
+            } else if (mod[0] === DIFF_DELETE) {  // Deletion
+              text = text.substring(0, start_loc + index2) +
+                     text.substring(start_loc + this.diff_xIndex(diffs,
+                         index1 + mod[1].length));
+            }
+            if (mod[0] !== DIFF_DELETE) {
+              index1 += mod[1].length;
+            }
+          }
+        }
+      }
+    }
+  }
+  // Strip the padding off.
+  text = text.substring(nullPadding.length, text.length - nullPadding.length);
+  return [text, results];
+};
+
+
+/**
+ * Add some padding on text start and end so that edges can match something.
+ * Intended to be called only from within patch_apply.
+ * @param {!Array.<!diff_match_patch.patch_obj>} patches Array of Patch objects.
+ * @return {string} The padding string added to each side.
+ */
+diff_match_patch.prototype.patch_addPadding = function(patches) {
+  var paddingLength = this.Patch_Margin;
+  var nullPadding = '';
+  for (var x = 1; x <= paddingLength; x++) {
+    nullPadding += String.fromCharCode(x);
+  }
+
+  // Bump all the patches forward.
+  for (var x = 0; x < patches.length; x++) {
+    patches[x].start1 += paddingLength;
+    patches[x].start2 += paddingLength;
+  }
+
+  // Add some padding on start of first diff.
+  var patch = patches[0];
+  var diffs = patch.diffs;
+  if (diffs.length == 0 || diffs[0][0] != DIFF_EQUAL) {
+    // Add nullPadding equality.
+    diffs.unshift(new diff_match_patch.Diff(DIFF_EQUAL, nullPadding));
+    patch.start1 -= paddingLength;  // Should be 0.
+    patch.start2 -= paddingLength;  // Should be 0.
+    patch.length1 += paddingLength;
+    patch.length2 += paddingLength;
+  } else if (paddingLength > diffs[0][1].length) {
+    // Grow first equality.
+    var extraLength = paddingLength - diffs[0][1].length;
+    diffs[0][1] = nullPadding.substring(diffs[0][1].length) + diffs[0][1];
+    patch.start1 -= extraLength;
+    patch.start2 -= extraLength;
+    patch.length1 += extraLength;
+    patch.length2 += extraLength;
+  }
+
+  // Add some padding on end of last diff.
+  patch = patches[patches.length - 1];
+  diffs = patch.diffs;
+  if (diffs.length == 0 || diffs[diffs.length - 1][0] != DIFF_EQUAL) {
+    // Add nullPadding equality.
+    diffs.push(new diff_match_patch.Diff(DIFF_EQUAL, nullPadding));
+    patch.length1 += paddingLength;
+    patch.length2 += paddingLength;
+  } else if (paddingLength > diffs[diffs.length - 1][1].length) {
+    // Grow last equality.
+    var extraLength = paddingLength - diffs[diffs.length - 1][1].length;
+    diffs[diffs.length - 1][1] += nullPadding.substring(0, extraLength);
+    patch.length1 += extraLength;
+    patch.length2 += extraLength;
+  }
+
+  return nullPadding;
+};
+
+
+/**
+ * Look through the patches and break up any which are longer than the maximum
+ * limit of the match algorithm.
+ * Intended to be called only from within patch_apply.
+ * @param {!Array.<!diff_match_patch.patch_obj>} patches Array of Patch objects.
+ */
+diff_match_patch.prototype.patch_splitMax = function(patches) {
+  var patch_size = this.Match_MaxBits;
+  for (var x = 0; x < patches.length; x++) {
+    if (patches[x].length1 <= patch_size) {
+      continue;
+    }
+    var bigpatch = patches[x];
+    // Remove the big old patch.
+    patches.splice(x--, 1);
+    var start1 = bigpatch.start1;
+    var start2 = bigpatch.start2;
+    var precontext = '';
+    while (bigpatch.diffs.length !== 0) {
+      // Create one of several smaller patches.
+      var patch = new diff_match_patch.patch_obj();
+      var empty = true;
+      patch.start1 = start1 - precontext.length;
+      patch.start2 = start2 - precontext.length;
+      if (precontext !== '') {
+        patch.length1 = patch.length2 = precontext.length;
+        patch.diffs.push(new diff_match_patch.Diff(DIFF_EQUAL, precontext));
+      }
+      while (bigpatch.diffs.length !== 0 &&
+             patch.length1 < patch_size - this.Patch_Margin) {
+        var diff_type = bigpatch.diffs[0][0];
+        var diff_text = bigpatch.diffs[0][1];
+        if (diff_type === DIFF_INSERT) {
+          // Insertions are harmless.
+          patch.length2 += diff_text.length;
+          start2 += diff_text.length;
+          patch.diffs.push(bigpatch.diffs.shift());
+          empty = false;
+        } else if (diff_type === DIFF_DELETE && patch.diffs.length == 1 &&
+                   patch.diffs[0][0] == DIFF_EQUAL &&
+                   diff_text.length > 2 * patch_size) {
+          // This is a large deletion.  Let it pass in one chunk.
+          patch.length1 += diff_text.length;
+          start1 += diff_text.length;
+          empty = false;
+          patch.diffs.push(new diff_match_patch.Diff(diff_type, diff_text));
+          bigpatch.diffs.shift();
+        } else {
+          // Deletion or equality.  Only take as much as we can stomach.
+          diff_text = diff_text.substring(0,
+              patch_size - patch.length1 - this.Patch_Margin);
+          patch.length1 += diff_text.length;
+          start1 += diff_text.length;
+          if (diff_type === DIFF_EQUAL) {
+            patch.length2 += diff_text.length;
+            start2 += diff_text.length;
+          } else {
+            empty = false;
+          }
+          patch.diffs.push(new diff_match_patch.Diff(diff_type, diff_text));
+          if (diff_text == bigpatch.diffs[0][1]) {
+            bigpatch.diffs.shift();
+          } else {
+            bigpatch.diffs[0][1] =
+                bigpatch.diffs[0][1].substring(diff_text.length);
+          }
+        }
+      }
+      // Compute the head context for the next patch.
+      precontext = this.diff_text2(patch.diffs);
+      precontext =
+          precontext.substring(precontext.length - this.Patch_Margin);
+      // Append the end context for this patch.
+      var postcontext = this.diff_text1(bigpatch.diffs)
+                            .substring(0, this.Patch_Margin);
+      if (postcontext !== '') {
+        patch.length1 += postcontext.length;
+        patch.length2 += postcontext.length;
+        if (patch.diffs.length !== 0 &&
+            patch.diffs[patch.diffs.length - 1][0] === DIFF_EQUAL) {
+          patch.diffs[patch.diffs.length - 1][1] += postcontext;
+        } else {
+          patch.diffs.push(new diff_match_patch.Diff(DIFF_EQUAL, postcontext));
+        }
+      }
+      if (!empty) {
+        patches.splice(++x, 0, patch);
+      }
+    }
+  }
+};
+
+
+/**
+ * Take a list of patches and return a textual representation.
+ * @param {!Array.<!diff_match_patch.patch_obj>} patches Array of Patch objects.
+ * @return {string} Text representation of patches.
+ */
+diff_match_patch.prototype.patch_toText = function(patches) {
+  var text = [];
+  for (var x = 0; x < patches.length; x++) {
+    text[x] = patches[x];
+  }
+  return text.join('');
+};
+
+
+/**
+ * Parse a textual representation of patches and return a list of Patch objects.
+ * @param {string} textline Text representation of patches.
+ * @return {!Array.<!diff_match_patch.patch_obj>} Array of Patch objects.
+ * @throws {!Error} If invalid input.
+ */
+diff_match_patch.prototype.patch_fromText = function(textline) {
+  var patches = [];
+  if (!textline) {
+    return patches;
+  }
+  var text = textline.split('\n');
+  var textPointer = 0;
+  var patchHeader = /^@@ -(\d+),?(\d*) \+(\d+),?(\d*) @@$/;
+  while (textPointer < text.length) {
+    var m = text[textPointer].match(patchHeader);
+    if (!m) {
+      throw new Error('Invalid patch string: ' + text[textPointer]);
+    }
+    var patch = new diff_match_patch.patch_obj();
+    patches.push(patch);
+    patch.start1 = parseInt(m[1], 10);
+    if (m[2] === '') {
+      patch.start1--;
+      patch.length1 = 1;
+    } else if (m[2] == '0') {
+      patch.length1 = 0;
+    } else {
+      patch.start1--;
+      patch.length1 = parseInt(m[2], 10);
+    }
+
+    patch.start2 = parseInt(m[3], 10);
+    if (m[4] === '') {
+      patch.start2--;
+      patch.length2 = 1;
+    } else if (m[4] == '0') {
+      patch.length2 = 0;
+    } else {
+      patch.start2--;
+      patch.length2 = parseInt(m[4], 10);
+    }
+    textPointer++;
+
+    while (textPointer < text.length) {
+      var sign = text[textPointer].charAt(0);
+      try {
+        var line = decodeURI(text[textPointer].substring(1));
+      } catch (ex) {
+        // Malformed URI sequence.
+        throw new Error('Illegal escape in patch_fromText: ' + line);
+      }
+      if (sign == '-') {
+        // Deletion.
+        patch.diffs.push(new diff_match_patch.Diff(DIFF_DELETE, line));
+      } else if (sign == '+') {
+        // Insertion.
+        patch.diffs.push(new diff_match_patch.Diff(DIFF_INSERT, line));
+      } else if (sign == ' ') {
+        // Minor equality.
+        patch.diffs.push(new diff_match_patch.Diff(DIFF_EQUAL, line));
+      } else if (sign == '@') {
+        // Start of next patch.
+        break;
+      } else if (sign === '') {
+        // Blank line?  Whatever.
+      } else {
+        // WTF?
+        throw new Error('Invalid patch mode "' + sign + '" in: ' + line);
+      }
+      textPointer++;
+    }
+  }
+  return patches;
+};
+
+
+/**
+ * Class representing one patch operation.
+ * @constructor
+ */
+diff_match_patch.patch_obj = function() {
+  /** @type {!Array.<!diff_match_patch.Diff>} */
+  this.diffs = [];
+  /** @type {?number} */
+  this.start1 = null;
+  /** @type {?number} */
+  this.start2 = null;
+  /** @type {number} */
+  this.length1 = 0;
+  /** @type {number} */
+  this.length2 = 0;
+};
+
+
+/**
+ * Emulate GNU diff's format.
+ * Header: @@ -382,8 +481,9 @@
+ * Indices are printed as 1-based, not 0-based.
+ * @return {string} The GNU diff string.
+ */
+diff_match_patch.patch_obj.prototype.toString = function() {
+  var coords1, coords2;
+  if (this.length1 === 0) {
+    coords1 = this.start1 + ',0';
+  } else if (this.length1 == 1) {
+    coords1 = this.start1 + 1;
+  } else {
+    coords1 = (this.start1 + 1) + ',' + this.length1;
+  }
+  if (this.length2 === 0) {
+    coords2 = this.start2 + ',0';
+  } else if (this.length2 == 1) {
+    coords2 = this.start2 + 1;
+  } else {
+    coords2 = (this.start2 + 1) + ',' + this.length2;
+  }
+  var text = ['@@ -' + coords1 + ' +' + coords2 + ' @@\n'];
+  var op;
+  // Escape the body of the patch with %xx notation.
+  for (var x = 0; x < this.diffs.length; x++) {
+    switch (this.diffs[x][0]) {
+      case DIFF_INSERT:
+        op = '+';
+        break;
+      case DIFF_DELETE:
+        op = '-';
+        break;
+      case DIFF_EQUAL:
+        op = ' ';
+        break;
+    }
+    text[x + 1] = op + encodeURI(this.diffs[x][1]) + '\n';
+  }
+  return text.join('').replace(/%20/g, ' ');
+};
+
+
+// The following export code was added by @ForbesLindesay
+module.exports = diff_match_patch;
+module.exports.diff_match_patch = diff_match_patch;
+module.exports.DIFF_DELETE = DIFF_DELETE;
+module.exports.DIFF_INSERT = DIFF_INSERT;
+module.exports.DIFF_EQUAL = DIFF_EQUAL;
+
+/***/ }),
+
+/***/ "./node_modules/extend/index.js":
+/*!**************************************!*\
+  !*** ./node_modules/extend/index.js ***!
+  \**************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+var hasOwn = Object.prototype.hasOwnProperty;
+var toStr = Object.prototype.toString;
+var defineProperty = Object.defineProperty;
+var gOPD = Object.getOwnPropertyDescriptor;
+
+var isArray = function isArray(arr) {
+	if (typeof Array.isArray === 'function') {
+		return Array.isArray(arr);
+	}
+
+	return toStr.call(arr) === '[object Array]';
+};
+
+var isPlainObject = function isPlainObject(obj) {
+	if (!obj || toStr.call(obj) !== '[object Object]') {
+		return false;
+	}
+
+	var hasOwnConstructor = hasOwn.call(obj, 'constructor');
+	var hasIsPrototypeOf = obj.constructor && obj.constructor.prototype && hasOwn.call(obj.constructor.prototype, 'isPrototypeOf');
+	// Not own constructor property must be Object
+	if (obj.constructor && !hasOwnConstructor && !hasIsPrototypeOf) {
+		return false;
+	}
+
+	// Own properties are enumerated firstly, so to speed up,
+	// if last one is own, then all properties are own.
+	var key;
+	for (key in obj) { /**/ }
+
+	return typeof key === 'undefined' || hasOwn.call(obj, key);
+};
+
+// If name is '__proto__', and Object.defineProperty is available, define __proto__ as an own property on target
+var setProperty = function setProperty(target, options) {
+	if (defineProperty && options.name === '__proto__') {
+		defineProperty(target, options.name, {
+			enumerable: true,
+			configurable: true,
+			value: options.newValue,
+			writable: true
+		});
+	} else {
+		target[options.name] = options.newValue;
+	}
+};
+
+// Return undefined instead of __proto__ if '__proto__' is not an own property
+var getProperty = function getProperty(obj, name) {
+	if (name === '__proto__') {
+		if (!hasOwn.call(obj, name)) {
+			return void 0;
+		} else if (gOPD) {
+			// In early versions of node, obj['__proto__'] is buggy when obj has
+			// __proto__ as an own property. Object.getOwnPropertyDescriptor() works.
+			return gOPD(obj, name).value;
+		}
+	}
+
+	return obj[name];
+};
+
+module.exports = function extend() {
+	var options, name, src, copy, copyIsArray, clone;
+	var target = arguments[0];
+	var i = 1;
+	var length = arguments.length;
+	var deep = false;
+
+	// Handle a deep copy situation
+	if (typeof target === 'boolean') {
+		deep = target;
+		target = arguments[1] || {};
+		// skip the boolean and the target
+		i = 2;
+	}
+	if (target == null || (typeof target !== 'object' && typeof target !== 'function')) {
+		target = {};
+	}
+
+	for (; i < length; ++i) {
+		options = arguments[i];
+		// Only deal with non-null/undefined values
+		if (options != null) {
+			// Extend the base object
+			for (name in options) {
+				src = getProperty(target, name);
+				copy = getProperty(options, name);
+
+				// Prevent never-ending loop
+				if (target !== copy) {
+					// Recurse if we're merging plain objects or arrays
+					if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
+						if (copyIsArray) {
+							copyIsArray = false;
+							clone = src && isArray(src) ? src : [];
+						} else {
+							clone = src && isPlainObject(src) ? src : {};
+						}
+
+						// Never move original objects, clone them
+						setProperty(target, { name: name, newValue: extend(deep, clone, copy) });
+
+					// Don't bring in undefined values
+					} else if (typeof copy !== 'undefined') {
+						setProperty(target, { name: name, newValue: copy });
+					}
+				}
+			}
+		}
+	}
+
+	// Return the modified object
+	return target;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/inline-style-parser/index.js":
+/*!***************************************************!*\
+  !*** ./node_modules/inline-style-parser/index.js ***!
+  \***************************************************/
+/***/ ((module) => {
+
+// http://www.w3.org/TR/CSS21/grammar.html
+// https://github.com/visionmedia/css-parse/pull/49#issuecomment-30088027
+var COMMENT_REGEX = /\/\*[^*]*\*+([^/*][^*]*\*+)*\//g;
+
+var NEWLINE_REGEX = /\n/g;
+var WHITESPACE_REGEX = /^\s*/;
+
+// declaration
+var PROPERTY_REGEX = /^(\*?[-#/*\\\w]+(\[[0-9a-z_-]+\])?)\s*/;
+var COLON_REGEX = /^:\s*/;
+var VALUE_REGEX = /^((?:'(?:\\'|.)*?'|"(?:\\"|.)*?"|\([^)]*?\)|[^};])+)/;
+var SEMICOLON_REGEX = /^[;\s]*/;
+
+// https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String/Trim#Polyfill
+var TRIM_REGEX = /^\s+|\s+$/g;
+
+// strings
+var NEWLINE = '\n';
+var FORWARD_SLASH = '/';
+var ASTERISK = '*';
+var EMPTY_STRING = '';
+
+// types
+var TYPE_COMMENT = 'comment';
+var TYPE_DECLARATION = 'declaration';
+
+/**
+ * @param {String} style
+ * @param {Object} [options]
+ * @return {Object[]}
+ * @throws {TypeError}
+ * @throws {Error}
+ */
+module.exports = function(style, options) {
+  if (typeof style !== 'string') {
+    throw new TypeError('First argument must be a string');
+  }
+
+  if (!style) return [];
+
+  options = options || {};
+
+  /**
+   * Positional.
+   */
+  var lineno = 1;
+  var column = 1;
+
+  /**
+   * Update lineno and column based on `str`.
+   *
+   * @param {String} str
+   */
+  function updatePosition(str) {
+    var lines = str.match(NEWLINE_REGEX);
+    if (lines) lineno += lines.length;
+    var i = str.lastIndexOf(NEWLINE);
+    column = ~i ? str.length - i : column + str.length;
+  }
+
+  /**
+   * Mark position and patch `node.position`.
+   *
+   * @return {Function}
+   */
+  function position() {
+    var start = { line: lineno, column: column };
+    return function(node) {
+      node.position = new Position(start);
+      whitespace();
+      return node;
+    };
+  }
+
+  /**
+   * Store position information for a node.
+   *
+   * @constructor
+   * @property {Object} start
+   * @property {Object} end
+   * @property {undefined|String} source
+   */
+  function Position(start) {
+    this.start = start;
+    this.end = { line: lineno, column: column };
+    this.source = options.source;
+  }
+
+  /**
+   * Non-enumerable source string.
+   */
+  Position.prototype.content = style;
+
+  var errorsList = [];
+
+  /**
+   * Error `msg`.
+   *
+   * @param {String} msg
+   * @throws {Error}
+   */
+  function error(msg) {
+    var err = new Error(
+      options.source + ':' + lineno + ':' + column + ': ' + msg
+    );
+    err.reason = msg;
+    err.filename = options.source;
+    err.line = lineno;
+    err.column = column;
+    err.source = style;
+
+    if (options.silent) {
+      errorsList.push(err);
+    } else {
+      throw err;
+    }
+  }
+
+  /**
+   * Match `re` and return captures.
+   *
+   * @param {RegExp} re
+   * @return {undefined|Array}
+   */
+  function match(re) {
+    var m = re.exec(style);
+    if (!m) return;
+    var str = m[0];
+    updatePosition(str);
+    style = style.slice(str.length);
+    return m;
+  }
+
+  /**
+   * Parse whitespace.
+   */
+  function whitespace() {
+    match(WHITESPACE_REGEX);
+  }
+
+  /**
+   * Parse comments.
+   *
+   * @param {Object[]} [rules]
+   * @return {Object[]}
+   */
+  function comments(rules) {
+    var c;
+    rules = rules || [];
+    while ((c = comment())) {
+      if (c !== false) {
+        rules.push(c);
+      }
+    }
+    return rules;
+  }
+
+  /**
+   * Parse comment.
+   *
+   * @return {Object}
+   * @throws {Error}
+   */
+  function comment() {
+    var pos = position();
+    if (FORWARD_SLASH != style.charAt(0) || ASTERISK != style.charAt(1)) return;
+
+    var i = 2;
+    while (
+      EMPTY_STRING != style.charAt(i) &&
+      (ASTERISK != style.charAt(i) || FORWARD_SLASH != style.charAt(i + 1))
+    ) {
+      ++i;
+    }
+    i += 2;
+
+    if (EMPTY_STRING === style.charAt(i - 1)) {
+      return error('End of comment missing');
+    }
+
+    var str = style.slice(2, i - 2);
+    column += 2;
+    updatePosition(str);
+    style = style.slice(i);
+    column += 2;
+
+    return pos({
+      type: TYPE_COMMENT,
+      comment: str
+    });
+  }
+
+  /**
+   * Parse declaration.
+   *
+   * @return {Object}
+   * @throws {Error}
+   */
+  function declaration() {
+    var pos = position();
+
+    // prop
+    var prop = match(PROPERTY_REGEX);
+    if (!prop) return;
+    comment();
+
+    // :
+    if (!match(COLON_REGEX)) return error("property missing ':'");
+
+    // val
+    var val = match(VALUE_REGEX);
+
+    var ret = pos({
+      type: TYPE_DECLARATION,
+      property: trim(prop[0].replace(COMMENT_REGEX, EMPTY_STRING)),
+      value: val
+        ? trim(val[0].replace(COMMENT_REGEX, EMPTY_STRING))
+        : EMPTY_STRING
+    });
+
+    // ;
+    match(SEMICOLON_REGEX);
+
+    return ret;
+  }
+
+  /**
+   * Parse declarations.
+   *
+   * @return {Object[]}
+   */
+  function declarations() {
+    var decls = [];
+
+    comments(decls);
+
+    // declarations
+    var decl;
+    while ((decl = declaration())) {
+      if (decl !== false) {
+        decls.push(decl);
+        comments(decls);
+      }
+    }
+
+    return decls;
+  }
+
+  whitespace();
+  return declarations();
+};
+
+/**
+ * Trim `str`.
+ *
+ * @param {String} str
+ * @return {String}
+ */
+function trim(str) {
+  return str ? str.replace(TRIM_REGEX, EMPTY_STRING) : EMPTY_STRING;
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/is-plain-obj/index.js":
+/*!********************************************!*\
+  !*** ./node_modules/is-plain-obj/index.js ***!
+  \********************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = value => {
+	if (Object.prototype.toString.call(value) !== '[object Object]') {
+		return false;
+	}
+
+	const prototype = Object.getPrototypeOf(value);
+	return prototype === null || prototype === Object.prototype;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash.get/index.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash.get/index.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/** Used as the `TypeError` message for "Functions" methods. */
+var FUNC_ERROR_TEXT = 'Expected a function';
+
+/** Used to stand-in for `undefined` hash values. */
+var HASH_UNDEFINED = '__lodash_hash_undefined__';
+
+/** Used as references for various `Number` constants. */
+var INFINITY = 1 / 0;
+
+/** `Object#toString` result references. */
+var funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]',
+    symbolTag = '[object Symbol]';
+
+/** Used to match property names within property paths. */
+var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
+    reIsPlainProp = /^\w*$/,
+    reLeadingDot = /^\./,
+    rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
+
+/**
+ * Used to match `RegExp`
+ * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+ */
+var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+
+/** Used to match backslashes in property paths. */
+var reEscapeChar = /\\(\\)?/g;
+
+/** Used to detect host constructors (Safari). */
+var reIsHostCtor = /^\[object .+?Constructor\]$/;
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof __webpack_require__.g == 'object' && __webpack_require__.g && __webpack_require__.g.Object === Object && __webpack_require__.g;
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = freeGlobal || freeSelf || Function('return this')();
+
+/**
+ * Gets the value at `key` of `object`.
+ *
+ * @private
+ * @param {Object} [object] The object to query.
+ * @param {string} key The key of the property to get.
+ * @returns {*} Returns the property value.
+ */
+function getValue(object, key) {
+  return object == null ? undefined : object[key];
+}
+
+/**
+ * Checks if `value` is a host object in IE < 9.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+ */
+function isHostObject(value) {
+  // Many host objects are `Object` objects that can coerce to strings
+  // despite having improperly defined `toString` methods.
+  var result = false;
+  if (value != null && typeof value.toString != 'function') {
+    try {
+      result = !!(value + '');
+    } catch (e) {}
+  }
+  return result;
+}
+
+/** Used for built-in method references. */
+var arrayProto = Array.prototype,
+    funcProto = Function.prototype,
+    objectProto = Object.prototype;
+
+/** Used to detect overreaching core-js shims. */
+var coreJsData = root['__core-js_shared__'];
+
+/** Used to detect methods masquerading as native. */
+var maskSrcKey = (function() {
+  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+  return uid ? ('Symbol(src)_1.' + uid) : '';
+}());
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = funcProto.toString;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString = objectProto.toString;
+
+/** Used to detect if a method is native. */
+var reIsNative = RegExp('^' +
+  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
+  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+);
+
+/** Built-in value references. */
+var Symbol = root.Symbol,
+    splice = arrayProto.splice;
+
+/* Built-in method references that are verified to be native. */
+var Map = getNative(root, 'Map'),
+    nativeCreate = getNative(Object, 'create');
+
+/** Used to convert symbols to primitives and strings. */
+var symbolProto = Symbol ? Symbol.prototype : undefined,
+    symbolToString = symbolProto ? symbolProto.toString : undefined;
+
+/**
+ * Creates a hash object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function Hash(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the hash.
+ *
+ * @private
+ * @name clear
+ * @memberOf Hash
+ */
+function hashClear() {
+  this.__data__ = nativeCreate ? nativeCreate(null) : {};
+}
+
+/**
+ * Removes `key` and its value from the hash.
+ *
+ * @private
+ * @name delete
+ * @memberOf Hash
+ * @param {Object} hash The hash to modify.
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function hashDelete(key) {
+  return this.has(key) && delete this.__data__[key];
+}
+
+/**
+ * Gets the hash value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf Hash
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function hashGet(key) {
+  var data = this.__data__;
+  if (nativeCreate) {
+    var result = data[key];
+    return result === HASH_UNDEFINED ? undefined : result;
+  }
+  return hasOwnProperty.call(data, key) ? data[key] : undefined;
+}
+
+/**
+ * Checks if a hash value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf Hash
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function hashHas(key) {
+  var data = this.__data__;
+  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
+}
+
+/**
+ * Sets the hash `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf Hash
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the hash instance.
+ */
+function hashSet(key, value) {
+  var data = this.__data__;
+  data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
+  return this;
+}
+
+// Add methods to `Hash`.
+Hash.prototype.clear = hashClear;
+Hash.prototype['delete'] = hashDelete;
+Hash.prototype.get = hashGet;
+Hash.prototype.has = hashHas;
+Hash.prototype.set = hashSet;
+
+/**
+ * Creates an list cache object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function ListCache(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the list cache.
+ *
+ * @private
+ * @name clear
+ * @memberOf ListCache
+ */
+function listCacheClear() {
+  this.__data__ = [];
+}
+
+/**
+ * Removes `key` and its value from the list cache.
+ *
+ * @private
+ * @name delete
+ * @memberOf ListCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function listCacheDelete(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    return false;
+  }
+  var lastIndex = data.length - 1;
+  if (index == lastIndex) {
+    data.pop();
+  } else {
+    splice.call(data, index, 1);
+  }
+  return true;
+}
+
+/**
+ * Gets the list cache value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf ListCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function listCacheGet(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  return index < 0 ? undefined : data[index][1];
+}
+
+/**
+ * Checks if a list cache value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf ListCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function listCacheHas(key) {
+  return assocIndexOf(this.__data__, key) > -1;
+}
+
+/**
+ * Sets the list cache `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf ListCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the list cache instance.
+ */
+function listCacheSet(key, value) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    data.push([key, value]);
+  } else {
+    data[index][1] = value;
+  }
+  return this;
+}
+
+// Add methods to `ListCache`.
+ListCache.prototype.clear = listCacheClear;
+ListCache.prototype['delete'] = listCacheDelete;
+ListCache.prototype.get = listCacheGet;
+ListCache.prototype.has = listCacheHas;
+ListCache.prototype.set = listCacheSet;
+
+/**
+ * Creates a map cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function MapCache(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the map.
+ *
+ * @private
+ * @name clear
+ * @memberOf MapCache
+ */
+function mapCacheClear() {
+  this.__data__ = {
+    'hash': new Hash,
+    'map': new (Map || ListCache),
+    'string': new Hash
+  };
+}
+
+/**
+ * Removes `key` and its value from the map.
+ *
+ * @private
+ * @name delete
+ * @memberOf MapCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function mapCacheDelete(key) {
+  return getMapData(this, key)['delete'](key);
+}
+
+/**
+ * Gets the map value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf MapCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function mapCacheGet(key) {
+  return getMapData(this, key).get(key);
+}
+
+/**
+ * Checks if a map value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf MapCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function mapCacheHas(key) {
+  return getMapData(this, key).has(key);
+}
+
+/**
+ * Sets the map `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf MapCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the map cache instance.
+ */
+function mapCacheSet(key, value) {
+  getMapData(this, key).set(key, value);
+  return this;
+}
+
+// Add methods to `MapCache`.
+MapCache.prototype.clear = mapCacheClear;
+MapCache.prototype['delete'] = mapCacheDelete;
+MapCache.prototype.get = mapCacheGet;
+MapCache.prototype.has = mapCacheHas;
+MapCache.prototype.set = mapCacheSet;
+
+/**
+ * Gets the index at which the `key` is found in `array` of key-value pairs.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} key The key to search for.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function assocIndexOf(array, key) {
+  var length = array.length;
+  while (length--) {
+    if (eq(array[length][0], key)) {
+      return length;
+    }
+  }
+  return -1;
+}
+
+/**
+ * The base implementation of `_.get` without support for default values.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {Array|string} path The path of the property to get.
+ * @returns {*} Returns the resolved value.
+ */
+function baseGet(object, path) {
+  path = isKey(path, object) ? [path] : castPath(path);
+
+  var index = 0,
+      length = path.length;
+
+  while (object != null && index < length) {
+    object = object[toKey(path[index++])];
+  }
+  return (index && index == length) ? object : undefined;
+}
+
+/**
+ * The base implementation of `_.isNative` without bad shim checks.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a native function,
+ *  else `false`.
+ */
+function baseIsNative(value) {
+  if (!isObject(value) || isMasked(value)) {
+    return false;
+  }
+  var pattern = (isFunction(value) || isHostObject(value)) ? reIsNative : reIsHostCtor;
+  return pattern.test(toSource(value));
+}
+
+/**
+ * The base implementation of `_.toString` which doesn't convert nullish
+ * values to empty strings.
+ *
+ * @private
+ * @param {*} value The value to process.
+ * @returns {string} Returns the string.
+ */
+function baseToString(value) {
+  // Exit early for strings to avoid a performance hit in some environments.
+  if (typeof value == 'string') {
+    return value;
+  }
+  if (isSymbol(value)) {
+    return symbolToString ? symbolToString.call(value) : '';
+  }
+  var result = (value + '');
+  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+}
+
+/**
+ * Casts `value` to a path array if it's not one.
+ *
+ * @private
+ * @param {*} value The value to inspect.
+ * @returns {Array} Returns the cast property path array.
+ */
+function castPath(value) {
+  return isArray(value) ? value : stringToPath(value);
+}
+
+/**
+ * Gets the data for `map`.
+ *
+ * @private
+ * @param {Object} map The map to query.
+ * @param {string} key The reference key.
+ * @returns {*} Returns the map data.
+ */
+function getMapData(map, key) {
+  var data = map.__data__;
+  return isKeyable(key)
+    ? data[typeof key == 'string' ? 'string' : 'hash']
+    : data.map;
+}
+
+/**
+ * Gets the native function at `key` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {string} key The key of the method to get.
+ * @returns {*} Returns the function if it's native, else `undefined`.
+ */
+function getNative(object, key) {
+  var value = getValue(object, key);
+  return baseIsNative(value) ? value : undefined;
+}
+
+/**
+ * Checks if `value` is a property name and not a property path.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @param {Object} [object] The object to query keys on.
+ * @returns {boolean} Returns `true` if `value` is a property name, else `false`.
+ */
+function isKey(value, object) {
+  if (isArray(value)) {
+    return false;
+  }
+  var type = typeof value;
+  if (type == 'number' || type == 'symbol' || type == 'boolean' ||
+      value == null || isSymbol(value)) {
+    return true;
+  }
+  return reIsPlainProp.test(value) || !reIsDeepProp.test(value) ||
+    (object != null && value in Object(object));
+}
+
+/**
+ * Checks if `value` is suitable for use as unique object key.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+ */
+function isKeyable(value) {
+  var type = typeof value;
+  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
+    ? (value !== '__proto__')
+    : (value === null);
+}
+
+/**
+ * Checks if `func` has its source masked.
+ *
+ * @private
+ * @param {Function} func The function to check.
+ * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+ */
+function isMasked(func) {
+  return !!maskSrcKey && (maskSrcKey in func);
+}
+
+/**
+ * Converts `string` to a property path array.
+ *
+ * @private
+ * @param {string} string The string to convert.
+ * @returns {Array} Returns the property path array.
+ */
+var stringToPath = memoize(function(string) {
+  string = toString(string);
+
+  var result = [];
+  if (reLeadingDot.test(string)) {
+    result.push('');
+  }
+  string.replace(rePropName, function(match, number, quote, string) {
+    result.push(quote ? string.replace(reEscapeChar, '$1') : (number || match));
+  });
+  return result;
+});
+
+/**
+ * Converts `value` to a string key if it's not a string or symbol.
+ *
+ * @private
+ * @param {*} value The value to inspect.
+ * @returns {string|symbol} Returns the key.
+ */
+function toKey(value) {
+  if (typeof value == 'string' || isSymbol(value)) {
+    return value;
+  }
+  var result = (value + '');
+  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+}
+
+/**
+ * Converts `func` to its source code.
+ *
+ * @private
+ * @param {Function} func The function to process.
+ * @returns {string} Returns the source code.
+ */
+function toSource(func) {
+  if (func != null) {
+    try {
+      return funcToString.call(func);
+    } catch (e) {}
+    try {
+      return (func + '');
+    } catch (e) {}
+  }
+  return '';
+}
+
+/**
+ * Creates a function that memoizes the result of `func`. If `resolver` is
+ * provided, it determines the cache key for storing the result based on the
+ * arguments provided to the memoized function. By default, the first argument
+ * provided to the memoized function is used as the map cache key. The `func`
+ * is invoked with the `this` binding of the memoized function.
+ *
+ * **Note:** The cache is exposed as the `cache` property on the memoized
+ * function. Its creation may be customized by replacing the `_.memoize.Cache`
+ * constructor with one whose instances implement the
+ * [`Map`](http://ecma-international.org/ecma-262/7.0/#sec-properties-of-the-map-prototype-object)
+ * method interface of `delete`, `get`, `has`, and `set`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Function
+ * @param {Function} func The function to have its output memoized.
+ * @param {Function} [resolver] The function to resolve the cache key.
+ * @returns {Function} Returns the new memoized function.
+ * @example
+ *
+ * var object = { 'a': 1, 'b': 2 };
+ * var other = { 'c': 3, 'd': 4 };
+ *
+ * var values = _.memoize(_.values);
+ * values(object);
+ * // => [1, 2]
+ *
+ * values(other);
+ * // => [3, 4]
+ *
+ * object.a = 2;
+ * values(object);
+ * // => [1, 2]
+ *
+ * // Modify the result cache.
+ * values.cache.set(object, ['a', 'b']);
+ * values(object);
+ * // => ['a', 'b']
+ *
+ * // Replace `_.memoize.Cache`.
+ * _.memoize.Cache = WeakMap;
+ */
+function memoize(func, resolver) {
+  if (typeof func != 'function' || (resolver && typeof resolver != 'function')) {
+    throw new TypeError(FUNC_ERROR_TEXT);
+  }
+  var memoized = function() {
+    var args = arguments,
+        key = resolver ? resolver.apply(this, args) : args[0],
+        cache = memoized.cache;
+
+    if (cache.has(key)) {
+      return cache.get(key);
+    }
+    var result = func.apply(this, args);
+    memoized.cache = cache.set(key, result);
+    return result;
+  };
+  memoized.cache = new (memoize.Cache || MapCache);
+  return memoized;
+}
+
+// Assign cache to `_.memoize`.
+memoize.Cache = MapCache;
+
+/**
+ * Performs a
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * comparison between two values to determine if they are equivalent.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ * var other = { 'a': 1 };
+ *
+ * _.eq(object, object);
+ * // => true
+ *
+ * _.eq(object, other);
+ * // => false
+ *
+ * _.eq('a', 'a');
+ * // => true
+ *
+ * _.eq('a', Object('a'));
+ * // => false
+ *
+ * _.eq(NaN, NaN);
+ * // => true
+ */
+function eq(value, other) {
+  return value === other || (value !== value && other !== other);
+}
+
+/**
+ * Checks if `value` is classified as an `Array` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array, else `false`.
+ * @example
+ *
+ * _.isArray([1, 2, 3]);
+ * // => true
+ *
+ * _.isArray(document.body.children);
+ * // => false
+ *
+ * _.isArray('abc');
+ * // => false
+ *
+ * _.isArray(_.noop);
+ * // => false
+ */
+var isArray = Array.isArray;
+
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+function isFunction(value) {
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in Safari 8-9 which returns 'object' for typed array and other constructors.
+  var tag = isObject(value) ? objectToString.call(value) : '';
+  return tag == funcTag || tag == genTag;
+}
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return !!value && (type == 'object' || type == 'function');
+}
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return !!value && typeof value == 'object';
+}
+
+/**
+ * Checks if `value` is classified as a `Symbol` primitive or object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+ * @example
+ *
+ * _.isSymbol(Symbol.iterator);
+ * // => true
+ *
+ * _.isSymbol('abc');
+ * // => false
+ */
+function isSymbol(value) {
+  return typeof value == 'symbol' ||
+    (isObjectLike(value) && objectToString.call(value) == symbolTag);
+}
+
+/**
+ * Converts `value` to a string. An empty string is returned for `null`
+ * and `undefined` values. The sign of `-0` is preserved.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to process.
+ * @returns {string} Returns the string.
+ * @example
+ *
+ * _.toString(null);
+ * // => ''
+ *
+ * _.toString(-0);
+ * // => '-0'
+ *
+ * _.toString([1, 2, 3]);
+ * // => '1,2,3'
+ */
+function toString(value) {
+  return value == null ? '' : baseToString(value);
+}
+
+/**
+ * Gets the value at `path` of `object`. If the resolved value is
+ * `undefined`, the `defaultValue` is returned in its place.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.7.0
+ * @category Object
+ * @param {Object} object The object to query.
+ * @param {Array|string} path The path of the property to get.
+ * @param {*} [defaultValue] The value returned for `undefined` resolved values.
+ * @returns {*} Returns the resolved value.
+ * @example
+ *
+ * var object = { 'a': [{ 'b': { 'c': 3 } }] };
+ *
+ * _.get(object, 'a[0].b.c');
+ * // => 3
+ *
+ * _.get(object, ['a', '0', 'b', 'c']);
+ * // => 3
+ *
+ * _.get(object, 'a.b.c', 'default');
+ * // => 'default'
+ */
+function get(object, path, defaultValue) {
+  var result = object == null ? undefined : baseGet(object, path);
+  return result === undefined ? defaultValue : result;
+}
+
+module.exports = get;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash.isequal/index.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash.isequal/index.js ***!
+  \**********************************************/
+/***/ ((module, exports, __webpack_require__) => {
+
+/* module decorator */ module = __webpack_require__.nmd(module);
+/**
+ * Lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright JS Foundation and other contributors <https://js.foundation/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/** Used as the size to enable large array optimizations. */
+var LARGE_ARRAY_SIZE = 200;
+
+/** Used to stand-in for `undefined` hash values. */
+var HASH_UNDEFINED = '__lodash_hash_undefined__';
+
+/** Used to compose bitmasks for value comparisons. */
+var COMPARE_PARTIAL_FLAG = 1,
+    COMPARE_UNORDERED_FLAG = 2;
+
+/** Used as references for various `Number` constants. */
+var MAX_SAFE_INTEGER = 9007199254740991;
+
+/** `Object#toString` result references. */
+var argsTag = '[object Arguments]',
+    arrayTag = '[object Array]',
+    asyncTag = '[object AsyncFunction]',
+    boolTag = '[object Boolean]',
+    dateTag = '[object Date]',
+    errorTag = '[object Error]',
+    funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]',
+    mapTag = '[object Map]',
+    numberTag = '[object Number]',
+    nullTag = '[object Null]',
+    objectTag = '[object Object]',
+    promiseTag = '[object Promise]',
+    proxyTag = '[object Proxy]',
+    regexpTag = '[object RegExp]',
+    setTag = '[object Set]',
+    stringTag = '[object String]',
+    symbolTag = '[object Symbol]',
+    undefinedTag = '[object Undefined]',
+    weakMapTag = '[object WeakMap]';
+
+var arrayBufferTag = '[object ArrayBuffer]',
+    dataViewTag = '[object DataView]',
+    float32Tag = '[object Float32Array]',
+    float64Tag = '[object Float64Array]',
+    int8Tag = '[object Int8Array]',
+    int16Tag = '[object Int16Array]',
+    int32Tag = '[object Int32Array]',
+    uint8Tag = '[object Uint8Array]',
+    uint8ClampedTag = '[object Uint8ClampedArray]',
+    uint16Tag = '[object Uint16Array]',
+    uint32Tag = '[object Uint32Array]';
+
+/**
+ * Used to match `RegExp`
+ * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+ */
+var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+
+/** Used to detect host constructors (Safari). */
+var reIsHostCtor = /^\[object .+?Constructor\]$/;
+
+/** Used to detect unsigned integer values. */
+var reIsUint = /^(?:0|[1-9]\d*)$/;
+
+/** Used to identify `toStringTag` values of typed arrays. */
+var typedArrayTags = {};
+typedArrayTags[float32Tag] = typedArrayTags[float64Tag] =
+typedArrayTags[int8Tag] = typedArrayTags[int16Tag] =
+typedArrayTags[int32Tag] = typedArrayTags[uint8Tag] =
+typedArrayTags[uint8ClampedTag] = typedArrayTags[uint16Tag] =
+typedArrayTags[uint32Tag] = true;
+typedArrayTags[argsTag] = typedArrayTags[arrayTag] =
+typedArrayTags[arrayBufferTag] = typedArrayTags[boolTag] =
+typedArrayTags[dataViewTag] = typedArrayTags[dateTag] =
+typedArrayTags[errorTag] = typedArrayTags[funcTag] =
+typedArrayTags[mapTag] = typedArrayTags[numberTag] =
+typedArrayTags[objectTag] = typedArrayTags[regexpTag] =
+typedArrayTags[setTag] = typedArrayTags[stringTag] =
+typedArrayTags[weakMapTag] = false;
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof __webpack_require__.g == 'object' && __webpack_require__.g && __webpack_require__.g.Object === Object && __webpack_require__.g;
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = freeGlobal || freeSelf || Function('return this')();
+
+/** Detect free variable `exports`. */
+var freeExports =  true && exports && !exports.nodeType && exports;
+
+/** Detect free variable `module`. */
+var freeModule = freeExports && "object" == 'object' && module && !module.nodeType && module;
+
+/** Detect the popular CommonJS extension `module.exports`. */
+var moduleExports = freeModule && freeModule.exports === freeExports;
+
+/** Detect free variable `process` from Node.js. */
+var freeProcess = moduleExports && freeGlobal.process;
+
+/** Used to access faster Node.js helpers. */
+var nodeUtil = (function() {
+  try {
+    return freeProcess && freeProcess.binding && freeProcess.binding('util');
+  } catch (e) {}
+}());
+
+/* Node.js helper references. */
+var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
+
+/**
+ * A specialized version of `_.filter` for arrays without support for
+ * iteratee shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} predicate The function invoked per iteration.
+ * @returns {Array} Returns the new filtered array.
+ */
+function arrayFilter(array, predicate) {
+  var index = -1,
+      length = array == null ? 0 : array.length,
+      resIndex = 0,
+      result = [];
+
+  while (++index < length) {
+    var value = array[index];
+    if (predicate(value, index, array)) {
+      result[resIndex++] = value;
+    }
+  }
+  return result;
+}
+
+/**
+ * Appends the elements of `values` to `array`.
+ *
+ * @private
+ * @param {Array} array The array to modify.
+ * @param {Array} values The values to append.
+ * @returns {Array} Returns `array`.
+ */
+function arrayPush(array, values) {
+  var index = -1,
+      length = values.length,
+      offset = array.length;
+
+  while (++index < length) {
+    array[offset + index] = values[index];
+  }
+  return array;
+}
+
+/**
+ * A specialized version of `_.some` for arrays without support for iteratee
+ * shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} predicate The function invoked per iteration.
+ * @returns {boolean} Returns `true` if any element passes the predicate check,
+ *  else `false`.
+ */
+function arraySome(array, predicate) {
+  var index = -1,
+      length = array == null ? 0 : array.length;
+
+  while (++index < length) {
+    if (predicate(array[index], index, array)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * The base implementation of `_.times` without support for iteratee shorthands
+ * or max array length checks.
+ *
+ * @private
+ * @param {number} n The number of times to invoke `iteratee`.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns the array of results.
+ */
+function baseTimes(n, iteratee) {
+  var index = -1,
+      result = Array(n);
+
+  while (++index < n) {
+    result[index] = iteratee(index);
+  }
+  return result;
+}
+
+/**
+ * The base implementation of `_.unary` without support for storing metadata.
+ *
+ * @private
+ * @param {Function} func The function to cap arguments for.
+ * @returns {Function} Returns the new capped function.
+ */
+function baseUnary(func) {
+  return function(value) {
+    return func(value);
+  };
+}
+
+/**
+ * Checks if a `cache` value for `key` exists.
+ *
+ * @private
+ * @param {Object} cache The cache to query.
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function cacheHas(cache, key) {
+  return cache.has(key);
+}
+
+/**
+ * Gets the value at `key` of `object`.
+ *
+ * @private
+ * @param {Object} [object] The object to query.
+ * @param {string} key The key of the property to get.
+ * @returns {*} Returns the property value.
+ */
+function getValue(object, key) {
+  return object == null ? undefined : object[key];
+}
+
+/**
+ * Converts `map` to its key-value pairs.
+ *
+ * @private
+ * @param {Object} map The map to convert.
+ * @returns {Array} Returns the key-value pairs.
+ */
+function mapToArray(map) {
+  var index = -1,
+      result = Array(map.size);
+
+  map.forEach(function(value, key) {
+    result[++index] = [key, value];
+  });
+  return result;
+}
+
+/**
+ * Creates a unary function that invokes `func` with its argument transformed.
+ *
+ * @private
+ * @param {Function} func The function to wrap.
+ * @param {Function} transform The argument transform.
+ * @returns {Function} Returns the new function.
+ */
+function overArg(func, transform) {
+  return function(arg) {
+    return func(transform(arg));
+  };
+}
+
+/**
+ * Converts `set` to an array of its values.
+ *
+ * @private
+ * @param {Object} set The set to convert.
+ * @returns {Array} Returns the values.
+ */
+function setToArray(set) {
+  var index = -1,
+      result = Array(set.size);
+
+  set.forEach(function(value) {
+    result[++index] = value;
+  });
+  return result;
+}
+
+/** Used for built-in method references. */
+var arrayProto = Array.prototype,
+    funcProto = Function.prototype,
+    objectProto = Object.prototype;
+
+/** Used to detect overreaching core-js shims. */
+var coreJsData = root['__core-js_shared__'];
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = funcProto.toString;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/** Used to detect methods masquerading as native. */
+var maskSrcKey = (function() {
+  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+  return uid ? ('Symbol(src)_1.' + uid) : '';
+}());
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var nativeObjectToString = objectProto.toString;
+
+/** Used to detect if a method is native. */
+var reIsNative = RegExp('^' +
+  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
+  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+);
+
+/** Built-in value references. */
+var Buffer = moduleExports ? root.Buffer : undefined,
+    Symbol = root.Symbol,
+    Uint8Array = root.Uint8Array,
+    propertyIsEnumerable = objectProto.propertyIsEnumerable,
+    splice = arrayProto.splice,
+    symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeGetSymbols = Object.getOwnPropertySymbols,
+    nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined,
+    nativeKeys = overArg(Object.keys, Object);
+
+/* Built-in method references that are verified to be native. */
+var DataView = getNative(root, 'DataView'),
+    Map = getNative(root, 'Map'),
+    Promise = getNative(root, 'Promise'),
+    Set = getNative(root, 'Set'),
+    WeakMap = getNative(root, 'WeakMap'),
+    nativeCreate = getNative(Object, 'create');
+
+/** Used to detect maps, sets, and weakmaps. */
+var dataViewCtorString = toSource(DataView),
+    mapCtorString = toSource(Map),
+    promiseCtorString = toSource(Promise),
+    setCtorString = toSource(Set),
+    weakMapCtorString = toSource(WeakMap);
+
+/** Used to convert symbols to primitives and strings. */
+var symbolProto = Symbol ? Symbol.prototype : undefined,
+    symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
+
+/**
+ * Creates a hash object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function Hash(entries) {
+  var index = -1,
+      length = entries == null ? 0 : entries.length;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the hash.
+ *
+ * @private
+ * @name clear
+ * @memberOf Hash
+ */
+function hashClear() {
+  this.__data__ = nativeCreate ? nativeCreate(null) : {};
+  this.size = 0;
+}
+
+/**
+ * Removes `key` and its value from the hash.
+ *
+ * @private
+ * @name delete
+ * @memberOf Hash
+ * @param {Object} hash The hash to modify.
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function hashDelete(key) {
+  var result = this.has(key) && delete this.__data__[key];
+  this.size -= result ? 1 : 0;
+  return result;
+}
+
+/**
+ * Gets the hash value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf Hash
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function hashGet(key) {
+  var data = this.__data__;
+  if (nativeCreate) {
+    var result = data[key];
+    return result === HASH_UNDEFINED ? undefined : result;
+  }
+  return hasOwnProperty.call(data, key) ? data[key] : undefined;
+}
+
+/**
+ * Checks if a hash value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf Hash
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function hashHas(key) {
+  var data = this.__data__;
+  return nativeCreate ? (data[key] !== undefined) : hasOwnProperty.call(data, key);
+}
+
+/**
+ * Sets the hash `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf Hash
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the hash instance.
+ */
+function hashSet(key, value) {
+  var data = this.__data__;
+  this.size += this.has(key) ? 0 : 1;
+  data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
+  return this;
+}
+
+// Add methods to `Hash`.
+Hash.prototype.clear = hashClear;
+Hash.prototype['delete'] = hashDelete;
+Hash.prototype.get = hashGet;
+Hash.prototype.has = hashHas;
+Hash.prototype.set = hashSet;
+
+/**
+ * Creates an list cache object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function ListCache(entries) {
+  var index = -1,
+      length = entries == null ? 0 : entries.length;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the list cache.
+ *
+ * @private
+ * @name clear
+ * @memberOf ListCache
+ */
+function listCacheClear() {
+  this.__data__ = [];
+  this.size = 0;
+}
+
+/**
+ * Removes `key` and its value from the list cache.
+ *
+ * @private
+ * @name delete
+ * @memberOf ListCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function listCacheDelete(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    return false;
+  }
+  var lastIndex = data.length - 1;
+  if (index == lastIndex) {
+    data.pop();
+  } else {
+    splice.call(data, index, 1);
+  }
+  --this.size;
+  return true;
+}
+
+/**
+ * Gets the list cache value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf ListCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function listCacheGet(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  return index < 0 ? undefined : data[index][1];
+}
+
+/**
+ * Checks if a list cache value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf ListCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function listCacheHas(key) {
+  return assocIndexOf(this.__data__, key) > -1;
+}
+
+/**
+ * Sets the list cache `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf ListCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the list cache instance.
+ */
+function listCacheSet(key, value) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    ++this.size;
+    data.push([key, value]);
+  } else {
+    data[index][1] = value;
+  }
+  return this;
+}
+
+// Add methods to `ListCache`.
+ListCache.prototype.clear = listCacheClear;
+ListCache.prototype['delete'] = listCacheDelete;
+ListCache.prototype.get = listCacheGet;
+ListCache.prototype.has = listCacheHas;
+ListCache.prototype.set = listCacheSet;
+
+/**
+ * Creates a map cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function MapCache(entries) {
+  var index = -1,
+      length = entries == null ? 0 : entries.length;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the map.
+ *
+ * @private
+ * @name clear
+ * @memberOf MapCache
+ */
+function mapCacheClear() {
+  this.size = 0;
+  this.__data__ = {
+    'hash': new Hash,
+    'map': new (Map || ListCache),
+    'string': new Hash
+  };
+}
+
+/**
+ * Removes `key` and its value from the map.
+ *
+ * @private
+ * @name delete
+ * @memberOf MapCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function mapCacheDelete(key) {
+  var result = getMapData(this, key)['delete'](key);
+  this.size -= result ? 1 : 0;
+  return result;
+}
+
+/**
+ * Gets the map value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf MapCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function mapCacheGet(key) {
+  return getMapData(this, key).get(key);
+}
+
+/**
+ * Checks if a map value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf MapCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function mapCacheHas(key) {
+  return getMapData(this, key).has(key);
+}
+
+/**
+ * Sets the map `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf MapCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the map cache instance.
+ */
+function mapCacheSet(key, value) {
+  var data = getMapData(this, key),
+      size = data.size;
+
+  data.set(key, value);
+  this.size += data.size == size ? 0 : 1;
+  return this;
+}
+
+// Add methods to `MapCache`.
+MapCache.prototype.clear = mapCacheClear;
+MapCache.prototype['delete'] = mapCacheDelete;
+MapCache.prototype.get = mapCacheGet;
+MapCache.prototype.has = mapCacheHas;
+MapCache.prototype.set = mapCacheSet;
+
+/**
+ *
+ * Creates an array cache object to store unique values.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [values] The values to cache.
+ */
+function SetCache(values) {
+  var index = -1,
+      length = values == null ? 0 : values.length;
+
+  this.__data__ = new MapCache;
+  while (++index < length) {
+    this.add(values[index]);
+  }
+}
+
+/**
+ * Adds `value` to the array cache.
+ *
+ * @private
+ * @name add
+ * @memberOf SetCache
+ * @alias push
+ * @param {*} value The value to cache.
+ * @returns {Object} Returns the cache instance.
+ */
+function setCacheAdd(value) {
+  this.__data__.set(value, HASH_UNDEFINED);
+  return this;
+}
+
+/**
+ * Checks if `value` is in the array cache.
+ *
+ * @private
+ * @name has
+ * @memberOf SetCache
+ * @param {*} value The value to search for.
+ * @returns {number} Returns `true` if `value` is found, else `false`.
+ */
+function setCacheHas(value) {
+  return this.__data__.has(value);
+}
+
+// Add methods to `SetCache`.
+SetCache.prototype.add = SetCache.prototype.push = setCacheAdd;
+SetCache.prototype.has = setCacheHas;
+
+/**
+ * Creates a stack cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function Stack(entries) {
+  var data = this.__data__ = new ListCache(entries);
+  this.size = data.size;
+}
+
+/**
+ * Removes all key-value entries from the stack.
+ *
+ * @private
+ * @name clear
+ * @memberOf Stack
+ */
+function stackClear() {
+  this.__data__ = new ListCache;
+  this.size = 0;
+}
+
+/**
+ * Removes `key` and its value from the stack.
+ *
+ * @private
+ * @name delete
+ * @memberOf Stack
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function stackDelete(key) {
+  var data = this.__data__,
+      result = data['delete'](key);
+
+  this.size = data.size;
+  return result;
+}
+
+/**
+ * Gets the stack value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf Stack
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function stackGet(key) {
+  return this.__data__.get(key);
+}
+
+/**
+ * Checks if a stack value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf Stack
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function stackHas(key) {
+  return this.__data__.has(key);
+}
+
+/**
+ * Sets the stack `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf Stack
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the stack cache instance.
+ */
+function stackSet(key, value) {
+  var data = this.__data__;
+  if (data instanceof ListCache) {
+    var pairs = data.__data__;
+    if (!Map || (pairs.length < LARGE_ARRAY_SIZE - 1)) {
+      pairs.push([key, value]);
+      this.size = ++data.size;
+      return this;
+    }
+    data = this.__data__ = new MapCache(pairs);
+  }
+  data.set(key, value);
+  this.size = data.size;
+  return this;
+}
+
+// Add methods to `Stack`.
+Stack.prototype.clear = stackClear;
+Stack.prototype['delete'] = stackDelete;
+Stack.prototype.get = stackGet;
+Stack.prototype.has = stackHas;
+Stack.prototype.set = stackSet;
+
+/**
+ * Creates an array of the enumerable property names of the array-like `value`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @param {boolean} inherited Specify returning inherited property names.
+ * @returns {Array} Returns the array of property names.
+ */
+function arrayLikeKeys(value, inherited) {
+  var isArr = isArray(value),
+      isArg = !isArr && isArguments(value),
+      isBuff = !isArr && !isArg && isBuffer(value),
+      isType = !isArr && !isArg && !isBuff && isTypedArray(value),
+      skipIndexes = isArr || isArg || isBuff || isType,
+      result = skipIndexes ? baseTimes(value.length, String) : [],
+      length = result.length;
+
+  for (var key in value) {
+    if ((inherited || hasOwnProperty.call(value, key)) &&
+        !(skipIndexes && (
+           // Safari 9 has enumerable `arguments.length` in strict mode.
+           key == 'length' ||
+           // Node.js 0.10 has enumerable non-index properties on buffers.
+           (isBuff && (key == 'offset' || key == 'parent')) ||
+           // PhantomJS 2 has enumerable non-index properties on typed arrays.
+           (isType && (key == 'buffer' || key == 'byteLength' || key == 'byteOffset')) ||
+           // Skip index properties.
+           isIndex(key, length)
+        ))) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+/**
+ * Gets the index at which the `key` is found in `array` of key-value pairs.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} key The key to search for.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function assocIndexOf(array, key) {
+  var length = array.length;
+  while (length--) {
+    if (eq(array[length][0], key)) {
+      return length;
+    }
+  }
+  return -1;
+}
+
+/**
+ * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
+ * `keysFunc` and `symbolsFunc` to get the enumerable property names and
+ * symbols of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {Function} keysFunc The function to get the keys of `object`.
+ * @param {Function} symbolsFunc The function to get the symbols of `object`.
+ * @returns {Array} Returns the array of property names and symbols.
+ */
+function baseGetAllKeys(object, keysFunc, symbolsFunc) {
+  var result = keysFunc(object);
+  return isArray(object) ? result : arrayPush(result, symbolsFunc(object));
+}
+
+/**
+ * The base implementation of `getTag` without fallbacks for buggy environments.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+function baseGetTag(value) {
+  if (value == null) {
+    return value === undefined ? undefinedTag : nullTag;
+  }
+  return (symToStringTag && symToStringTag in Object(value))
+    ? getRawTag(value)
+    : objectToString(value);
+}
+
+/**
+ * The base implementation of `_.isArguments`.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+ */
+function baseIsArguments(value) {
+  return isObjectLike(value) && baseGetTag(value) == argsTag;
+}
+
+/**
+ * The base implementation of `_.isEqual` which supports partial comparisons
+ * and tracks traversed objects.
+ *
+ * @private
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @param {boolean} bitmask The bitmask flags.
+ *  1 - Unordered comparison
+ *  2 - Partial comparison
+ * @param {Function} [customizer] The function to customize comparisons.
+ * @param {Object} [stack] Tracks traversed `value` and `other` objects.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ */
+function baseIsEqual(value, other, bitmask, customizer, stack) {
+  if (value === other) {
+    return true;
+  }
+  if (value == null || other == null || (!isObjectLike(value) && !isObjectLike(other))) {
+    return value !== value && other !== other;
+  }
+  return baseIsEqualDeep(value, other, bitmask, customizer, baseIsEqual, stack);
+}
+
+/**
+ * A specialized version of `baseIsEqual` for arrays and objects which performs
+ * deep comparisons and tracks traversed objects enabling objects with circular
+ * references to be compared.
+ *
+ * @private
+ * @param {Object} object The object to compare.
+ * @param {Object} other The other object to compare.
+ * @param {number} bitmask The bitmask flags. See `baseIsEqual` for more details.
+ * @param {Function} customizer The function to customize comparisons.
+ * @param {Function} equalFunc The function to determine equivalents of values.
+ * @param {Object} [stack] Tracks traversed `object` and `other` objects.
+ * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
+ */
+function baseIsEqualDeep(object, other, bitmask, customizer, equalFunc, stack) {
+  var objIsArr = isArray(object),
+      othIsArr = isArray(other),
+      objTag = objIsArr ? arrayTag : getTag(object),
+      othTag = othIsArr ? arrayTag : getTag(other);
+
+  objTag = objTag == argsTag ? objectTag : objTag;
+  othTag = othTag == argsTag ? objectTag : othTag;
+
+  var objIsObj = objTag == objectTag,
+      othIsObj = othTag == objectTag,
+      isSameTag = objTag == othTag;
+
+  if (isSameTag && isBuffer(object)) {
+    if (!isBuffer(other)) {
+      return false;
+    }
+    objIsArr = true;
+    objIsObj = false;
+  }
+  if (isSameTag && !objIsObj) {
+    stack || (stack = new Stack);
+    return (objIsArr || isTypedArray(object))
+      ? equalArrays(object, other, bitmask, customizer, equalFunc, stack)
+      : equalByTag(object, other, objTag, bitmask, customizer, equalFunc, stack);
+  }
+  if (!(bitmask & COMPARE_PARTIAL_FLAG)) {
+    var objIsWrapped = objIsObj && hasOwnProperty.call(object, '__wrapped__'),
+        othIsWrapped = othIsObj && hasOwnProperty.call(other, '__wrapped__');
+
+    if (objIsWrapped || othIsWrapped) {
+      var objUnwrapped = objIsWrapped ? object.value() : object,
+          othUnwrapped = othIsWrapped ? other.value() : other;
+
+      stack || (stack = new Stack);
+      return equalFunc(objUnwrapped, othUnwrapped, bitmask, customizer, stack);
+    }
+  }
+  if (!isSameTag) {
+    return false;
+  }
+  stack || (stack = new Stack);
+  return equalObjects(object, other, bitmask, customizer, equalFunc, stack);
+}
+
+/**
+ * The base implementation of `_.isNative` without bad shim checks.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a native function,
+ *  else `false`.
+ */
+function baseIsNative(value) {
+  if (!isObject(value) || isMasked(value)) {
+    return false;
+  }
+  var pattern = isFunction(value) ? reIsNative : reIsHostCtor;
+  return pattern.test(toSource(value));
+}
+
+/**
+ * The base implementation of `_.isTypedArray` without Node.js optimizations.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
+ */
+function baseIsTypedArray(value) {
+  return isObjectLike(value) &&
+    isLength(value.length) && !!typedArrayTags[baseGetTag(value)];
+}
+
+/**
+ * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ */
+function baseKeys(object) {
+  if (!isPrototype(object)) {
+    return nativeKeys(object);
+  }
+  var result = [];
+  for (var key in Object(object)) {
+    if (hasOwnProperty.call(object, key) && key != 'constructor') {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+/**
+ * A specialized version of `baseIsEqualDeep` for arrays with support for
+ * partial deep comparisons.
+ *
+ * @private
+ * @param {Array} array The array to compare.
+ * @param {Array} other The other array to compare.
+ * @param {number} bitmask The bitmask flags. See `baseIsEqual` for more details.
+ * @param {Function} customizer The function to customize comparisons.
+ * @param {Function} equalFunc The function to determine equivalents of values.
+ * @param {Object} stack Tracks traversed `array` and `other` objects.
+ * @returns {boolean} Returns `true` if the arrays are equivalent, else `false`.
+ */
+function equalArrays(array, other, bitmask, customizer, equalFunc, stack) {
+  var isPartial = bitmask & COMPARE_PARTIAL_FLAG,
+      arrLength = array.length,
+      othLength = other.length;
+
+  if (arrLength != othLength && !(isPartial && othLength > arrLength)) {
+    return false;
+  }
+  // Assume cyclic values are equal.
+  var stacked = stack.get(array);
+  if (stacked && stack.get(other)) {
+    return stacked == other;
+  }
+  var index = -1,
+      result = true,
+      seen = (bitmask & COMPARE_UNORDERED_FLAG) ? new SetCache : undefined;
+
+  stack.set(array, other);
+  stack.set(other, array);
+
+  // Ignore non-index properties.
+  while (++index < arrLength) {
+    var arrValue = array[index],
+        othValue = other[index];
+
+    if (customizer) {
+      var compared = isPartial
+        ? customizer(othValue, arrValue, index, other, array, stack)
+        : customizer(arrValue, othValue, index, array, other, stack);
+    }
+    if (compared !== undefined) {
+      if (compared) {
+        continue;
+      }
+      result = false;
+      break;
+    }
+    // Recursively compare arrays (susceptible to call stack limits).
+    if (seen) {
+      if (!arraySome(other, function(othValue, othIndex) {
+            if (!cacheHas(seen, othIndex) &&
+                (arrValue === othValue || equalFunc(arrValue, othValue, bitmask, customizer, stack))) {
+              return seen.push(othIndex);
+            }
+          })) {
+        result = false;
+        break;
+      }
+    } else if (!(
+          arrValue === othValue ||
+            equalFunc(arrValue, othValue, bitmask, customizer, stack)
+        )) {
+      result = false;
+      break;
+    }
+  }
+  stack['delete'](array);
+  stack['delete'](other);
+  return result;
+}
+
+/**
+ * A specialized version of `baseIsEqualDeep` for comparing objects of
+ * the same `toStringTag`.
+ *
+ * **Note:** This function only supports comparing values with tags of
+ * `Boolean`, `Date`, `Error`, `Number`, `RegExp`, or `String`.
+ *
+ * @private
+ * @param {Object} object The object to compare.
+ * @param {Object} other The other object to compare.
+ * @param {string} tag The `toStringTag` of the objects to compare.
+ * @param {number} bitmask The bitmask flags. See `baseIsEqual` for more details.
+ * @param {Function} customizer The function to customize comparisons.
+ * @param {Function} equalFunc The function to determine equivalents of values.
+ * @param {Object} stack Tracks traversed `object` and `other` objects.
+ * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
+ */
+function equalByTag(object, other, tag, bitmask, customizer, equalFunc, stack) {
+  switch (tag) {
+    case dataViewTag:
+      if ((object.byteLength != other.byteLength) ||
+          (object.byteOffset != other.byteOffset)) {
+        return false;
+      }
+      object = object.buffer;
+      other = other.buffer;
+
+    case arrayBufferTag:
+      if ((object.byteLength != other.byteLength) ||
+          !equalFunc(new Uint8Array(object), new Uint8Array(other))) {
+        return false;
+      }
+      return true;
+
+    case boolTag:
+    case dateTag:
+    case numberTag:
+      // Coerce booleans to `1` or `0` and dates to milliseconds.
+      // Invalid dates are coerced to `NaN`.
+      return eq(+object, +other);
+
+    case errorTag:
+      return object.name == other.name && object.message == other.message;
+
+    case regexpTag:
+    case stringTag:
+      // Coerce regexes to strings and treat strings, primitives and objects,
+      // as equal. See http://www.ecma-international.org/ecma-262/7.0/#sec-regexp.prototype.tostring
+      // for more details.
+      return object == (other + '');
+
+    case mapTag:
+      var convert = mapToArray;
+
+    case setTag:
+      var isPartial = bitmask & COMPARE_PARTIAL_FLAG;
+      convert || (convert = setToArray);
+
+      if (object.size != other.size && !isPartial) {
+        return false;
+      }
+      // Assume cyclic values are equal.
+      var stacked = stack.get(object);
+      if (stacked) {
+        return stacked == other;
+      }
+      bitmask |= COMPARE_UNORDERED_FLAG;
+
+      // Recursively compare objects (susceptible to call stack limits).
+      stack.set(object, other);
+      var result = equalArrays(convert(object), convert(other), bitmask, customizer, equalFunc, stack);
+      stack['delete'](object);
+      return result;
+
+    case symbolTag:
+      if (symbolValueOf) {
+        return symbolValueOf.call(object) == symbolValueOf.call(other);
+      }
+  }
+  return false;
+}
+
+/**
+ * A specialized version of `baseIsEqualDeep` for objects with support for
+ * partial deep comparisons.
+ *
+ * @private
+ * @param {Object} object The object to compare.
+ * @param {Object} other The other object to compare.
+ * @param {number} bitmask The bitmask flags. See `baseIsEqual` for more details.
+ * @param {Function} customizer The function to customize comparisons.
+ * @param {Function} equalFunc The function to determine equivalents of values.
+ * @param {Object} stack Tracks traversed `object` and `other` objects.
+ * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
+ */
+function equalObjects(object, other, bitmask, customizer, equalFunc, stack) {
+  var isPartial = bitmask & COMPARE_PARTIAL_FLAG,
+      objProps = getAllKeys(object),
+      objLength = objProps.length,
+      othProps = getAllKeys(other),
+      othLength = othProps.length;
+
+  if (objLength != othLength && !isPartial) {
+    return false;
+  }
+  var index = objLength;
+  while (index--) {
+    var key = objProps[index];
+    if (!(isPartial ? key in other : hasOwnProperty.call(other, key))) {
+      return false;
+    }
+  }
+  // Assume cyclic values are equal.
+  var stacked = stack.get(object);
+  if (stacked && stack.get(other)) {
+    return stacked == other;
+  }
+  var result = true;
+  stack.set(object, other);
+  stack.set(other, object);
+
+  var skipCtor = isPartial;
+  while (++index < objLength) {
+    key = objProps[index];
+    var objValue = object[key],
+        othValue = other[key];
+
+    if (customizer) {
+      var compared = isPartial
+        ? customizer(othValue, objValue, key, other, object, stack)
+        : customizer(objValue, othValue, key, object, other, stack);
+    }
+    // Recursively compare objects (susceptible to call stack limits).
+    if (!(compared === undefined
+          ? (objValue === othValue || equalFunc(objValue, othValue, bitmask, customizer, stack))
+          : compared
+        )) {
+      result = false;
+      break;
+    }
+    skipCtor || (skipCtor = key == 'constructor');
+  }
+  if (result && !skipCtor) {
+    var objCtor = object.constructor,
+        othCtor = other.constructor;
+
+    // Non `Object` object instances with different constructors are not equal.
+    if (objCtor != othCtor &&
+        ('constructor' in object && 'constructor' in other) &&
+        !(typeof objCtor == 'function' && objCtor instanceof objCtor &&
+          typeof othCtor == 'function' && othCtor instanceof othCtor)) {
+      result = false;
+    }
+  }
+  stack['delete'](object);
+  stack['delete'](other);
+  return result;
+}
+
+/**
+ * Creates an array of own enumerable property names and symbols of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names and symbols.
+ */
+function getAllKeys(object) {
+  return baseGetAllKeys(object, keys, getSymbols);
+}
+
+/**
+ * Gets the data for `map`.
+ *
+ * @private
+ * @param {Object} map The map to query.
+ * @param {string} key The reference key.
+ * @returns {*} Returns the map data.
+ */
+function getMapData(map, key) {
+  var data = map.__data__;
+  return isKeyable(key)
+    ? data[typeof key == 'string' ? 'string' : 'hash']
+    : data.map;
+}
+
+/**
+ * Gets the native function at `key` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {string} key The key of the method to get.
+ * @returns {*} Returns the function if it's native, else `undefined`.
+ */
+function getNative(object, key) {
+  var value = getValue(object, key);
+  return baseIsNative(value) ? value : undefined;
+}
+
+/**
+ * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the raw `toStringTag`.
+ */
+function getRawTag(value) {
+  var isOwn = hasOwnProperty.call(value, symToStringTag),
+      tag = value[symToStringTag];
+
+  try {
+    value[symToStringTag] = undefined;
+    var unmasked = true;
+  } catch (e) {}
+
+  var result = nativeObjectToString.call(value);
+  if (unmasked) {
+    if (isOwn) {
+      value[symToStringTag] = tag;
+    } else {
+      delete value[symToStringTag];
+    }
+  }
+  return result;
+}
+
+/**
+ * Creates an array of the own enumerable symbols of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of symbols.
+ */
+var getSymbols = !nativeGetSymbols ? stubArray : function(object) {
+  if (object == null) {
+    return [];
+  }
+  object = Object(object);
+  return arrayFilter(nativeGetSymbols(object), function(symbol) {
+    return propertyIsEnumerable.call(object, symbol);
+  });
+};
+
+/**
+ * Gets the `toStringTag` of `value`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+var getTag = baseGetTag;
+
+// Fallback for data views, maps, sets, and weak maps in IE 11 and promises in Node.js < 6.
+if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag) ||
+    (Map && getTag(new Map) != mapTag) ||
+    (Promise && getTag(Promise.resolve()) != promiseTag) ||
+    (Set && getTag(new Set) != setTag) ||
+    (WeakMap && getTag(new WeakMap) != weakMapTag)) {
+  getTag = function(value) {
+    var result = baseGetTag(value),
+        Ctor = result == objectTag ? value.constructor : undefined,
+        ctorString = Ctor ? toSource(Ctor) : '';
+
+    if (ctorString) {
+      switch (ctorString) {
+        case dataViewCtorString: return dataViewTag;
+        case mapCtorString: return mapTag;
+        case promiseCtorString: return promiseTag;
+        case setCtorString: return setTag;
+        case weakMapCtorString: return weakMapTag;
+      }
+    }
+    return result;
+  };
+}
+
+/**
+ * Checks if `value` is a valid array-like index.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
+ * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+ */
+function isIndex(value, length) {
+  length = length == null ? MAX_SAFE_INTEGER : length;
+  return !!length &&
+    (typeof value == 'number' || reIsUint.test(value)) &&
+    (value > -1 && value % 1 == 0 && value < length);
+}
+
+/**
+ * Checks if `value` is suitable for use as unique object key.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+ */
+function isKeyable(value) {
+  var type = typeof value;
+  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
+    ? (value !== '__proto__')
+    : (value === null);
+}
+
+/**
+ * Checks if `func` has its source masked.
+ *
+ * @private
+ * @param {Function} func The function to check.
+ * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+ */
+function isMasked(func) {
+  return !!maskSrcKey && (maskSrcKey in func);
+}
+
+/**
+ * Checks if `value` is likely a prototype object.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
+ */
+function isPrototype(value) {
+  var Ctor = value && value.constructor,
+      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
+
+  return value === proto;
+}
+
+/**
+ * Converts `value` to a string using `Object.prototype.toString`.
+ *
+ * @private
+ * @param {*} value The value to convert.
+ * @returns {string} Returns the converted string.
+ */
+function objectToString(value) {
+  return nativeObjectToString.call(value);
+}
+
+/**
+ * Converts `func` to its source code.
+ *
+ * @private
+ * @param {Function} func The function to convert.
+ * @returns {string} Returns the source code.
+ */
+function toSource(func) {
+  if (func != null) {
+    try {
+      return funcToString.call(func);
+    } catch (e) {}
+    try {
+      return (func + '');
+    } catch (e) {}
+  }
+  return '';
+}
+
+/**
+ * Performs a
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * comparison between two values to determine if they are equivalent.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ * var other = { 'a': 1 };
+ *
+ * _.eq(object, object);
+ * // => true
+ *
+ * _.eq(object, other);
+ * // => false
+ *
+ * _.eq('a', 'a');
+ * // => true
+ *
+ * _.eq('a', Object('a'));
+ * // => false
+ *
+ * _.eq(NaN, NaN);
+ * // => true
+ */
+function eq(value, other) {
+  return value === other || (value !== value && other !== other);
+}
+
+/**
+ * Checks if `value` is likely an `arguments` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+ *  else `false`.
+ * @example
+ *
+ * _.isArguments(function() { return arguments; }());
+ * // => true
+ *
+ * _.isArguments([1, 2, 3]);
+ * // => false
+ */
+var isArguments = baseIsArguments(function() { return arguments; }()) ? baseIsArguments : function(value) {
+  return isObjectLike(value) && hasOwnProperty.call(value, 'callee') &&
+    !propertyIsEnumerable.call(value, 'callee');
+};
+
+/**
+ * Checks if `value` is classified as an `Array` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array, else `false`.
+ * @example
+ *
+ * _.isArray([1, 2, 3]);
+ * // => true
+ *
+ * _.isArray(document.body.children);
+ * // => false
+ *
+ * _.isArray('abc');
+ * // => false
+ *
+ * _.isArray(_.noop);
+ * // => false
+ */
+var isArray = Array.isArray;
+
+/**
+ * Checks if `value` is array-like. A value is considered array-like if it's
+ * not a function and has a `value.length` that's an integer greater than or
+ * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+ * @example
+ *
+ * _.isArrayLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLike(document.body.children);
+ * // => true
+ *
+ * _.isArrayLike('abc');
+ * // => true
+ *
+ * _.isArrayLike(_.noop);
+ * // => false
+ */
+function isArrayLike(value) {
+  return value != null && isLength(value.length) && !isFunction(value);
+}
+
+/**
+ * Checks if `value` is a buffer.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.3.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
+ * @example
+ *
+ * _.isBuffer(new Buffer(2));
+ * // => true
+ *
+ * _.isBuffer(new Uint8Array(2));
+ * // => false
+ */
+var isBuffer = nativeIsBuffer || stubFalse;
+
+/**
+ * Performs a deep comparison between two values to determine if they are
+ * equivalent.
+ *
+ * **Note:** This method supports comparing arrays, array buffers, booleans,
+ * date objects, error objects, maps, numbers, `Object` objects, regexes,
+ * sets, strings, symbols, and typed arrays. `Object` objects are compared
+ * by their own, not inherited, enumerable properties. Functions and DOM
+ * nodes are compared by strict equality, i.e. `===`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ * var other = { 'a': 1 };
+ *
+ * _.isEqual(object, other);
+ * // => true
+ *
+ * object === other;
+ * // => false
+ */
+function isEqual(value, other) {
+  return baseIsEqual(value, other);
+}
+
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+function isFunction(value) {
+  if (!isObject(value)) {
+    return false;
+  }
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in Safari 9 which returns 'object' for typed arrays and other constructors.
+  var tag = baseGetTag(value);
+  return tag == funcTag || tag == genTag || tag == asyncTag || tag == proxyTag;
+}
+
+/**
+ * Checks if `value` is a valid array-like length.
+ *
+ * **Note:** This method is loosely based on
+ * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+ * @example
+ *
+ * _.isLength(3);
+ * // => true
+ *
+ * _.isLength(Number.MIN_VALUE);
+ * // => false
+ *
+ * _.isLength(Infinity);
+ * // => false
+ *
+ * _.isLength('3');
+ * // => false
+ */
+function isLength(value) {
+  return typeof value == 'number' &&
+    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+}
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return value != null && (type == 'object' || type == 'function');
+}
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return value != null && typeof value == 'object';
+}
+
+/**
+ * Checks if `value` is classified as a typed array.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
+ * @example
+ *
+ * _.isTypedArray(new Uint8Array);
+ * // => true
+ *
+ * _.isTypedArray([]);
+ * // => false
+ */
+var isTypedArray = nodeIsTypedArray ? baseUnary(nodeIsTypedArray) : baseIsTypedArray;
+
+/**
+ * Creates an array of the own enumerable property names of `object`.
+ *
+ * **Note:** Non-object values are coerced to objects. See the
+ * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+ * for more details.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ *   this.b = 2;
+ * }
+ *
+ * Foo.prototype.c = 3;
+ *
+ * _.keys(new Foo);
+ * // => ['a', 'b'] (iteration order is not guaranteed)
+ *
+ * _.keys('hi');
+ * // => ['0', '1']
+ */
+function keys(object) {
+  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
+}
+
+/**
+ * This method returns a new empty array.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.13.0
+ * @category Util
+ * @returns {Array} Returns the new empty array.
+ * @example
+ *
+ * var arrays = _.times(2, _.stubArray);
+ *
+ * console.log(arrays);
+ * // => [[], []]
+ *
+ * console.log(arrays[0] === arrays[1]);
+ * // => false
+ */
+function stubArray() {
+  return [];
+}
+
+/**
+ * This method returns `false`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.13.0
+ * @category Util
+ * @returns {boolean} Returns `false`.
+ * @example
+ *
+ * _.times(2, _.stubFalse);
+ * // => [false, false]
+ */
+function stubFalse() {
+  return false;
+}
+
+module.exports = isEqual;
+
+
+/***/ }),
+
+/***/ "./node_modules/markdown-table/index.js":
+/*!**********************************************!*\
+  !*** ./node_modules/markdown-table/index.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var repeat = __webpack_require__(/*! repeat-string */ "./node_modules/repeat-string/index.js")
+
+module.exports = markdownTable
+
+var trailingWhitespace = / +$/
+
+// Characters.
+var space = ' '
+var lineFeed = '\n'
+var dash = '-'
+var colon = ':'
+var verticalBar = '|'
+
+var x = 0
+var C = 67
+var L = 76
+var R = 82
+var c = 99
+var l = 108
+var r = 114
+
+// Create a table from a matrix of strings.
+function markdownTable(table, options) {
+  var settings = options || {}
+  var padding = settings.padding !== false
+  var start = settings.delimiterStart !== false
+  var end = settings.delimiterEnd !== false
+  var align = (settings.align || []).concat()
+  var alignDelimiters = settings.alignDelimiters !== false
+  var alignments = []
+  var stringLength = settings.stringLength || defaultStringLength
+  var rowIndex = -1
+  var rowLength = table.length
+  var cellMatrix = []
+  var sizeMatrix = []
+  var row = []
+  var sizes = []
+  var longestCellByColumn = []
+  var mostCellsPerRow = 0
+  var cells
+  var columnIndex
+  var columnLength
+  var largest
+  var size
+  var cell
+  var lines
+  var line
+  var before
+  var after
+  var code
+
+  // This is a superfluous loop if we don’t align delimiters, but otherwise we’d
+  // do superfluous work when aligning, so optimize for aligning.
+  while (++rowIndex < rowLength) {
+    cells = table[rowIndex]
+    columnIndex = -1
+    columnLength = cells.length
+    row = []
+    sizes = []
+
+    if (columnLength > mostCellsPerRow) {
+      mostCellsPerRow = columnLength
+    }
+
+    while (++columnIndex < columnLength) {
+      cell = serialize(cells[columnIndex])
+
+      if (alignDelimiters === true) {
+        size = stringLength(cell)
+        sizes[columnIndex] = size
+
+        largest = longestCellByColumn[columnIndex]
+
+        if (largest === undefined || size > largest) {
+          longestCellByColumn[columnIndex] = size
+        }
+      }
+
+      row.push(cell)
+    }
+
+    cellMatrix[rowIndex] = row
+    sizeMatrix[rowIndex] = sizes
+  }
+
+  // Figure out which alignments to use.
+  columnIndex = -1
+  columnLength = mostCellsPerRow
+
+  if (typeof align === 'object' && 'length' in align) {
+    while (++columnIndex < columnLength) {
+      alignments[columnIndex] = toAlignment(align[columnIndex])
+    }
+  } else {
+    code = toAlignment(align)
+
+    while (++columnIndex < columnLength) {
+      alignments[columnIndex] = code
+    }
+  }
+
+  // Inject the alignment row.
+  columnIndex = -1
+  columnLength = mostCellsPerRow
+  row = []
+  sizes = []
+
+  while (++columnIndex < columnLength) {
+    code = alignments[columnIndex]
+    before = ''
+    after = ''
+
+    if (code === l) {
+      before = colon
+    } else if (code === r) {
+      after = colon
+    } else if (code === c) {
+      before = colon
+      after = colon
+    }
+
+    // There *must* be at least one hyphen-minus in each alignment cell.
+    size = alignDelimiters
+      ? Math.max(
+          1,
+          longestCellByColumn[columnIndex] - before.length - after.length
+        )
+      : 1
+
+    cell = before + repeat(dash, size) + after
+
+    if (alignDelimiters === true) {
+      size = before.length + size + after.length
+
+      if (size > longestCellByColumn[columnIndex]) {
+        longestCellByColumn[columnIndex] = size
+      }
+
+      sizes[columnIndex] = size
+    }
+
+    row[columnIndex] = cell
+  }
+
+  // Inject the alignment row.
+  cellMatrix.splice(1, 0, row)
+  sizeMatrix.splice(1, 0, sizes)
+
+  rowIndex = -1
+  rowLength = cellMatrix.length
+  lines = []
+
+  while (++rowIndex < rowLength) {
+    row = cellMatrix[rowIndex]
+    sizes = sizeMatrix[rowIndex]
+    columnIndex = -1
+    columnLength = mostCellsPerRow
+    line = []
+
+    while (++columnIndex < columnLength) {
+      cell = row[columnIndex] || ''
+      before = ''
+      after = ''
+
+      if (alignDelimiters === true) {
+        size = longestCellByColumn[columnIndex] - (sizes[columnIndex] || 0)
+        code = alignments[columnIndex]
+
+        if (code === r) {
+          before = repeat(space, size)
+        } else if (code === c) {
+          if (size % 2 === 0) {
+            before = repeat(space, size / 2)
+            after = before
+          } else {
+            before = repeat(space, size / 2 + 0.5)
+            after = repeat(space, size / 2 - 0.5)
+          }
+        } else {
+          after = repeat(space, size)
+        }
+      }
+
+      if (start === true && columnIndex === 0) {
+        line.push(verticalBar)
+      }
+
+      if (
+        padding === true &&
+        // Don’t add the opening space if we’re not aligning and the cell is
+        // empty: there will be a closing space.
+        !(alignDelimiters === false && cell === '') &&
+        (start === true || columnIndex !== 0)
+      ) {
+        line.push(space)
+      }
+
+      if (alignDelimiters === true) {
+        line.push(before)
+      }
+
+      line.push(cell)
+
+      if (alignDelimiters === true) {
+        line.push(after)
+      }
+
+      if (padding === true) {
+        line.push(space)
+      }
+
+      if (end === true || columnIndex !== columnLength - 1) {
+        line.push(verticalBar)
+      }
+    }
+
+    line = line.join('')
+
+    if (end === false) {
+      line = line.replace(trailingWhitespace, '')
+    }
+
+    lines.push(line)
+  }
+
+  return lines.join(lineFeed)
+}
+
+function serialize(value) {
+  return value === null || value === undefined ? '' : String(value)
+}
+
+function defaultStringLength(value) {
+  return value.length
+}
+
+function toAlignment(value) {
+  var code = typeof value === 'string' ? value.charCodeAt(0) : x
+
+  return code === L || code === l
+    ? l
+    : code === R || code === r
+    ? r
+    : code === C || code === c
+    ? c
+    : x
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-definitions/index.js":
+/*!******************************************************!*\
+  !*** ./node_modules/mdast-util-definitions/index.js ***!
+  \******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var visit = __webpack_require__(/*! unist-util-visit */ "./node_modules/unist-util-visit/index.js")
+
+module.exports = getDefinitionFactory
+
+var own = {}.hasOwnProperty
+
+// Get a definition in `node` by `identifier`.
+function getDefinitionFactory(node, options) {
+  return getterFactory(gather(node, options))
+}
+
+// Gather all definitions in `node`
+function gather(node) {
+  var cache = {}
+
+  if (!node || !node.type) {
+    throw new Error('mdast-util-definitions expected node')
+  }
+
+  visit(node, 'definition', ondefinition)
+
+  return cache
+
+  function ondefinition(definition) {
+    var id = normalise(definition.identifier)
+    if (!own.call(cache, id)) {
+      cache[id] = definition
+    }
+  }
+}
+
+// Factory to get a node from the given definition-cache.
+function getterFactory(cache) {
+  return getter
+
+  // Get a node from the bound definition-cache.
+  function getter(identifier) {
+    var id = identifier && normalise(identifier)
+    return id && own.call(cache, id) ? cache[id] : null
+  }
+}
+
+function normalise(identifier) {
+  return identifier.toUpperCase()
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-find-and-replace/index.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/mdast-util-find-and-replace/index.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = findAndReplace
+
+var visit = __webpack_require__(/*! unist-util-visit-parents */ "./node_modules/unist-util-visit-parents/index.js")
+var convert = __webpack_require__(/*! unist-util-is/convert */ "./node_modules/unist-util-is/convert.js")
+var escape = __webpack_require__(/*! escape-string-regexp */ "./node_modules/mdast-util-find-and-replace/node_modules/escape-string-regexp/index.js")
+
+var splice = [].splice
+
+function findAndReplace(tree, find, replace, options) {
+  var settings
+  var schema
+
+  if (typeof find === 'string' || (find && typeof find.exec === 'function')) {
+    schema = [[find, replace]]
+  } else {
+    schema = find
+    options = replace
+  }
+
+  settings = options || {}
+
+  search(tree, settings, handlerFactory(toPairs(schema)))
+
+  return tree
+
+  function handlerFactory(pairs) {
+    var pair = pairs[0]
+
+    return handler
+
+    function handler(node, parent) {
+      var find = pair[0]
+      var replace = pair[1]
+      var nodes = []
+      var start = 0
+      var index = parent.children.indexOf(node)
+      var position
+      var match
+      var subhandler
+      var value
+
+      find.lastIndex = 0
+
+      match = find.exec(node.value)
+
+      while (match) {
+        position = match.index
+        value = replace.apply(
+          null,
+          [].concat(match, {index: match.index, input: match.input})
+        )
+
+        if (value !== false) {
+          if (start !== position) {
+            nodes.push({type: 'text', value: node.value.slice(start, position)})
+          }
+
+          if (typeof value === 'string' && value.length > 0) {
+            value = {type: 'text', value: value}
+          }
+
+          if (value) {
+            nodes = [].concat(nodes, value)
+          }
+
+          start = position + match[0].length
+        }
+
+        if (!find.global) {
+          break
+        }
+
+        match = find.exec(node.value)
+      }
+
+      if (position === undefined) {
+        nodes = [node]
+        index--
+      } else {
+        if (start < node.value.length) {
+          nodes.push({type: 'text', value: node.value.slice(start)})
+        }
+
+        nodes.unshift(index, 1)
+        splice.apply(parent.children, nodes)
+      }
+
+      if (pairs.length > 1) {
+        subhandler = handlerFactory(pairs.slice(1))
+        position = -1
+
+        while (++position < nodes.length) {
+          node = nodes[position]
+
+          if (node.type === 'text') {
+            subhandler(node, parent)
+          } else {
+            search(node, settings, subhandler)
+          }
+        }
+      }
+
+      return index + nodes.length + 1
+    }
+  }
+}
+
+function search(tree, settings, handler) {
+  var ignored = convert(settings.ignore || [])
+  var result = []
+
+  visit(tree, 'text', visitor)
+
+  return result
+
+  function visitor(node, parents) {
+    var index = -1
+    var parent
+    var grandparent
+
+    while (++index < parents.length) {
+      parent = parents[index]
+
+      if (
+        ignored(
+          parent,
+          grandparent ? grandparent.children.indexOf(parent) : undefined,
+          grandparent
+        )
+      ) {
+        return
+      }
+
+      grandparent = parent
+    }
+
+    return handler(node, grandparent)
+  }
+}
+
+function toPairs(schema) {
+  var result = []
+  var key
+  var index
+
+  if (typeof schema !== 'object') {
+    throw new Error('Expected array or object as schema')
+  }
+
+  if ('length' in schema) {
+    index = -1
+
+    while (++index < schema.length) {
+      result.push([
+        toExpression(schema[index][0]),
+        toFunction(schema[index][1])
+      ])
+    }
+  } else {
+    for (key in schema) {
+      result.push([toExpression(key), toFunction(schema[key])])
+    }
+  }
+
+  return result
+}
+
+function toExpression(find) {
+  return typeof find === 'string' ? new RegExp(escape(find), 'g') : find
+}
+
+function toFunction(replace) {
+  return typeof replace === 'function' ? replace : returner
+
+  function returner() {
+    return replace
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-find-and-replace/node_modules/escape-string-regexp/index.js":
+/*!*********************************************************************************************!*\
+  !*** ./node_modules/mdast-util-find-and-replace/node_modules/escape-string-regexp/index.js ***!
+  \*********************************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = string => {
+	if (typeof string !== 'string') {
+		throw new TypeError('Expected a string');
+	}
+
+	// Escape characters with special meaning either inside or outside character sets.
+	// Use a simple backslash escape when it’s always valid, and a \unnnn escape when the simpler form would be disallowed by Unicode patterns’ stricter grammar.
+	return string
+		.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
+		.replace(/-/g, '\\x2d');
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-from-markdown/dist/index.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/mdast-util-from-markdown/dist/index.js ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = fromMarkdown
+
+// These three are compiled away in the `dist/`
+
+var toString = __webpack_require__(/*! mdast-util-to-string */ "./node_modules/mdast-util-to-string/index.js")
+var assign = __webpack_require__(/*! micromark/dist/constant/assign */ "./node_modules/micromark/dist/constant/assign.js")
+var own = __webpack_require__(/*! micromark/dist/constant/has-own-property */ "./node_modules/micromark/dist/constant/has-own-property.js")
+var normalizeIdentifier = __webpack_require__(/*! micromark/dist/util/normalize-identifier */ "./node_modules/micromark/dist/util/normalize-identifier.js")
+var safeFromInt = __webpack_require__(/*! micromark/dist/util/safe-from-int */ "./node_modules/micromark/dist/util/safe-from-int.js")
+var parser = __webpack_require__(/*! micromark/dist/parse */ "./node_modules/micromark/dist/parse.js")
+var preprocessor = __webpack_require__(/*! micromark/dist/preprocess */ "./node_modules/micromark/dist/preprocess.js")
+var postprocess = __webpack_require__(/*! micromark/dist/postprocess */ "./node_modules/micromark/dist/postprocess.js")
+var decode = __webpack_require__(/*! parse-entities/decode-entity */ "./node_modules/parse-entities/decode-entity.browser.js")
+var stringifyPosition = __webpack_require__(/*! unist-util-stringify-position */ "./node_modules/unist-util-stringify-position/index.js")
+
+function fromMarkdown(value, encoding, options) {
+  if (typeof encoding !== 'string') {
+    options = encoding
+    encoding = undefined
+  }
+
+  return compiler(options)(
+    postprocess(
+      parser(options).document().write(preprocessor()(value, encoding, true))
+    )
+  )
+}
+
+// Note this compiler only understand complete buffering, not streaming.
+function compiler(options) {
+  var settings = options || {}
+  var config = configure(
+    {
+      transforms: [],
+      canContainEols: [
+        'emphasis',
+        'fragment',
+        'heading',
+        'paragraph',
+        'strong'
+      ],
+
+      enter: {
+        autolink: opener(link),
+        autolinkProtocol: onenterdata,
+        autolinkEmail: onenterdata,
+        atxHeading: opener(heading),
+        blockQuote: opener(blockQuote),
+        characterEscape: onenterdata,
+        characterReference: onenterdata,
+        codeFenced: opener(codeFlow),
+        codeFencedFenceInfo: buffer,
+        codeFencedFenceMeta: buffer,
+        codeIndented: opener(codeFlow, buffer),
+        codeText: opener(codeText, buffer),
+        codeTextData: onenterdata,
+        data: onenterdata,
+        codeFlowValue: onenterdata,
+        definition: opener(definition),
+        definitionDestinationString: buffer,
+        definitionLabelString: buffer,
+        definitionTitleString: buffer,
+        emphasis: opener(emphasis),
+        hardBreakEscape: opener(hardBreak),
+        hardBreakTrailing: opener(hardBreak),
+        htmlFlow: opener(html, buffer),
+        htmlFlowData: onenterdata,
+        htmlText: opener(html, buffer),
+        htmlTextData: onenterdata,
+        image: opener(image),
+        label: buffer,
+        link: opener(link),
+        listItem: opener(listItem),
+        listItemValue: onenterlistitemvalue,
+        listOrdered: opener(list, onenterlistordered),
+        listUnordered: opener(list),
+        paragraph: opener(paragraph),
+        reference: onenterreference,
+        referenceString: buffer,
+        resourceDestinationString: buffer,
+        resourceTitleString: buffer,
+        setextHeading: opener(heading),
+        strong: opener(strong),
+        thematicBreak: opener(thematicBreak)
+      },
+
+      exit: {
+        atxHeading: closer(),
+        atxHeadingSequence: onexitatxheadingsequence,
+        autolink: closer(),
+        autolinkEmail: onexitautolinkemail,
+        autolinkProtocol: onexitautolinkprotocol,
+        blockQuote: closer(),
+        characterEscapeValue: onexitdata,
+        characterReferenceMarkerHexadecimal: onexitcharacterreferencemarker,
+        characterReferenceMarkerNumeric: onexitcharacterreferencemarker,
+        characterReferenceValue: onexitcharacterreferencevalue,
+        codeFenced: closer(onexitcodefenced),
+        codeFencedFence: onexitcodefencedfence,
+        codeFencedFenceInfo: onexitcodefencedfenceinfo,
+        codeFencedFenceMeta: onexitcodefencedfencemeta,
+        codeFlowValue: onexitdata,
+        codeIndented: closer(onexitcodeindented),
+        codeText: closer(onexitcodetext),
+        codeTextData: onexitdata,
+        data: onexitdata,
+        definition: closer(),
+        definitionDestinationString: onexitdefinitiondestinationstring,
+        definitionLabelString: onexitdefinitionlabelstring,
+        definitionTitleString: onexitdefinitiontitlestring,
+        emphasis: closer(),
+        hardBreakEscape: closer(onexithardbreak),
+        hardBreakTrailing: closer(onexithardbreak),
+        htmlFlow: closer(onexithtmlflow),
+        htmlFlowData: onexitdata,
+        htmlText: closer(onexithtmltext),
+        htmlTextData: onexitdata,
+        image: closer(onexitimage),
+        label: onexitlabel,
+        labelText: onexitlabeltext,
+        lineEnding: onexitlineending,
+        link: closer(onexitlink),
+        listItem: closer(),
+        listOrdered: closer(),
+        listUnordered: closer(),
+        paragraph: closer(),
+        referenceString: onexitreferencestring,
+        resourceDestinationString: onexitresourcedestinationstring,
+        resourceTitleString: onexitresourcetitlestring,
+        resource: onexitresource,
+        setextHeading: closer(onexitsetextheading),
+        setextHeadingLineSequence: onexitsetextheadinglinesequence,
+        setextHeadingText: onexitsetextheadingtext,
+        strong: closer(),
+        thematicBreak: closer()
+      }
+    },
+
+    settings.mdastExtensions || []
+  )
+
+  var data = {}
+
+  return compile
+
+  function compile(events) {
+    var tree = {type: 'root', children: []}
+    var stack = [tree]
+    var tokenStack = []
+    var listStack = []
+    var index = -1
+    var handler
+    var listStart
+
+    var context = {
+      stack: stack,
+      tokenStack: tokenStack,
+      config: config,
+      enter: enter,
+      exit: exit,
+      buffer: buffer,
+      resume: resume,
+      setData: setData,
+      getData: getData
+    }
+
+    while (++index < events.length) {
+      // We preprocess lists to add `listItem` tokens, and to infer whether
+      // items the list itself are spread out.
+      if (
+        events[index][1].type === 'listOrdered' ||
+        events[index][1].type === 'listUnordered'
+      ) {
+        if (events[index][0] === 'enter') {
+          listStack.push(index)
+        } else {
+          listStart = listStack.pop(index)
+          index = prepareList(events, listStart, index)
+        }
+      }
+    }
+
+    index = -1
+
+    while (++index < events.length) {
+      handler = config[events[index][0]]
+
+      if (own.call(handler, events[index][1].type)) {
+        handler[events[index][1].type].call(
+          assign({sliceSerialize: events[index][2].sliceSerialize}, context),
+          events[index][1]
+        )
+      }
+    }
+
+    if (tokenStack.length) {
+      throw new Error(
+        'Cannot close document, a token (`' +
+          tokenStack[tokenStack.length - 1].type +
+          '`, ' +
+          stringifyPosition({
+            start: tokenStack[tokenStack.length - 1].start,
+            end: tokenStack[tokenStack.length - 1].end
+          }) +
+          ') is still open'
+      )
+    }
+
+    // Figure out `root` position.
+    tree.position = {
+      start: point(
+        events.length ? events[0][1].start : {line: 1, column: 1, offset: 0}
+      ),
+
+      end: point(
+        events.length
+          ? events[events.length - 2][1].end
+          : {line: 1, column: 1, offset: 0}
+      )
+    }
+
+    index = -1
+    while (++index < config.transforms.length) {
+      tree = config.transforms[index](tree) || tree
+    }
+
+    return tree
+  }
+
+  function prepareList(events, start, length) {
+    var index = start - 1
+    var containerBalance = -1
+    var listSpread = false
+    var listItem
+    var tailIndex
+    var lineIndex
+    var tailEvent
+    var event
+    var firstBlankLineIndex
+    var atMarker
+
+    while (++index <= length) {
+      event = events[index]
+
+      if (
+        event[1].type === 'listUnordered' ||
+        event[1].type === 'listOrdered' ||
+        event[1].type === 'blockQuote'
+      ) {
+        if (event[0] === 'enter') {
+          containerBalance++
+        } else {
+          containerBalance--
+        }
+
+        atMarker = undefined
+      } else if (event[1].type === 'lineEndingBlank') {
+        if (event[0] === 'enter') {
+          if (
+            listItem &&
+            !atMarker &&
+            !containerBalance &&
+            !firstBlankLineIndex
+          ) {
+            firstBlankLineIndex = index
+          }
+
+          atMarker = undefined
+        }
+      } else if (
+        event[1].type === 'linePrefix' ||
+        event[1].type === 'listItemValue' ||
+        event[1].type === 'listItemMarker' ||
+        event[1].type === 'listItemPrefix' ||
+        event[1].type === 'listItemPrefixWhitespace'
+      ) {
+        // Empty.
+      } else {
+        atMarker = undefined
+      }
+
+      if (
+        (!containerBalance &&
+          event[0] === 'enter' &&
+          event[1].type === 'listItemPrefix') ||
+        (containerBalance === -1 &&
+          event[0] === 'exit' &&
+          (event[1].type === 'listUnordered' ||
+            event[1].type === 'listOrdered'))
+      ) {
+        if (listItem) {
+          tailIndex = index
+          lineIndex = undefined
+
+          while (tailIndex--) {
+            tailEvent = events[tailIndex]
+
+            if (
+              tailEvent[1].type === 'lineEnding' ||
+              tailEvent[1].type === 'lineEndingBlank'
+            ) {
+              if (tailEvent[0] === 'exit') continue
+
+              if (lineIndex) {
+                events[lineIndex][1].type = 'lineEndingBlank'
+                listSpread = true
+              }
+
+              tailEvent[1].type = 'lineEnding'
+              lineIndex = tailIndex
+            } else if (
+              tailEvent[1].type === 'linePrefix' ||
+              tailEvent[1].type === 'blockQuotePrefix' ||
+              tailEvent[1].type === 'blockQuotePrefixWhitespace' ||
+              tailEvent[1].type === 'blockQuoteMarker' ||
+              tailEvent[1].type === 'listItemIndent'
+            ) {
+              // Empty
+            } else {
+              break
+            }
+          }
+
+          if (
+            firstBlankLineIndex &&
+            (!lineIndex || firstBlankLineIndex < lineIndex)
+          ) {
+            listItem._spread = true
+          }
+
+          // Fix position.
+          listItem.end = point(
+            lineIndex ? events[lineIndex][1].start : event[1].end
+          )
+
+          events.splice(lineIndex || index, 0, ['exit', listItem, event[2]])
+          index++
+          length++
+        }
+
+        // Create a new list item.
+        if (event[1].type === 'listItemPrefix') {
+          listItem = {
+            type: 'listItem',
+            _spread: false,
+            start: point(event[1].start)
+          }
+
+          events.splice(index, 0, ['enter', listItem, event[2]])
+          index++
+          length++
+          firstBlankLineIndex = undefined
+          atMarker = true
+        }
+      }
+    }
+
+    events[start][1]._spread = listSpread
+    return length
+  }
+
+  function setData(key, value) {
+    data[key] = value
+  }
+
+  function getData(key) {
+    return data[key]
+  }
+
+  function point(d) {
+    return {line: d.line, column: d.column, offset: d.offset}
+  }
+
+  function opener(create, and) {
+    return open
+
+    function open(token) {
+      enter.call(this, create(token), token)
+      if (and) and.call(this, token)
+    }
+  }
+
+  function buffer() {
+    this.stack.push({type: 'fragment', children: []})
+  }
+
+  function enter(node, token) {
+    this.stack[this.stack.length - 1].children.push(node)
+    this.stack.push(node)
+    this.tokenStack.push(token)
+    node.position = {start: point(token.start)}
+    return node
+  }
+
+  function closer(and) {
+    return close
+
+    function close(token) {
+      if (and) and.call(this, token)
+      exit.call(this, token)
+    }
+  }
+
+  function exit(token) {
+    var node = this.stack.pop()
+    var open = this.tokenStack.pop()
+
+    if (!open) {
+      throw new Error(
+        'Cannot close `' +
+          token.type +
+          '` (' +
+          stringifyPosition({start: token.start, end: token.end}) +
+          '): it’s not open'
+      )
+    } else if (open.type !== token.type) {
+      throw new Error(
+        'Cannot close `' +
+          token.type +
+          '` (' +
+          stringifyPosition({start: token.start, end: token.end}) +
+          '): a different token (`' +
+          open.type +
+          '`, ' +
+          stringifyPosition({start: open.start, end: open.end}) +
+          ') is open'
+      )
+    }
+
+    node.position.end = point(token.end)
+    return node
+  }
+
+  function resume() {
+    return toString(this.stack.pop())
+  }
+
+  //
+  // Handlers.
+  //
+
+  function onenterlistordered() {
+    setData('expectingFirstListItemValue', true)
+  }
+
+  function onenterlistitemvalue(token) {
+    if (getData('expectingFirstListItemValue')) {
+      this.stack[this.stack.length - 2].start = parseInt(
+        this.sliceSerialize(token),
+        10
+      )
+
+      setData('expectingFirstListItemValue')
+    }
+  }
+
+  function onexitcodefencedfenceinfo() {
+    var data = this.resume()
+    this.stack[this.stack.length - 1].lang = data
+  }
+
+  function onexitcodefencedfencemeta() {
+    var data = this.resume()
+    this.stack[this.stack.length - 1].meta = data
+  }
+
+  function onexitcodefencedfence() {
+    // Exit if this is the closing fence.
+    if (getData('flowCodeInside')) return
+    this.buffer()
+    setData('flowCodeInside', true)
+  }
+
+  function onexitcodefenced() {
+    var data = this.resume()
+    this.stack[this.stack.length - 1].value = data.replace(
+      /^(\r?\n|\r)|(\r?\n|\r)$/g,
+      ''
+    )
+
+    setData('flowCodeInside')
+  }
+
+  function onexitcodeindented() {
+    var data = this.resume()
+    this.stack[this.stack.length - 1].value = data
+  }
+
+  function onexitdefinitionlabelstring(token) {
+    // Discard label, use the source content instead.
+    var label = this.resume()
+    this.stack[this.stack.length - 1].label = label
+    this.stack[this.stack.length - 1].identifier = normalizeIdentifier(
+      this.sliceSerialize(token)
+    ).toLowerCase()
+  }
+
+  function onexitdefinitiontitlestring() {
+    var data = this.resume()
+    this.stack[this.stack.length - 1].title = data
+  }
+
+  function onexitdefinitiondestinationstring() {
+    var data = this.resume()
+    this.stack[this.stack.length - 1].url = data
+  }
+
+  function onexitatxheadingsequence(token) {
+    if (!this.stack[this.stack.length - 1].depth) {
+      this.stack[this.stack.length - 1].depth = this.sliceSerialize(
+        token
+      ).length
+    }
+  }
+
+  function onexitsetextheadingtext() {
+    setData('setextHeadingSlurpLineEnding', true)
+  }
+
+  function onexitsetextheadinglinesequence(token) {
+    this.stack[this.stack.length - 1].depth =
+      this.sliceSerialize(token).charCodeAt(0) === 61 ? 1 : 2
+  }
+
+  function onexitsetextheading() {
+    setData('setextHeadingSlurpLineEnding')
+  }
+
+  function onenterdata(token) {
+    var siblings = this.stack[this.stack.length - 1].children
+    var tail = siblings[siblings.length - 1]
+
+    if (!tail || tail.type !== 'text') {
+      // Add a new text node.
+      tail = text()
+      tail.position = {start: point(token.start)}
+      this.stack[this.stack.length - 1].children.push(tail)
+    }
+
+    this.stack.push(tail)
+  }
+
+  function onexitdata(token) {
+    var tail = this.stack.pop()
+    tail.value += this.sliceSerialize(token)
+    tail.position.end = point(token.end)
+  }
+
+  function onexitlineending(token) {
+    var context = this.stack[this.stack.length - 1]
+
+    // If we’re at a hard break, include the line ending in there.
+    if (getData('atHardBreak')) {
+      context.children[context.children.length - 1].position.end = point(
+        token.end
+      )
+
+      setData('atHardBreak')
+      return
+    }
+
+    if (
+      !getData('setextHeadingSlurpLineEnding') &&
+      config.canContainEols.indexOf(context.type) > -1
+    ) {
+      onenterdata.call(this, token)
+      onexitdata.call(this, token)
+    }
+  }
+
+  function onexithardbreak() {
+    setData('atHardBreak', true)
+  }
+
+  function onexithtmlflow() {
+    var data = this.resume()
+    this.stack[this.stack.length - 1].value = data
+  }
+
+  function onexithtmltext() {
+    var data = this.resume()
+    this.stack[this.stack.length - 1].value = data
+  }
+
+  function onexitcodetext() {
+    var data = this.resume()
+    this.stack[this.stack.length - 1].value = data
+  }
+
+  function onexitlink() {
+    var context = this.stack[this.stack.length - 1]
+
+    // To do: clean.
+    if (getData('inReference')) {
+      context.type += 'Reference'
+      context.referenceType = getData('referenceType') || 'shortcut'
+      delete context.url
+      delete context.title
+    } else {
+      delete context.identifier
+      delete context.label
+      delete context.referenceType
+    }
+
+    setData('referenceType')
+  }
+
+  function onexitimage() {
+    var context = this.stack[this.stack.length - 1]
+
+    // To do: clean.
+    if (getData('inReference')) {
+      context.type += 'Reference'
+      context.referenceType = getData('referenceType') || 'shortcut'
+      delete context.url
+      delete context.title
+    } else {
+      delete context.identifier
+      delete context.label
+      delete context.referenceType
+    }
+
+    setData('referenceType')
+  }
+
+  function onexitlabeltext(token) {
+    this.stack[this.stack.length - 2].identifier = normalizeIdentifier(
+      this.sliceSerialize(token)
+    ).toLowerCase()
+  }
+
+  function onexitlabel() {
+    var fragment = this.stack[this.stack.length - 1]
+    var value = this.resume()
+
+    this.stack[this.stack.length - 1].label = value
+
+    // Assume a reference.
+    setData('inReference', true)
+
+    if (this.stack[this.stack.length - 1].type === 'link') {
+      this.stack[this.stack.length - 1].children = fragment.children
+    } else {
+      this.stack[this.stack.length - 1].alt = value
+    }
+  }
+
+  function onexitresourcedestinationstring() {
+    var data = this.resume()
+    this.stack[this.stack.length - 1].url = data
+  }
+
+  function onexitresourcetitlestring() {
+    var data = this.resume()
+    this.stack[this.stack.length - 1].title = data
+  }
+
+  function onexitresource() {
+    setData('inReference')
+  }
+
+  function onenterreference() {
+    setData('referenceType', 'collapsed')
+  }
+
+  function onexitreferencestring(token) {
+    var label = this.resume()
+    this.stack[this.stack.length - 1].label = label
+    this.stack[this.stack.length - 1].identifier = normalizeIdentifier(
+      this.sliceSerialize(token)
+    ).toLowerCase()
+    setData('referenceType', 'full')
+  }
+
+  function onexitcharacterreferencemarker(token) {
+    setData('characterReferenceType', token.type)
+  }
+
+  function onexitcharacterreferencevalue(token) {
+    var data = this.sliceSerialize(token)
+    var type = getData('characterReferenceType')
+    var value
+    var tail
+
+    if (type) {
+      value = safeFromInt(
+        data,
+        type === 'characterReferenceMarkerNumeric' ? 10 : 16
+      )
+
+      setData('characterReferenceType')
+    } else {
+      value = decode(data)
+    }
+
+    tail = this.stack.pop()
+    tail.value += value
+    tail.position.end = point(token.end)
+  }
+
+  function onexitautolinkprotocol(token) {
+    onexitdata.call(this, token)
+    this.stack[this.stack.length - 1].url = this.sliceSerialize(token)
+  }
+
+  function onexitautolinkemail(token) {
+    onexitdata.call(this, token)
+    this.stack[this.stack.length - 1].url =
+      'mailto:' + this.sliceSerialize(token)
+  }
+
+  //
+  // Creaters.
+  //
+
+  function blockQuote() {
+    return {type: 'blockquote', children: []}
+  }
+
+  function codeFlow() {
+    return {type: 'code', lang: null, meta: null, value: ''}
+  }
+
+  function codeText() {
+    return {type: 'inlineCode', value: ''}
+  }
+
+  function definition() {
+    return {
+      type: 'definition',
+      identifier: '',
+      label: null,
+      title: null,
+      url: ''
+    }
+  }
+
+  function emphasis() {
+    return {type: 'emphasis', children: []}
+  }
+
+  function heading() {
+    return {type: 'heading', depth: undefined, children: []}
+  }
+
+  function hardBreak() {
+    return {type: 'break'}
+  }
+
+  function html() {
+    return {type: 'html', value: ''}
+  }
+
+  function image() {
+    return {type: 'image', title: null, url: '', alt: null}
+  }
+
+  function link() {
+    return {type: 'link', title: null, url: '', children: []}
+  }
+
+  function list(token) {
+    return {
+      type: 'list',
+      ordered: token.type === 'listOrdered',
+      start: null,
+      spread: token._spread,
+      children: []
+    }
+  }
+
+  function listItem(token) {
+    return {
+      type: 'listItem',
+      spread: token._spread,
+      checked: null,
+      children: []
+    }
+  }
+
+  function paragraph() {
+    return {type: 'paragraph', children: []}
+  }
+
+  function strong() {
+    return {type: 'strong', children: []}
+  }
+
+  function text() {
+    return {type: 'text', value: ''}
+  }
+
+  function thematicBreak() {
+    return {type: 'thematicBreak'}
+  }
+}
+
+function configure(config, extensions) {
+  var index = -1
+
+  while (++index < extensions.length) {
+    extension(config, extensions[index])
+  }
+
+  return config
+}
+
+function extension(config, extension) {
+  var key
+  var left
+
+  for (key in extension) {
+    left = own.call(config, key) ? config[key] : (config[key] = {})
+
+    if (key === 'canContainEols' || key === 'transforms') {
+      config[key] = [].concat(left, extension[key])
+    } else {
+      Object.assign(left, extension[key])
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-from-markdown/index.js":
+/*!********************************************************!*\
+  !*** ./node_modules/mdast-util-from-markdown/index.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = __webpack_require__(/*! ./dist */ "./node_modules/mdast-util-from-markdown/dist/index.js")
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-gfm-autolink-literal/from-markdown.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/mdast-util-gfm-autolink-literal/from-markdown.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+var ccount = __webpack_require__(/*! ccount */ "./node_modules/ccount/index.js")
+var findAndReplace = __webpack_require__(/*! mdast-util-find-and-replace */ "./node_modules/mdast-util-find-and-replace/index.js")
+var unicodePunctuation = __webpack_require__(/*! micromark/dist/character/unicode-punctuation */ "./node_modules/micromark/dist/character/unicode-punctuation.js")
+var unicodeWhitespace = __webpack_require__(/*! micromark/dist/character/unicode-whitespace */ "./node_modules/micromark/dist/character/unicode-whitespace.js")
+
+exports.transforms = [transformGfmAutolinkLiterals]
+exports.enter = {
+  literalAutolink: enterLiteralAutolink,
+  literalAutolinkEmail: enterLiteralAutolinkValue,
+  literalAutolinkHttp: enterLiteralAutolinkValue,
+  literalAutolinkWww: enterLiteralAutolinkValue
+}
+exports.exit = {
+  literalAutolink: exitLiteralAutolink,
+  literalAutolinkEmail: exitLiteralAutolinkEmail,
+  literalAutolinkHttp: exitLiteralAutolinkHttp,
+  literalAutolinkWww: exitLiteralAutolinkWww
+}
+
+function enterLiteralAutolink(token) {
+  this.enter({type: 'link', title: null, url: '', children: []}, token)
+}
+
+function enterLiteralAutolinkValue(token) {
+  this.config.enter.autolinkProtocol.call(this, token)
+}
+
+function exitLiteralAutolinkHttp(token) {
+  this.config.exit.autolinkProtocol.call(this, token)
+}
+
+function exitLiteralAutolinkWww(token) {
+  this.config.exit.data.call(this, token)
+  this.stack[this.stack.length - 1].url = 'http://' + this.sliceSerialize(token)
+}
+
+function exitLiteralAutolinkEmail(token) {
+  this.config.exit.autolinkEmail.call(this, token)
+}
+
+function exitLiteralAutolink(token) {
+  this.exit(token)
+}
+
+function transformGfmAutolinkLiterals(tree) {
+  findAndReplace(
+    tree,
+    [
+      [/(https?:\/\/|www(?=\.))([-.\w]+)([^ \t\r\n]*)/i, findUrl],
+      [/([-.\w+]+)@([-\w]+(?:\.[-\w]+)+)/, findEmail]
+    ],
+    {ignore: ['link', 'linkReference']}
+  )
+}
+
+function findUrl($0, protocol, domain, path, match) {
+  var prefix = ''
+  var parts
+  var result
+
+  // Not an expected previous character.
+  if (!previous(match)) {
+    return false
+  }
+
+  // Treat `www` as part of the domain.
+  if (/^w/i.test(protocol)) {
+    domain = protocol + domain
+    protocol = ''
+    prefix = 'http://'
+  }
+
+  if (!isCorrectDomain(domain)) {
+    return false
+  }
+
+  parts = splitUrl(domain + path)
+
+  if (!parts[0]) return false
+
+  result = {
+    type: 'link',
+    title: null,
+    url: prefix + protocol + parts[0],
+    children: [{type: 'text', value: protocol + parts[0]}]
+  }
+
+  if (parts[1]) {
+    result = [result, {type: 'text', value: parts[1]}]
+  }
+
+  return result
+}
+
+function findEmail($0, atext, label, match) {
+  // Not an expected previous character.
+  if (!previous(match, true) || /[_-]$/.test(label)) {
+    return false
+  }
+
+  return {
+    type: 'link',
+    title: null,
+    url: 'mailto:' + atext + '@' + label,
+    children: [{type: 'text', value: atext + '@' + label}]
+  }
+}
+
+function isCorrectDomain(domain) {
+  var parts = domain.split('.')
+
+  if (
+    parts.length < 2 ||
+    (parts[parts.length - 1] &&
+      (/_/.test(parts[parts.length - 1]) ||
+        !/[a-zA-Z\d]/.test(parts[parts.length - 1]))) ||
+    (parts[parts.length - 2] &&
+      (/_/.test(parts[parts.length - 2]) ||
+        !/[a-zA-Z\d]/.test(parts[parts.length - 2])))
+  ) {
+    return false
+  }
+
+  return true
+}
+
+function splitUrl(url) {
+  var trail = /[!"&'),.:;<>?\]}]+$/.exec(url)
+  var closingParenIndex
+  var openingParens
+  var closingParens
+
+  if (trail) {
+    url = url.slice(0, trail.index)
+    trail = trail[0]
+    closingParenIndex = trail.indexOf(')')
+    openingParens = ccount(url, '(')
+    closingParens = ccount(url, ')')
+
+    while (closingParenIndex !== -1 && openingParens > closingParens) {
+      url += trail.slice(0, closingParenIndex + 1)
+      trail = trail.slice(closingParenIndex + 1)
+      closingParenIndex = trail.indexOf(')')
+      closingParens++
+    }
+  }
+
+  return [url, trail]
+}
+
+function previous(match, email) {
+  var code = match.input.charCodeAt(match.index - 1)
+  return (
+    (code !== code || unicodeWhitespace(code) || unicodePunctuation(code)) &&
+    (!email || code !== 47)
+  )
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-gfm-autolink-literal/to-markdown.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/mdast-util-gfm-autolink-literal/to-markdown.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+var inConstruct = 'phrasing'
+var notInConstruct = ['autolink', 'link', 'image', 'label']
+
+exports.unsafe = [
+  {
+    character: '@',
+    before: '[+\\-.\\w]',
+    after: '[\\-.\\w]',
+    inConstruct: inConstruct,
+    notInConstruct: notInConstruct
+  },
+  {
+    character: '.',
+    before: '[Ww]',
+    after: '[\\-.\\w]',
+    inConstruct: inConstruct,
+    notInConstruct: notInConstruct
+  },
+  {
+    character: ':',
+    before: '[ps]',
+    after: '\\/',
+    inConstruct: inConstruct,
+    notInConstruct: notInConstruct
+  }
+]
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-gfm-strikethrough/from-markdown.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/mdast-util-gfm-strikethrough/from-markdown.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+exports.canContainEols = ['delete']
+exports.enter = {strikethrough: enterStrikethrough}
+exports.exit = {strikethrough: exitStrikethrough}
+
+function enterStrikethrough(token) {
+  this.enter({type: 'delete', children: []}, token)
+}
+
+function exitStrikethrough(token) {
+  this.exit(token)
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-gfm-strikethrough/to-markdown.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/mdast-util-gfm-strikethrough/to-markdown.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+var phrasing = __webpack_require__(/*! mdast-util-to-markdown/lib/util/container-phrasing */ "./node_modules/mdast-util-to-markdown/lib/util/container-phrasing.js")
+
+exports.unsafe = [{character: '~', inConstruct: 'phrasing'}]
+exports.handlers = {delete: handleDelete}
+
+handleDelete.peek = peekDelete
+
+function handleDelete(node, _, context) {
+  var exit = context.enter('emphasis')
+  var value = phrasing(node, context, {before: '~', after: '~'})
+  exit()
+  return '~~' + value + '~~'
+}
+
+function peekDelete() {
+  return '~'
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-gfm-table/from-markdown.js":
+/*!************************************************************!*\
+  !*** ./node_modules/mdast-util-gfm-table/from-markdown.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+exports.enter = {
+  table: enterTable,
+  tableData: enterCell,
+  tableHeader: enterCell,
+  tableRow: enterRow
+}
+exports.exit = {
+  codeText: exitCodeText,
+  table: exitTable,
+  tableData: exit,
+  tableHeader: exit,
+  tableRow: exit
+}
+
+function enterTable(token) {
+  this.enter({type: 'table', align: token._align, children: []}, token)
+  this.setData('inTable', true)
+}
+
+function exitTable(token) {
+  this.exit(token)
+  this.setData('inTable')
+}
+
+function enterRow(token) {
+  this.enter({type: 'tableRow', children: []}, token)
+}
+
+function exit(token) {
+  this.exit(token)
+}
+
+function enterCell(token) {
+  this.enter({type: 'tableCell', children: []}, token)
+}
+
+// Overwrite the default code text data handler to unescape escaped pipes when
+// they are in tables.
+function exitCodeText(token) {
+  var value = this.resume()
+
+  if (this.getData('inTable')) {
+    value = value.replace(/\\([\\|])/g, replace)
+  }
+
+  this.stack[this.stack.length - 1].value = value
+  this.exit(token)
+}
+
+function replace($0, $1) {
+  // Pipes work, backslashes don’t (but can’t escape pipes).
+  return $1 === '|' ? $1 : $0
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-gfm-table/to-markdown.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/mdast-util-gfm-table/to-markdown.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var phrasing = __webpack_require__(/*! mdast-util-to-markdown/lib/util/container-phrasing */ "./node_modules/mdast-util-to-markdown/lib/util/container-phrasing.js")
+var defaultInlineCode = __webpack_require__(/*! mdast-util-to-markdown/lib/handle/inline-code */ "./node_modules/mdast-util-to-markdown/lib/handle/inline-code.js")
+var markdownTable = __webpack_require__(/*! markdown-table */ "./node_modules/markdown-table/index.js")
+
+module.exports = toMarkdown
+
+function toMarkdown(options) {
+  var settings = options || {}
+  var padding = settings.tableCellPadding
+  var alignDelimiters = settings.tablePipeAlign
+  var stringLength = settings.stringLength
+  var around = padding ? ' ' : '|'
+
+  return {
+    unsafe: [
+      {character: '\r', inConstruct: 'tableCell'},
+      {character: '\n', inConstruct: 'tableCell'},
+      // A pipe, when followed by a tab or space (padding), or a dash or colon
+      // (unpadded delimiter row), could result in a table.
+      {atBreak: true, character: '|', after: '[\t :-]'},
+      // A pipe in a cell must be encoded.
+      {character: '|', inConstruct: 'tableCell'},
+      // A colon must be followed by a dash, in which case it could start a
+      // delimiter row.
+      {atBreak: true, character: ':', after: '-'},
+      // A delimiter row can also start with a dash, when followed by more
+      // dashes, a colon, or a pipe.
+      // This is a stricter version than the built in check for lists, thematic
+      // breaks, and setex heading underlines though:
+      // <https://github.com/syntax-tree/mdast-util-to-markdown/blob/51a2038/lib/unsafe.js#L57>
+      {atBreak: true, character: '-', after: '[:|-]'}
+    ],
+    handlers: {
+      table: handleTable,
+      tableRow: handleTableRow,
+      tableCell: handleTableCell,
+      inlineCode: inlineCodeWithTable
+    }
+  }
+
+  function handleTable(node, _, context) {
+    return serializeData(handleTableAsData(node, context), node.align)
+  }
+
+  // This function isn’t really used normally, because we handle rows at the
+  // table level.
+  // But, if someone passes in a table row, this ensures we make somewhat sense.
+  function handleTableRow(node, _, context) {
+    var row = handleTableRowAsData(node, context)
+    // `markdown-table` will always add an align row
+    var value = serializeData([row])
+    return value.slice(0, value.indexOf('\n'))
+  }
+
+  function handleTableCell(node, _, context) {
+    var exit = context.enter('tableCell')
+    var value = phrasing(node, context, {before: around, after: around})
+    exit()
+    return value
+  }
+
+  function serializeData(matrix, align) {
+    return markdownTable(matrix, {
+      align: align,
+      alignDelimiters: alignDelimiters,
+      padding: padding,
+      stringLength: stringLength
+    })
+  }
+
+  function handleTableAsData(node, context) {
+    var children = node.children
+    var index = -1
+    var length = children.length
+    var result = []
+    var subexit = context.enter('table')
+
+    while (++index < length) {
+      result[index] = handleTableRowAsData(children[index], context)
+    }
+
+    subexit()
+
+    return result
+  }
+
+  function handleTableRowAsData(node, context) {
+    var children = node.children
+    var index = -1
+    var length = children.length
+    var result = []
+    var subexit = context.enter('tableRow')
+
+    while (++index < length) {
+      result[index] = handleTableCell(children[index], node, context)
+    }
+
+    subexit()
+
+    return result
+  }
+
+  function inlineCodeWithTable(node, parent, context) {
+    var value = defaultInlineCode(node, parent, context)
+
+    if (context.stack.indexOf('tableCell') !== -1) {
+      value = value.replace(/\|/g, '\\$&')
+    }
+
+    return value
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-gfm-task-list-item/from-markdown.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/mdast-util-gfm-task-list-item/from-markdown.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+exports.exit = {
+  taskListCheckValueChecked: exitCheck,
+  taskListCheckValueUnchecked: exitCheck,
+  paragraph: exitParagraphWithTaskListItem
+}
+
+function exitCheck(token) {
+  // We’re always in a paragraph, in a list item.
+  this.stack[this.stack.length - 2].checked =
+    token.type === 'taskListCheckValueChecked'
+}
+
+function exitParagraphWithTaskListItem(token) {
+  var parent = this.stack[this.stack.length - 2]
+  var node = this.stack[this.stack.length - 1]
+  var siblings = parent.children
+  var head = node.children[0]
+  var index = -1
+  var firstParaghraph
+
+  if (
+    parent &&
+    parent.type === 'listItem' &&
+    typeof parent.checked === 'boolean' &&
+    head &&
+    head.type === 'text'
+  ) {
+    while (++index < siblings.length) {
+      if (siblings[index].type === 'paragraph') {
+        firstParaghraph = siblings[index]
+        break
+      }
+    }
+
+    if (firstParaghraph === node) {
+      // Must start with a space or a tab.
+      head.value = head.value.slice(1)
+
+      if (head.value.length === 0) {
+        node.children.shift()
+      } else {
+        head.position.start.column++
+        head.position.start.offset++
+        node.position.start = Object.assign({}, head.position.start)
+      }
+    }
+  }
+
+  this.exit(token)
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-gfm-task-list-item/to-markdown.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/mdast-util-gfm-task-list-item/to-markdown.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+var defaultListItem = __webpack_require__(/*! mdast-util-to-markdown/lib/handle/list-item */ "./node_modules/mdast-util-to-markdown/lib/handle/list-item.js")
+
+exports.unsafe = [{atBreak: true, character: '-', after: '[:|-]'}]
+
+exports.handlers = {
+  listItem: listItemWithTaskListItem
+}
+
+function listItemWithTaskListItem(node, parent, context) {
+  var value = defaultListItem(node, parent, context)
+  var head = node.children[0]
+
+  if (typeof node.checked === 'boolean' && head && head.type === 'paragraph') {
+    value = value.replace(/^(?:[*+-]|\d+\.)([\r\n]| {1,3})/, check)
+  }
+
+  return value
+
+  function check($0) {
+    return $0 + '[' + (node.checked ? 'x' : ' ') + '] '
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-gfm/from-markdown.js":
+/*!******************************************************!*\
+  !*** ./node_modules/mdast-util-gfm/from-markdown.js ***!
+  \******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var autolinkLiteral = __webpack_require__(/*! mdast-util-gfm-autolink-literal/from-markdown */ "./node_modules/mdast-util-gfm-autolink-literal/from-markdown.js")
+var strikethrough = __webpack_require__(/*! mdast-util-gfm-strikethrough/from-markdown */ "./node_modules/mdast-util-gfm-strikethrough/from-markdown.js")
+var table = __webpack_require__(/*! mdast-util-gfm-table/from-markdown */ "./node_modules/mdast-util-gfm-table/from-markdown.js")
+var taskListItem = __webpack_require__(/*! mdast-util-gfm-task-list-item/from-markdown */ "./node_modules/mdast-util-gfm-task-list-item/from-markdown.js")
+
+var own = {}.hasOwnProperty
+
+module.exports = configure([
+  autolinkLiteral,
+  strikethrough,
+  table,
+  taskListItem
+])
+
+function configure(extensions) {
+  var config = {transforms: [], canContainEols: []}
+  var length = extensions.length
+  var index = -1
+
+  while (++index < length) {
+    extension(config, extensions[index])
+  }
+
+  return config
+}
+
+function extension(config, extension) {
+  var key
+  var left
+  var right
+
+  for (key in extension) {
+    left = own.call(config, key) ? config[key] : (config[key] = {})
+    right = extension[key]
+
+    if (key === 'canContainEols' || key === 'transforms') {
+      config[key] = [].concat(left, right)
+    } else {
+      Object.assign(left, right)
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-gfm/to-markdown.js":
+/*!****************************************************!*\
+  !*** ./node_modules/mdast-util-gfm/to-markdown.js ***!
+  \****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var autolinkLiteral = __webpack_require__(/*! mdast-util-gfm-autolink-literal/to-markdown */ "./node_modules/mdast-util-gfm-autolink-literal/to-markdown.js")
+var strikethrough = __webpack_require__(/*! mdast-util-gfm-strikethrough/to-markdown */ "./node_modules/mdast-util-gfm-strikethrough/to-markdown.js")
+var table = __webpack_require__(/*! mdast-util-gfm-table/to-markdown */ "./node_modules/mdast-util-gfm-table/to-markdown.js")
+var taskListItem = __webpack_require__(/*! mdast-util-gfm-task-list-item/to-markdown */ "./node_modules/mdast-util-gfm-task-list-item/to-markdown.js")
+var configure = __webpack_require__(/*! mdast-util-to-markdown/lib/configure */ "./node_modules/mdast-util-to-markdown/lib/configure.js")
+
+module.exports = toMarkdown
+
+function toMarkdown(options) {
+  var config = configure(
+    {handlers: {}, join: [], unsafe: [], options: {}},
+    {
+      extensions: [autolinkLiteral, strikethrough, table(options), taskListItem]
+    }
+  )
+
+  return Object.assign(config.options, {
+    handlers: config.handlers,
+    join: config.join,
+    unsafe: config.unsafe
+  })
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/index.js":
+/*!**************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/index.js ***!
+  \**************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+module.exports = __webpack_require__(/*! ./lib */ "./node_modules/mdast-util-to-hast/lib/index.js")
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/all.js":
+/*!****************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/all.js ***!
+  \****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = all
+
+var one = __webpack_require__(/*! ./one */ "./node_modules/mdast-util-to-hast/lib/one.js")
+
+function all(h, parent) {
+  var nodes = parent.children || []
+  var length = nodes.length
+  var values = []
+  var index = -1
+  var result
+  var head
+
+  while (++index < length) {
+    result = one(h, nodes[index], parent)
+
+    if (result) {
+      if (index && nodes[index - 1].type === 'break') {
+        if (result.value) {
+          result.value = result.value.replace(/^\s+/, '')
+        }
+
+        head = result.children && result.children[0]
+
+        if (head && head.value) {
+          head.value = head.value.replace(/^\s+/, '')
+        }
+      }
+
+      values = values.concat(result)
+    }
+  }
+
+  return values
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/footer.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/footer.js ***!
+  \*******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = generateFootnotes
+
+var thematicBreak = __webpack_require__(/*! ./handlers/thematic-break */ "./node_modules/mdast-util-to-hast/lib/handlers/thematic-break.js")
+var list = __webpack_require__(/*! ./handlers/list */ "./node_modules/mdast-util-to-hast/lib/handlers/list.js")
+var wrap = __webpack_require__(/*! ./wrap */ "./node_modules/mdast-util-to-hast/lib/wrap.js")
+
+function generateFootnotes(h) {
+  var footnoteById = h.footnoteById
+  var footnoteOrder = h.footnoteOrder
+  var length = footnoteOrder.length
+  var index = -1
+  var listItems = []
+  var def
+  var backReference
+  var content
+  var tail
+
+  while (++index < length) {
+    def = footnoteById[footnoteOrder[index].toUpperCase()]
+
+    if (!def) {
+      continue
+    }
+
+    content = def.children.concat()
+    tail = content[content.length - 1]
+    backReference = {
+      type: 'link',
+      url: '#fnref-' + def.identifier,
+      data: {hProperties: {className: ['footnote-backref']}},
+      children: [{type: 'text', value: '↩'}]
+    }
+
+    if (!tail || tail.type !== 'paragraph') {
+      tail = {type: 'paragraph', children: []}
+      content.push(tail)
+    }
+
+    tail.children.push(backReference)
+
+    listItems.push({
+      type: 'listItem',
+      data: {hProperties: {id: 'fn-' + def.identifier}},
+      children: content,
+      position: def.position
+    })
+  }
+
+  if (listItems.length === 0) {
+    return null
+  }
+
+  return h(
+    null,
+    'div',
+    {className: ['footnotes']},
+    wrap(
+      [
+        thematicBreak(h),
+        list(h, {type: 'list', ordered: true, children: listItems})
+      ],
+      true
+    )
+  )
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/blockquote.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/blockquote.js ***!
+  \********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = blockquote
+
+var wrap = __webpack_require__(/*! ../wrap */ "./node_modules/mdast-util-to-hast/lib/wrap.js")
+var all = __webpack_require__(/*! ../all */ "./node_modules/mdast-util-to-hast/lib/all.js")
+
+function blockquote(h, node) {
+  return h(node, 'blockquote', wrap(all(h, node), true))
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/break.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/break.js ***!
+  \***************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = hardBreak
+
+var u = __webpack_require__(/*! unist-builder */ "./node_modules/unist-builder/index.js")
+
+function hardBreak(h, node) {
+  return [h(node, 'br'), u('text', '\n')]
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/code.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/code.js ***!
+  \**************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = code
+
+var u = __webpack_require__(/*! unist-builder */ "./node_modules/unist-builder/index.js")
+
+function code(h, node) {
+  var value = node.value ? node.value + '\n' : ''
+  // To do: next major, use `node.lang` w/o regex, the splitting’s been going
+  // on for years in remark now.
+  var lang = node.lang && node.lang.match(/^[^ \t]+(?=[ \t]|$)/)
+  var props = {}
+  var code
+
+  if (lang) {
+    props.className = ['language-' + lang]
+  }
+
+  code = h(node, 'code', props, [u('text', value)])
+
+  if (node.meta) {
+    code.data = {meta: node.meta}
+  }
+
+  return h(node.position, 'pre', [code])
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/delete.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/delete.js ***!
+  \****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = strikethrough
+
+var all = __webpack_require__(/*! ../all */ "./node_modules/mdast-util-to-hast/lib/all.js")
+
+function strikethrough(h, node) {
+  return h(node, 'del', all(h, node))
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/emphasis.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/emphasis.js ***!
+  \******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = emphasis
+
+var all = __webpack_require__(/*! ../all */ "./node_modules/mdast-util-to-hast/lib/all.js")
+
+function emphasis(h, node) {
+  return h(node, 'em', all(h, node))
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/footnote-reference.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/footnote-reference.js ***!
+  \****************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = footnoteReference
+
+var u = __webpack_require__(/*! unist-builder */ "./node_modules/unist-builder/index.js")
+
+function footnoteReference(h, node) {
+  var footnoteOrder = h.footnoteOrder
+  var identifier = String(node.identifier)
+
+  if (footnoteOrder.indexOf(identifier) === -1) {
+    footnoteOrder.push(identifier)
+  }
+
+  return h(node.position, 'sup', {id: 'fnref-' + identifier}, [
+    h(node, 'a', {href: '#fn-' + identifier, className: ['footnote-ref']}, [
+      u('text', node.label || identifier)
+    ])
+  ])
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/footnote.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/footnote.js ***!
+  \******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = footnote
+
+var footnoteReference = __webpack_require__(/*! ./footnote-reference */ "./node_modules/mdast-util-to-hast/lib/handlers/footnote-reference.js")
+
+function footnote(h, node) {
+  var footnoteById = h.footnoteById
+  var footnoteOrder = h.footnoteOrder
+  var identifier = 1
+
+  while (identifier in footnoteById) {
+    identifier++
+  }
+
+  identifier = String(identifier)
+
+  // No need to check if `identifier` exists in `footnoteOrder`, it’s guaranteed
+  // to not exist because we just generated it.
+  footnoteOrder.push(identifier)
+
+  footnoteById[identifier] = {
+    type: 'footnoteDefinition',
+    identifier: identifier,
+    children: [{type: 'paragraph', children: node.children}],
+    position: node.position
+  }
+
+  return footnoteReference(h, {
+    type: 'footnoteReference',
+    identifier: identifier,
+    position: node.position
+  })
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/heading.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/heading.js ***!
+  \*****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = heading
+
+var all = __webpack_require__(/*! ../all */ "./node_modules/mdast-util-to-hast/lib/all.js")
+
+function heading(h, node) {
+  return h(node, 'h' + node.depth, all(h, node))
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/html.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/html.js ***!
+  \**************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = html
+
+var u = __webpack_require__(/*! unist-builder */ "./node_modules/unist-builder/index.js")
+
+// Return either a `raw` node in dangerous mode, otherwise nothing.
+function html(h, node) {
+  return h.dangerous ? h.augment(node, u('raw', node.value)) : null
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/image-reference.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/image-reference.js ***!
+  \*************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = imageReference
+
+var normalize = __webpack_require__(/*! mdurl/encode */ "./node_modules/mdurl/encode.js")
+var revert = __webpack_require__(/*! ../revert */ "./node_modules/mdast-util-to-hast/lib/revert.js")
+
+function imageReference(h, node) {
+  var def = h.definition(node.identifier)
+  var props
+
+  if (!def) {
+    return revert(h, node)
+  }
+
+  props = {src: normalize(def.url || ''), alt: node.alt}
+
+  if (def.title !== null && def.title !== undefined) {
+    props.title = def.title
+  }
+
+  return h(node, 'img', props)
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/image.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/image.js ***!
+  \***************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var normalize = __webpack_require__(/*! mdurl/encode */ "./node_modules/mdurl/encode.js")
+
+module.exports = image
+
+function image(h, node) {
+  var props = {src: normalize(node.url), alt: node.alt}
+
+  if (node.title !== null && node.title !== undefined) {
+    props.title = node.title
+  }
+
+  return h(node, 'img', props)
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/index.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/index.js ***!
+  \***************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = {
+  blockquote: __webpack_require__(/*! ./blockquote */ "./node_modules/mdast-util-to-hast/lib/handlers/blockquote.js"),
+  break: __webpack_require__(/*! ./break */ "./node_modules/mdast-util-to-hast/lib/handlers/break.js"),
+  code: __webpack_require__(/*! ./code */ "./node_modules/mdast-util-to-hast/lib/handlers/code.js"),
+  delete: __webpack_require__(/*! ./delete */ "./node_modules/mdast-util-to-hast/lib/handlers/delete.js"),
+  emphasis: __webpack_require__(/*! ./emphasis */ "./node_modules/mdast-util-to-hast/lib/handlers/emphasis.js"),
+  footnoteReference: __webpack_require__(/*! ./footnote-reference */ "./node_modules/mdast-util-to-hast/lib/handlers/footnote-reference.js"),
+  footnote: __webpack_require__(/*! ./footnote */ "./node_modules/mdast-util-to-hast/lib/handlers/footnote.js"),
+  heading: __webpack_require__(/*! ./heading */ "./node_modules/mdast-util-to-hast/lib/handlers/heading.js"),
+  html: __webpack_require__(/*! ./html */ "./node_modules/mdast-util-to-hast/lib/handlers/html.js"),
+  imageReference: __webpack_require__(/*! ./image-reference */ "./node_modules/mdast-util-to-hast/lib/handlers/image-reference.js"),
+  image: __webpack_require__(/*! ./image */ "./node_modules/mdast-util-to-hast/lib/handlers/image.js"),
+  inlineCode: __webpack_require__(/*! ./inline-code */ "./node_modules/mdast-util-to-hast/lib/handlers/inline-code.js"),
+  linkReference: __webpack_require__(/*! ./link-reference */ "./node_modules/mdast-util-to-hast/lib/handlers/link-reference.js"),
+  link: __webpack_require__(/*! ./link */ "./node_modules/mdast-util-to-hast/lib/handlers/link.js"),
+  listItem: __webpack_require__(/*! ./list-item */ "./node_modules/mdast-util-to-hast/lib/handlers/list-item.js"),
+  list: __webpack_require__(/*! ./list */ "./node_modules/mdast-util-to-hast/lib/handlers/list.js"),
+  paragraph: __webpack_require__(/*! ./paragraph */ "./node_modules/mdast-util-to-hast/lib/handlers/paragraph.js"),
+  root: __webpack_require__(/*! ./root */ "./node_modules/mdast-util-to-hast/lib/handlers/root.js"),
+  strong: __webpack_require__(/*! ./strong */ "./node_modules/mdast-util-to-hast/lib/handlers/strong.js"),
+  table: __webpack_require__(/*! ./table */ "./node_modules/mdast-util-to-hast/lib/handlers/table.js"),
+  text: __webpack_require__(/*! ./text */ "./node_modules/mdast-util-to-hast/lib/handlers/text.js"),
+  thematicBreak: __webpack_require__(/*! ./thematic-break */ "./node_modules/mdast-util-to-hast/lib/handlers/thematic-break.js"),
+  toml: ignore,
+  yaml: ignore,
+  definition: ignore,
+  footnoteDefinition: ignore
+}
+
+// Return nothing for nodes that are ignored.
+function ignore() {
+  return null
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/inline-code.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/inline-code.js ***!
+  \*********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = inlineCode
+
+var u = __webpack_require__(/*! unist-builder */ "./node_modules/unist-builder/index.js")
+
+function inlineCode(h, node) {
+  var value = node.value.replace(/\r?\n|\r/g, ' ')
+  return h(node, 'code', [u('text', value)])
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/link-reference.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/link-reference.js ***!
+  \************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = linkReference
+
+var normalize = __webpack_require__(/*! mdurl/encode */ "./node_modules/mdurl/encode.js")
+var revert = __webpack_require__(/*! ../revert */ "./node_modules/mdast-util-to-hast/lib/revert.js")
+var all = __webpack_require__(/*! ../all */ "./node_modules/mdast-util-to-hast/lib/all.js")
+
+function linkReference(h, node) {
+  var def = h.definition(node.identifier)
+  var props
+
+  if (!def) {
+    return revert(h, node)
+  }
+
+  props = {href: normalize(def.url || '')}
+
+  if (def.title !== null && def.title !== undefined) {
+    props.title = def.title
+  }
+
+  return h(node, 'a', props, all(h, node))
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/link.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/link.js ***!
+  \**************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var normalize = __webpack_require__(/*! mdurl/encode */ "./node_modules/mdurl/encode.js")
+var all = __webpack_require__(/*! ../all */ "./node_modules/mdast-util-to-hast/lib/all.js")
+
+module.exports = link
+
+function link(h, node) {
+  var props = {href: normalize(node.url)}
+
+  if (node.title !== null && node.title !== undefined) {
+    props.title = node.title
+  }
+
+  return h(node, 'a', props, all(h, node))
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/list-item.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/list-item.js ***!
+  \*******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = listItem
+
+var u = __webpack_require__(/*! unist-builder */ "./node_modules/unist-builder/index.js")
+var all = __webpack_require__(/*! ../all */ "./node_modules/mdast-util-to-hast/lib/all.js")
+
+function listItem(h, node, parent) {
+  var result = all(h, node)
+  var head = result[0]
+  var loose = parent ? listLoose(parent) : listItemLoose(node)
+  var props = {}
+  var wrapped = []
+  var length
+  var index
+  var child
+
+  if (typeof node.checked === 'boolean') {
+    if (!head || head.tagName !== 'p') {
+      head = h(null, 'p', [])
+      result.unshift(head)
+    }
+
+    if (head.children.length > 0) {
+      head.children.unshift(u('text', ' '))
+    }
+
+    head.children.unshift(
+      h(null, 'input', {
+        type: 'checkbox',
+        checked: node.checked,
+        disabled: true
+      })
+    )
+
+    // According to github-markdown-css, this class hides bullet.
+    // See: <https://github.com/sindresorhus/github-markdown-css>.
+    props.className = ['task-list-item']
+  }
+
+  length = result.length
+  index = -1
+
+  while (++index < length) {
+    child = result[index]
+
+    // Add eols before nodes, except if this is a loose, first paragraph.
+    if (loose || index !== 0 || child.tagName !== 'p') {
+      wrapped.push(u('text', '\n'))
+    }
+
+    if (child.tagName === 'p' && !loose) {
+      wrapped = wrapped.concat(child.children)
+    } else {
+      wrapped.push(child)
+    }
+  }
+
+  // Add a final eol.
+  if (length && (loose || child.tagName !== 'p')) {
+    wrapped.push(u('text', '\n'))
+  }
+
+  return h(node, 'li', props, wrapped)
+}
+
+function listLoose(node) {
+  var loose = node.spread
+  var children = node.children
+  var length = children.length
+  var index = -1
+
+  while (!loose && ++index < length) {
+    loose = listItemLoose(children[index])
+  }
+
+  return loose
+}
+
+function listItemLoose(node) {
+  var spread = node.spread
+
+  return spread === undefined || spread === null
+    ? node.children.length > 1
+    : spread
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/list.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/list.js ***!
+  \**************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = list
+
+var wrap = __webpack_require__(/*! ../wrap */ "./node_modules/mdast-util-to-hast/lib/wrap.js")
+var all = __webpack_require__(/*! ../all */ "./node_modules/mdast-util-to-hast/lib/all.js")
+
+function list(h, node) {
+  var props = {}
+  var name = node.ordered ? 'ol' : 'ul'
+  var items
+  var index = -1
+  var length
+
+  if (typeof node.start === 'number' && node.start !== 1) {
+    props.start = node.start
+  }
+
+  items = all(h, node)
+  length = items.length
+
+  // Like GitHub, add a class for custom styling.
+  while (++index < length) {
+    if (
+      items[index].properties.className &&
+      items[index].properties.className.indexOf('task-list-item') !== -1
+    ) {
+      props.className = ['contains-task-list']
+      break
+    }
+  }
+
+  return h(node, name, props, wrap(items, true))
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/paragraph.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/paragraph.js ***!
+  \*******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = paragraph
+
+var all = __webpack_require__(/*! ../all */ "./node_modules/mdast-util-to-hast/lib/all.js")
+
+function paragraph(h, node) {
+  return h(node, 'p', all(h, node))
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/root.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/root.js ***!
+  \**************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = root
+
+var u = __webpack_require__(/*! unist-builder */ "./node_modules/unist-builder/index.js")
+var wrap = __webpack_require__(/*! ../wrap */ "./node_modules/mdast-util-to-hast/lib/wrap.js")
+var all = __webpack_require__(/*! ../all */ "./node_modules/mdast-util-to-hast/lib/all.js")
+
+function root(h, node) {
+  return h.augment(node, u('root', wrap(all(h, node))))
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/strong.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/strong.js ***!
+  \****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = strong
+
+var all = __webpack_require__(/*! ../all */ "./node_modules/mdast-util-to-hast/lib/all.js")
+
+function strong(h, node) {
+  return h(node, 'strong', all(h, node))
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/table.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/table.js ***!
+  \***************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = table
+
+var position = __webpack_require__(/*! unist-util-position */ "./node_modules/unist-util-position/index.js")
+var wrap = __webpack_require__(/*! ../wrap */ "./node_modules/mdast-util-to-hast/lib/wrap.js")
+var all = __webpack_require__(/*! ../all */ "./node_modules/mdast-util-to-hast/lib/all.js")
+
+function table(h, node) {
+  var rows = node.children
+  var index = rows.length
+  var align = node.align || []
+  var alignLength = align.length
+  var result = []
+  var pos
+  var row
+  var out
+  var name
+  var cell
+
+  while (index--) {
+    row = rows[index].children
+    name = index === 0 ? 'th' : 'td'
+    pos = alignLength || row.length
+    out = []
+
+    while (pos--) {
+      cell = row[pos]
+      out[pos] = h(cell, name, {align: align[pos]}, cell ? all(h, cell) : [])
+    }
+
+    result[index] = h(rows[index], 'tr', wrap(out, true))
+  }
+
+  return h(
+    node,
+    'table',
+    wrap(
+      [h(result[0].position, 'thead', wrap([result[0]], true))].concat(
+        result[1]
+          ? h(
+              {
+                start: position.start(result[1]),
+                end: position.end(result[result.length - 1])
+              },
+              'tbody',
+              wrap(result.slice(1), true)
+            )
+          : []
+      ),
+      true
+    )
+  )
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/text.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/text.js ***!
+  \**************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = text
+
+var u = __webpack_require__(/*! unist-builder */ "./node_modules/unist-builder/index.js")
+
+function text(h, node) {
+  return h.augment(
+    node,
+    u('text', String(node.value).replace(/[ \t]*(\r?\n|\r)[ \t]*/g, '$1'))
+  )
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/handlers/thematic-break.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/handlers/thematic-break.js ***!
+  \************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = thematicBreak
+
+function thematicBreak(h, node) {
+  return h(node, 'hr')
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/index.js":
+/*!******************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/index.js ***!
+  \******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = toHast
+
+var u = __webpack_require__(/*! unist-builder */ "./node_modules/unist-builder/index.js")
+var visit = __webpack_require__(/*! unist-util-visit */ "./node_modules/unist-util-visit/index.js")
+var position = __webpack_require__(/*! unist-util-position */ "./node_modules/unist-util-position/index.js")
+var generated = __webpack_require__(/*! unist-util-generated */ "./node_modules/unist-util-generated/index.js")
+var definitions = __webpack_require__(/*! mdast-util-definitions */ "./node_modules/mdast-util-definitions/index.js")
+var one = __webpack_require__(/*! ./one */ "./node_modules/mdast-util-to-hast/lib/one.js")
+var footer = __webpack_require__(/*! ./footer */ "./node_modules/mdast-util-to-hast/lib/footer.js")
+var handlers = __webpack_require__(/*! ./handlers */ "./node_modules/mdast-util-to-hast/lib/handlers/index.js")
+
+var own = {}.hasOwnProperty
+
+var deprecationWarningIssued = false
+
+// Factory to transform.
+function factory(tree, options) {
+  var settings = options || {}
+
+  // Issue a warning if the deprecated tag 'allowDangerousHTML' is used
+  if (settings.allowDangerousHTML !== undefined && !deprecationWarningIssued) {
+    deprecationWarningIssued = true
+    console.warn(
+      'mdast-util-to-hast: deprecation: `allowDangerousHTML` is nonstandard, use `allowDangerousHtml` instead'
+    )
+  }
+
+  var dangerous = settings.allowDangerousHtml || settings.allowDangerousHTML
+  var footnoteById = {}
+
+  h.dangerous = dangerous
+  h.definition = definitions(tree)
+  h.footnoteById = footnoteById
+  h.footnoteOrder = []
+  h.augment = augment
+  h.handlers = Object.assign({}, handlers, settings.handlers)
+  h.unknownHandler = settings.unknownHandler
+  h.passThrough = settings.passThrough
+
+  visit(tree, 'footnoteDefinition', onfootnotedefinition)
+
+  return h
+
+  // Finalise the created `right`, a hast node, from `left`, an mdast node.
+  function augment(left, right) {
+    var data
+    var ctx
+
+    // Handle `data.hName`, `data.hProperties, `data.hChildren`.
+    if (left && left.data) {
+      data = left.data
+
+      if (data.hName) {
+        if (right.type !== 'element') {
+          right = {
+            type: 'element',
+            tagName: '',
+            properties: {},
+            children: []
+          }
+        }
+
+        right.tagName = data.hName
+      }
+
+      if (right.type === 'element' && data.hProperties) {
+        right.properties = Object.assign({}, right.properties, data.hProperties)
+      }
+
+      if (right.children && data.hChildren) {
+        right.children = data.hChildren
+      }
+    }
+
+    ctx = left && left.position ? left : {position: left}
+
+    if (!generated(ctx)) {
+      right.position = {
+        start: position.start(ctx),
+        end: position.end(ctx)
+      }
+    }
+
+    return right
+  }
+
+  // Create an element for `node`.
+  function h(node, tagName, props, children) {
+    if (
+      (children === undefined || children === null) &&
+      typeof props === 'object' &&
+      'length' in props
+    ) {
+      children = props
+      props = {}
+    }
+
+    return augment(node, {
+      type: 'element',
+      tagName: tagName,
+      properties: props || {},
+      children: children || []
+    })
+  }
+
+  function onfootnotedefinition(definition) {
+    var id = String(definition.identifier).toUpperCase()
+
+    // Mimick CM behavior of link definitions.
+    // See: <https://github.com/syntax-tree/mdast-util-definitions/blob/8290999/index.js#L26>.
+    if (!own.call(footnoteById, id)) {
+      footnoteById[id] = definition
+    }
+  }
+}
+
+// Transform `tree`, which is an mdast node, to a hast node.
+function toHast(tree, options) {
+  var h = factory(tree, options)
+  var node = one(h, tree)
+  var foot = footer(h)
+
+  if (foot) {
+    node.children = node.children.concat(u('text', '\n'), foot)
+  }
+
+  return node
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/one.js":
+/*!****************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/one.js ***!
+  \****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = one
+
+var u = __webpack_require__(/*! unist-builder */ "./node_modules/unist-builder/index.js")
+var all = __webpack_require__(/*! ./all */ "./node_modules/mdast-util-to-hast/lib/all.js")
+
+var own = {}.hasOwnProperty
+
+// Transform an unknown node.
+function unknown(h, node) {
+  if (text(node)) {
+    return h.augment(node, u('text', node.value))
+  }
+
+  return h(node, 'div', all(h, node))
+}
+
+// Visit a node.
+function one(h, node, parent) {
+  var type = node && node.type
+  var fn
+
+  // Fail on non-nodes.
+  if (!type) {
+    throw new Error('Expected node, got `' + node + '`')
+  }
+
+  if (own.call(h.handlers, type)) {
+    fn = h.handlers[type]
+  } else if (h.passThrough && h.passThrough.indexOf(type) > -1) {
+    fn = returnNode
+  } else {
+    fn = h.unknownHandler
+  }
+
+  return (typeof fn === 'function' ? fn : unknown)(h, node, parent)
+}
+
+// Check if the node should be renderered as a text node.
+function text(node) {
+  var data = node.data || {}
+
+  if (
+    own.call(data, 'hName') ||
+    own.call(data, 'hProperties') ||
+    own.call(data, 'hChildren')
+  ) {
+    return false
+  }
+
+  return 'value' in node
+}
+
+function returnNode(h, node) {
+  var clone
+
+  if (node.children) {
+    clone = Object.assign({}, node)
+    clone.children = all(h, node)
+    return clone
+  }
+
+  return node
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/revert.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/revert.js ***!
+  \*******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = revert
+
+var u = __webpack_require__(/*! unist-builder */ "./node_modules/unist-builder/index.js")
+var all = __webpack_require__(/*! ./all */ "./node_modules/mdast-util-to-hast/lib/all.js")
+
+// Return the content of a reference without definition as Markdown.
+function revert(h, node) {
+  var subtype = node.referenceType
+  var suffix = ']'
+  var contents
+  var head
+  var tail
+
+  if (subtype === 'collapsed') {
+    suffix += '[]'
+  } else if (subtype === 'full') {
+    suffix += '[' + (node.label || node.identifier) + ']'
+  }
+
+  if (node.type === 'imageReference') {
+    return u('text', '![' + node.alt + suffix)
+  }
+
+  contents = all(h, node)
+  head = contents[0]
+
+  if (head && head.type === 'text') {
+    head.value = '[' + head.value
+  } else {
+    contents.unshift(u('text', '['))
+  }
+
+  tail = contents[contents.length - 1]
+
+  if (tail && tail.type === 'text') {
+    tail.value += suffix
+  } else {
+    contents.push(u('text', suffix))
+  }
+
+  return contents
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-hast/lib/wrap.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/lib/wrap.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = wrap
+
+var u = __webpack_require__(/*! unist-builder */ "./node_modules/unist-builder/index.js")
+
+// Wrap `nodes` with line feeds between each entry.
+// Optionally adds line feeds at the start and end.
+function wrap(nodes, loose) {
+  var result = []
+  var index = -1
+  var length = nodes.length
+
+  if (loose) {
+    result.push(u('text', '\n'))
+  }
+
+  while (++index < length) {
+    if (index) {
+      result.push(u('text', '\n'))
+    }
+
+    result.push(nodes[index])
+  }
+
+  if (loose && nodes.length > 0) {
+    result.push(u('text', '\n'))
+  }
+
+  return result
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-markdown/lib/configure.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/mdast-util-to-markdown/lib/configure.js ***!
+  \**************************************************************/
+/***/ ((module) => {
+
+module.exports = configure
+
+function configure(base, extension) {
+  var index = -1
+  var key
+
+  // First do subextensions.
+  if (extension.extensions) {
+    while (++index < extension.extensions.length) {
+      configure(base, extension.extensions[index])
+    }
+  }
+
+  for (key in extension) {
+    if (key === 'extensions') {
+      // Empty.
+    } else if (key === 'unsafe' || key === 'join') {
+      base[key] = base[key].concat(extension[key] || [])
+    } else if (key === 'handlers') {
+      base[key] = Object.assign(base[key], extension[key] || {})
+    } else {
+      base.options[key] = extension[key]
+    }
+  }
+
+  return base
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-markdown/lib/handle/inline-code.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/mdast-util-to-markdown/lib/handle/inline-code.js ***!
+  \***********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = inlineCode
+inlineCode.peek = inlineCodePeek
+
+var patternCompile = __webpack_require__(/*! ../util/pattern-compile */ "./node_modules/mdast-util-to-markdown/lib/util/pattern-compile.js")
+
+function inlineCode(node, parent, context) {
+  var value = node.value || ''
+  var sequence = '`'
+  var index = -1
+  var pattern
+  var expression
+  var match
+  var position
+
+  // If there is a single grave accent on its own in the code, use a fence of
+  // two.
+  // If there are two in a row, use one.
+  while (new RegExp('(^|[^`])' + sequence + '([^`]|$)').test(value)) {
+    sequence += '`'
+  }
+
+  // If this is not just spaces or eols (tabs don’t count), and either the
+  // first or last character are a space, eol, or tick, then pad with spaces.
+  if (
+    /[^ \r\n]/.test(value) &&
+    (/[ \r\n`]/.test(value.charAt(0)) ||
+      /[ \r\n`]/.test(value.charAt(value.length - 1)))
+  ) {
+    value = ' ' + value + ' '
+  }
+
+  // We have a potential problem: certain characters after eols could result in
+  // blocks being seen.
+  // For example, if someone injected the string `'\n# b'`, then that would
+  // result in an ATX heading.
+  // We can’t escape characters in `inlineCode`, but because eols are
+  // transformed to spaces when going from markdown to HTML anyway, we can swap
+  // them out.
+  while (++index < context.unsafe.length) {
+    pattern = context.unsafe[index]
+
+    // Only look for `atBreak`s.
+    // Btw: note that `atBreak` patterns will always start the regex at LF or
+    // CR.
+    if (!pattern.atBreak) continue
+
+    expression = patternCompile(pattern)
+
+    while ((match = expression.exec(value))) {
+      position = match.index
+
+      // Support CRLF (patterns only look for one of the characters).
+      if (
+        value.charCodeAt(position) === 10 /* `\n` */ &&
+        value.charCodeAt(position - 1) === 13 /* `\r` */
+      ) {
+        position--
+      }
+
+      value = value.slice(0, position) + ' ' + value.slice(match.index + 1)
+    }
+  }
+
+  return sequence + value + sequence
+}
+
+function inlineCodePeek() {
+  return '`'
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-markdown/lib/handle/list-item.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/mdast-util-to-markdown/lib/handle/list-item.js ***!
+  \*********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = listItem
+
+var repeat = __webpack_require__(/*! repeat-string */ "./node_modules/repeat-string/index.js")
+var checkBullet = __webpack_require__(/*! ../util/check-bullet */ "./node_modules/mdast-util-to-markdown/lib/util/check-bullet.js")
+var checkListItemIndent = __webpack_require__(/*! ../util/check-list-item-indent */ "./node_modules/mdast-util-to-markdown/lib/util/check-list-item-indent.js")
+var flow = __webpack_require__(/*! ../util/container-flow */ "./node_modules/mdast-util-to-markdown/lib/util/container-flow.js")
+var indentLines = __webpack_require__(/*! ../util/indent-lines */ "./node_modules/mdast-util-to-markdown/lib/util/indent-lines.js")
+
+function listItem(node, parent, context) {
+  var bullet = checkBullet(context)
+  var listItemIndent = checkListItemIndent(context)
+  var size
+  var value
+  var exit
+
+  if (parent && parent.ordered) {
+    bullet =
+      (parent.start > -1 ? parent.start : 1) +
+      (context.options.incrementListMarker === false
+        ? 0
+        : parent.children.indexOf(node)) +
+      '.'
+  }
+
+  size = bullet.length + 1
+
+  if (
+    listItemIndent === 'tab' ||
+    (listItemIndent === 'mixed' && ((parent && parent.spread) || node.spread))
+  ) {
+    size = Math.ceil(size / 4) * 4
+  }
+
+  exit = context.enter('listItem')
+  value = indentLines(flow(node, context), map)
+  exit()
+
+  return value
+
+  function map(line, index, blank) {
+    if (index) {
+      return (blank ? '' : repeat(' ', size)) + line
+    }
+
+    return (blank ? bullet : bullet + repeat(' ', size - bullet.length)) + line
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-markdown/lib/util/check-bullet.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/mdast-util-to-markdown/lib/util/check-bullet.js ***!
+  \**********************************************************************/
+/***/ ((module) => {
+
+module.exports = checkBullet
+
+function checkBullet(context) {
+  var marker = context.options.bullet || '*'
+
+  if (marker !== '*' && marker !== '+' && marker !== '-') {
+    throw new Error(
+      'Cannot serialize items with `' +
+        marker +
+        '` for `options.bullet`, expected `*`, `+`, or `-`'
+    )
+  }
+
+  return marker
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-markdown/lib/util/check-list-item-indent.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/mdast-util-to-markdown/lib/util/check-list-item-indent.js ***!
+  \********************************************************************************/
+/***/ ((module) => {
+
+module.exports = checkListItemIndent
+
+function checkListItemIndent(context) {
+  var style = context.options.listItemIndent || 'tab'
+
+  if (style === 1 || style === '1') {
+    return 'one'
+  }
+
+  if (style !== 'tab' && style !== 'one' && style !== 'mixed') {
+    throw new Error(
+      'Cannot serialize items with `' +
+        style +
+        '` for `options.listItemIndent`, expected `tab`, `one`, or `mixed`'
+    )
+  }
+
+  return style
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-markdown/lib/util/container-flow.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/mdast-util-to-markdown/lib/util/container-flow.js ***!
+  \************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = flow
+
+var repeat = __webpack_require__(/*! repeat-string */ "./node_modules/repeat-string/index.js")
+
+function flow(parent, context) {
+  var children = parent.children || []
+  var results = []
+  var index = -1
+  var child
+
+  while (++index < children.length) {
+    child = children[index]
+
+    results.push(
+      context.handle(child, parent, context, {before: '\n', after: '\n'})
+    )
+
+    if (index + 1 < children.length) {
+      results.push(between(child, children[index + 1]))
+    }
+  }
+
+  return results.join('')
+
+  function between(left, right) {
+    var index = -1
+    var result
+
+    while (++index < context.join.length) {
+      result = context.join[index](left, right, parent, context)
+
+      if (result === true || result === 1) {
+        break
+      }
+
+      if (typeof result === 'number') {
+        return repeat('\n', 1 + Number(result))
+      }
+
+      if (result === false) {
+        return '\n\n<!---->\n\n'
+      }
+    }
+
+    return '\n\n'
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-markdown/lib/util/container-phrasing.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/mdast-util-to-markdown/lib/util/container-phrasing.js ***!
+  \****************************************************************************/
+/***/ ((module) => {
+
+module.exports = phrasing
+
+function phrasing(parent, context, safeOptions) {
+  var children = parent.children || []
+  var results = []
+  var index = -1
+  var before = safeOptions.before
+  var after
+  var handle
+  var child
+
+  while (++index < children.length) {
+    child = children[index]
+
+    if (index + 1 < children.length) {
+      handle = context.handle.handlers[children[index + 1].type]
+      if (handle && handle.peek) handle = handle.peek
+      after = handle
+        ? handle(children[index + 1], parent, context, {
+            before: '',
+            after: ''
+          }).charAt(0)
+        : ''
+    } else {
+      after = safeOptions.after
+    }
+
+    // In some cases, html (text) can be found in phrasing right after an eol.
+    // When we’d serialize that, in most cases that would be seen as html
+    // (flow).
+    // As we can’t escape or so to prevent it from happening, we take a somewhat
+    // reasonable approach: replace that eol with a space.
+    // See: <https://github.com/syntax-tree/mdast-util-to-markdown/issues/15>
+    if (
+      results.length > 0 &&
+      (before === '\r' || before === '\n') &&
+      child.type === 'html'
+    ) {
+      results[results.length - 1] = results[results.length - 1].replace(
+        /(\r?\n|\r)$/,
+        ' '
+      )
+      before = ' '
+    }
+
+    results.push(
+      context.handle(child, parent, context, {
+        before: before,
+        after: after
+      })
+    )
+
+    before = results[results.length - 1].slice(-1)
+  }
+
+  return results.join('')
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-markdown/lib/util/indent-lines.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/mdast-util-to-markdown/lib/util/indent-lines.js ***!
+  \**********************************************************************/
+/***/ ((module) => {
+
+module.exports = indentLines
+
+var eol = /\r?\n|\r/g
+
+function indentLines(value, map) {
+  var result = []
+  var start = 0
+  var line = 0
+  var match
+
+  while ((match = eol.exec(value))) {
+    one(value.slice(start, match.index))
+    result.push(match[0])
+    start = match.index + match[0].length
+    line++
+  }
+
+  one(value.slice(start))
+
+  return result.join('')
+
+  function one(value) {
+    result.push(map(value, line, !value))
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-markdown/lib/util/pattern-compile.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/mdast-util-to-markdown/lib/util/pattern-compile.js ***!
+  \*************************************************************************/
+/***/ ((module) => {
+
+module.exports = patternCompile
+
+function patternCompile(pattern) {
+  var before
+  var after
+
+  if (!pattern._compiled) {
+    before = pattern.before ? '(?:' + pattern.before + ')' : ''
+    after = pattern.after ? '(?:' + pattern.after + ')' : ''
+
+    if (pattern.atBreak) {
+      before = '[\\r\\n][\\t ]*' + before
+    }
+
+    pattern._compiled = new RegExp(
+      (before ? '(' + before + ')' : '') +
+        (/[|\\{}()[\]^$+*?.-]/.test(pattern.character) ? '\\' : '') +
+        pattern.character +
+        (after || ''),
+      'g'
+    )
+  }
+
+  return pattern._compiled
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-string/index.js":
+/*!****************************************************!*\
+  !*** ./node_modules/mdast-util-to-string/index.js ***!
+  \****************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = toString
+
+// Get the text content of a node.
+// Prefer the node’s plain-text fields, otherwise serialize its children,
+// and if the given value is an array, serialize the nodes in it.
+function toString(node) {
+  return (
+    (node &&
+      (node.value ||
+        node.alt ||
+        node.title ||
+        ('children' in node && all(node.children)) ||
+        ('length' in node && all(node)))) ||
+    ''
+  )
+}
+
+function all(values) {
+  var result = []
+  var index = -1
+
+  while (++index < values.length) {
+    result[index] = toString(values[index])
+  }
+
+  return result.join('')
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdurl/encode.js":
+/*!**************************************!*\
+  !*** ./node_modules/mdurl/encode.js ***!
+  \**************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+
+
+var encodeCache = {};
+
+
+// Create a lookup array where anything but characters in `chars` string
+// and alphanumeric chars is percent-encoded.
+//
+function getEncodeCache(exclude) {
+  var i, ch, cache = encodeCache[exclude];
+  if (cache) { return cache; }
+
+  cache = encodeCache[exclude] = [];
+
+  for (i = 0; i < 128; i++) {
+    ch = String.fromCharCode(i);
+
+    if (/^[0-9a-z]$/i.test(ch)) {
+      // always allow unencoded alphanumeric characters
+      cache.push(ch);
+    } else {
+      cache.push('%' + ('0' + i.toString(16).toUpperCase()).slice(-2));
+    }
+  }
+
+  for (i = 0; i < exclude.length; i++) {
+    cache[exclude.charCodeAt(i)] = exclude[i];
+  }
+
+  return cache;
+}
+
+
+// Encode unsafe characters with percent-encoding, skipping already
+// encoded sequences.
+//
+//  - string       - string to encode
+//  - exclude      - list of characters to ignore (in addition to a-zA-Z0-9)
+//  - keepEscaped  - don't encode '%' in a correct escape sequence (default: true)
+//
+function encode(string, exclude, keepEscaped) {
+  var i, l, code, nextCode, cache,
+      result = '';
+
+  if (typeof exclude !== 'string') {
+    // encode(string, keepEscaped)
+    keepEscaped  = exclude;
+    exclude = encode.defaultChars;
+  }
+
+  if (typeof keepEscaped === 'undefined') {
+    keepEscaped = true;
+  }
+
+  cache = getEncodeCache(exclude);
+
+  for (i = 0, l = string.length; i < l; i++) {
+    code = string.charCodeAt(i);
+
+    if (keepEscaped && code === 0x25 /* % */ && i + 2 < l) {
+      if (/^[0-9a-f]{2}$/i.test(string.slice(i + 1, i + 3))) {
+        result += string.slice(i, i + 3);
+        i += 2;
+        continue;
+      }
+    }
+
+    if (code < 128) {
+      result += cache[code];
+      continue;
+    }
+
+    if (code >= 0xD800 && code <= 0xDFFF) {
+      if (code >= 0xD800 && code <= 0xDBFF && i + 1 < l) {
+        nextCode = string.charCodeAt(i + 1);
+        if (nextCode >= 0xDC00 && nextCode <= 0xDFFF) {
+          result += encodeURIComponent(string[i] + string[i + 1]);
+          i++;
+          continue;
+        }
+      }
+      result += '%EF%BF%BD';
+      continue;
+    }
+
+    result += encodeURIComponent(string[i]);
+  }
+
+  return result;
+}
+
+encode.defaultChars   = ";/?:@&=+$,-_.!~*'()#";
+encode.componentChars = "-_.!~*'()";
+
+
+module.exports = encode;
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark-extension-gfm-autolink-literal/index.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/micromark-extension-gfm-autolink-literal/index.js ***!
+  \************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__(/*! ./syntax */ "./node_modules/micromark-extension-gfm-autolink-literal/syntax.js")
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark-extension-gfm-autolink-literal/syntax.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/micromark-extension-gfm-autolink-literal/syntax.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+var asciiAlpha = __webpack_require__(/*! micromark/dist/character/ascii-alpha */ "./node_modules/micromark/dist/character/ascii-alpha.js")
+var asciiAlphanumeric = __webpack_require__(/*! micromark/dist/character/ascii-alphanumeric */ "./node_modules/micromark/dist/character/ascii-alphanumeric.js")
+var asciiControl = __webpack_require__(/*! micromark/dist/character/ascii-control */ "./node_modules/micromark/dist/character/ascii-control.js")
+var markdownLineEnding = __webpack_require__(/*! micromark/dist/character/markdown-line-ending */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var unicodePunctuation = __webpack_require__(/*! micromark/dist/character/unicode-punctuation */ "./node_modules/micromark/dist/character/unicode-punctuation.js")
+var unicodeWhitespace = __webpack_require__(/*! micromark/dist/character/unicode-whitespace */ "./node_modules/micromark/dist/character/unicode-whitespace.js")
+
+var www = {tokenize: tokenizeWww, partial: true}
+var domain = {tokenize: tokenizeDomain, partial: true}
+var path = {tokenize: tokenizePath, partial: true}
+var punctuation = {tokenize: tokenizePunctuation, partial: true}
+var namedCharacterReference = {
+  tokenize: tokenizeNamedCharacterReference,
+  partial: true
+}
+
+var wwwAutolink = {tokenize: tokenizeWwwAutolink, previous: previousWww}
+var httpAutolink = {tokenize: tokenizeHttpAutolink, previous: previousHttp}
+var emailAutolink = {tokenize: tokenizeEmailAutolink, previous: previousEmail}
+
+var text = {}
+
+// Export hooked constructs.
+exports.text = text
+
+// `0`
+var code = 48
+
+// While the code is smaller than `{`.
+while (code < 123) {
+  text[code] = emailAutolink
+  code++
+  // Jump from `:` -> `A`
+  if (code === 58) code = 65
+  // Jump from `[` -> `a`
+  else if (code === 91) code = 97
+}
+
+// `+`
+text[43] = emailAutolink
+// `-`
+text[45] = emailAutolink
+// `.`
+text[46] = emailAutolink
+// `_`
+text[95] = emailAutolink
+// `h`.
+text[72] = [emailAutolink, httpAutolink]
+text[104] = [emailAutolink, httpAutolink]
+// `w`.
+text[87] = [emailAutolink, wwwAutolink]
+text[119] = [emailAutolink, wwwAutolink]
+
+function tokenizeEmailAutolink(effects, ok, nok) {
+  var self = this
+  var hasDot
+
+  return start
+
+  function start(code) {
+    /* istanbul ignore next - hooks. */
+    if (
+      !gfmAtext(code) ||
+      !previousEmail(self.previous) ||
+      previous(self.events)
+    ) {
+      return nok(code)
+    }
+
+    effects.enter('literalAutolink')
+    effects.enter('literalAutolinkEmail')
+    return atext(code)
+  }
+
+  function atext(code) {
+    if (gfmAtext(code)) {
+      effects.consume(code)
+      return atext
+    }
+
+    // `@`
+    if (code === 64) {
+      effects.consume(code)
+      return label
+    }
+
+    return nok(code)
+  }
+
+  function label(code) {
+    // `.`
+    if (code === 46) {
+      return effects.check(punctuation, done, dotContinuation)(code)
+    }
+
+    if (
+      // `-`
+      code === 45 ||
+      // `_`
+      code === 95
+    ) {
+      return effects.check(punctuation, nok, dashOrUnderscoreContinuation)(code)
+    }
+
+    if (asciiAlphanumeric(code)) {
+      effects.consume(code)
+      return label
+    }
+
+    return done(code)
+  }
+
+  function dotContinuation(code) {
+    effects.consume(code)
+    hasDot = true
+    return label
+  }
+
+  function dashOrUnderscoreContinuation(code) {
+    effects.consume(code)
+    return afterDashOrUnderscore
+  }
+
+  function afterDashOrUnderscore(code) {
+    // `.`
+    if (code === 46) {
+      return effects.check(punctuation, nok, dotContinuation)(code)
+    }
+
+    return label(code)
+  }
+
+  function done(code) {
+    if (hasDot) {
+      effects.exit('literalAutolinkEmail')
+      effects.exit('literalAutolink')
+      return ok(code)
+    }
+
+    return nok(code)
+  }
+}
+
+function tokenizeWwwAutolink(effects, ok, nok) {
+  var self = this
+
+  return start
+
+  function start(code) {
+    /* istanbul ignore next - hooks. */
+    if (
+      (code !== 87 && code - 32 !== 87) ||
+      !previousWww(self.previous) ||
+      previous(self.events)
+    ) {
+      return nok(code)
+    }
+
+    effects.enter('literalAutolink')
+    effects.enter('literalAutolinkWww')
+    // For `www.` we check instead of attempt, because when it matches, GH
+    // treats it as part of a domain (yes, it says a valid domain must come
+    // after `www.`, but that’s not how it’s implemented by them).
+    return effects.check(
+      www,
+      effects.attempt(domain, effects.attempt(path, done), nok),
+      nok
+    )(code)
+  }
+
+  function done(code) {
+    effects.exit('literalAutolinkWww')
+    effects.exit('literalAutolink')
+    return ok(code)
+  }
+}
+
+function tokenizeHttpAutolink(effects, ok, nok) {
+  var self = this
+
+  return start
+
+  function start(code) {
+    /* istanbul ignore next - hooks. */
+    if (
+      (code !== 72 && code - 32 !== 72) ||
+      !previousHttp(self.previous) ||
+      previous(self.events)
+    ) {
+      return nok(code)
+    }
+
+    effects.enter('literalAutolink')
+    effects.enter('literalAutolinkHttp')
+    effects.consume(code)
+    return t1
+  }
+
+  function t1(code) {
+    // `t`
+    if (code === 84 || code - 32 === 84) {
+      effects.consume(code)
+      return t2
+    }
+
+    return nok(code)
+  }
+
+  function t2(code) {
+    // `t`
+    if (code === 84 || code - 32 === 84) {
+      effects.consume(code)
+      return p
+    }
+
+    return nok(code)
+  }
+
+  function p(code) {
+    // `p`
+    if (code === 80 || code - 32 === 80) {
+      effects.consume(code)
+      return s
+    }
+
+    return nok(code)
+  }
+
+  function s(code) {
+    // `s`
+    if (code === 83 || code - 32 === 83) {
+      effects.consume(code)
+      return colon
+    }
+
+    return colon(code)
+  }
+
+  function colon(code) {
+    // `:`
+    if (code === 58) {
+      effects.consume(code)
+      return slash1
+    }
+
+    return nok(code)
+  }
+
+  function slash1(code) {
+    // `/`
+    if (code === 47) {
+      effects.consume(code)
+      return slash2
+    }
+
+    return nok(code)
+  }
+
+  function slash2(code) {
+    // `/`
+    if (code === 47) {
+      effects.consume(code)
+      return after
+    }
+
+    return nok(code)
+  }
+
+  function after(code) {
+    return asciiControl(code) ||
+      unicodeWhitespace(code) ||
+      unicodePunctuation(code)
+      ? nok(code)
+      : effects.attempt(domain, effects.attempt(path, done), nok)(code)
+  }
+
+  function done(code) {
+    effects.exit('literalAutolinkHttp')
+    effects.exit('literalAutolink')
+    return ok(code)
+  }
+}
+
+function tokenizeWww(effects, ok, nok) {
+  return start
+
+  function start(code) {
+    // Assume a `w`.
+    effects.consume(code)
+    return w2
+  }
+
+  function w2(code) {
+    // `w`
+    if (code === 87 || code - 32 === 87) {
+      effects.consume(code)
+      return w3
+    }
+
+    return nok(code)
+  }
+
+  function w3(code) {
+    // `w`
+    if (code === 87 || code - 32 === 87) {
+      effects.consume(code)
+      return dot
+    }
+
+    return nok(code)
+  }
+
+  function dot(code) {
+    // `.`
+    if (code === 46) {
+      effects.consume(code)
+      return after
+    }
+
+    return nok(code)
+  }
+
+  function after(code) {
+    return code === null || markdownLineEnding(code) ? nok(code) : ok(code)
+  }
+}
+
+function tokenizeDomain(effects, ok, nok) {
+  var hasUnderscoreInLastSegment
+  var hasUnderscoreInLastLastSegment
+
+  return domain
+
+  function domain(code) {
+    // `&`
+    if (code === 38) {
+      return effects.check(
+        namedCharacterReference,
+        done,
+        punctuationContinuation
+      )(code)
+    }
+
+    if (code === 46 /* `.` */ || code === 95 /* `_` */) {
+      return effects.check(punctuation, done, punctuationContinuation)(code)
+    }
+
+    // GH documents that only alphanumerics (other than `-`, `.`, and `_`) can
+    // occur, which sounds like ASCII only, but they also support `www.點看.com`,
+    // so that’s Unicode.
+    // Instead of some new production for Unicode alphanumerics, markdown
+    // already has that for Unicode punctuation and whitespace, so use those.
+    if (
+      asciiControl(code) ||
+      unicodeWhitespace(code) ||
+      (code !== 45 /* `-` */ && unicodePunctuation(code))
+    ) {
+      return done(code)
+    }
+
+    effects.consume(code)
+    return domain
+  }
+
+  function punctuationContinuation(code) {
+    // `.`
+    if (code === 46) {
+      hasUnderscoreInLastLastSegment = hasUnderscoreInLastSegment
+      hasUnderscoreInLastSegment = undefined
+      effects.consume(code)
+      return domain
+    }
+
+    // `_`
+    if (code === 95) hasUnderscoreInLastSegment = true
+
+    effects.consume(code)
+    return domain
+  }
+
+  function done(code) {
+    if (!hasUnderscoreInLastLastSegment && !hasUnderscoreInLastSegment) {
+      return ok(code)
+    }
+
+    return nok(code)
+  }
+}
+
+function tokenizePath(effects, ok) {
+  var balance = 0
+
+  return inPath
+
+  function inPath(code) {
+    // `&`
+    if (code === 38) {
+      return effects.check(
+        namedCharacterReference,
+        ok,
+        continuedPunctuation
+      )(code)
+    }
+
+    // `(`
+    if (code === 40) {
+      balance++
+    }
+
+    // `)`
+    if (code === 41) {
+      return effects.check(
+        punctuation,
+        parenAtPathEnd,
+        continuedPunctuation
+      )(code)
+    }
+
+    if (pathEnd(code)) {
+      return ok(code)
+    }
+
+    if (trailingPunctuation(code)) {
+      return effects.check(punctuation, ok, continuedPunctuation)(code)
+    }
+
+    effects.consume(code)
+    return inPath
+  }
+
+  function continuedPunctuation(code) {
+    effects.consume(code)
+    return inPath
+  }
+
+  function parenAtPathEnd(code) {
+    balance--
+    return balance < 0 ? ok(code) : continuedPunctuation(code)
+  }
+}
+
+function tokenizeNamedCharacterReference(effects, ok, nok) {
+  return start
+
+  function start(code) {
+    // Assume an ampersand.
+    effects.consume(code)
+    return inside
+  }
+
+  function inside(code) {
+    if (asciiAlpha(code)) {
+      effects.consume(code)
+      return inside
+    }
+
+    // `;`
+    if (code === 59) {
+      effects.consume(code)
+      return after
+    }
+
+    return nok(code)
+  }
+
+  function after(code) {
+    // If the named character reference is followed by the end of the path, it’s
+    // not continued punctuation.
+    return pathEnd(code) ? ok(code) : nok(code)
+  }
+}
+
+function tokenizePunctuation(effects, ok, nok) {
+  return start
+
+  function start(code) {
+    // Always a valid trailing punctuation marker.
+    effects.consume(code)
+    return after
+  }
+
+  function after(code) {
+    // Check the next.
+    if (trailingPunctuation(code)) {
+      effects.consume(code)
+      return after
+    }
+
+    // If the punctuation marker is followed by the end of the path, it’s not
+    // continued punctuation.
+    return pathEnd(code) ? ok(code) : nok(code)
+  }
+}
+
+function trailingPunctuation(code) {
+  return (
+    // `!`
+    code === 33 ||
+    // `"`
+    code === 34 ||
+    // `'`
+    code === 39 ||
+    // `)`
+    code === 41 ||
+    // `*`
+    code === 42 ||
+    // `,`
+    code === 44 ||
+    // `.`
+    code === 46 ||
+    // `:`
+    code === 58 ||
+    // `;`
+    code === 59 ||
+    // `<`
+    code === 60 ||
+    // `?`
+    code === 63 ||
+    // `_`.
+    code === 95 ||
+    // `~`
+    code === 126
+  )
+}
+
+function pathEnd(code) {
+  return (
+    // EOF.
+    code === null ||
+    // CR, LF, CRLF, HT, VS.
+    code < 0 ||
+    // Space.
+    code === 32 ||
+    // `<`
+    code === 60
+  )
+}
+
+function gfmAtext(code) {
+  return (
+    code === 43 /* `+` */ ||
+    code === 45 /* `-` */ ||
+    code === 46 /* `.` */ ||
+    code === 95 /* `_` */ ||
+    asciiAlphanumeric(code)
+  )
+}
+
+function previousWww(code) {
+  return (
+    code === null ||
+    code < 0 ||
+    code === 32 /* ` ` */ ||
+    code === 40 /* `(` */ ||
+    code === 42 /* `*` */ ||
+    code === 95 /* `_` */ ||
+    code === 126 /* `~` */
+  )
+}
+
+function previousHttp(code) {
+  return code === null || !asciiAlpha(code)
+}
+
+function previousEmail(code) {
+  return code !== 47 /* `/` */ && previousHttp(code)
+}
+
+function previous(events) {
+  var index = events.length
+
+  while (index--) {
+    if (
+      (events[index][1].type === 'labelLink' ||
+        events[index][1].type === 'labelImage') &&
+      !events[index][1]._balanced
+    ) {
+      return true
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark-extension-gfm-strikethrough/index.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/micromark-extension-gfm-strikethrough/index.js ***!
+  \*********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = create
+
+var classifyCharacter = __webpack_require__(/*! micromark/dist/util/classify-character */ "./node_modules/micromark/dist/util/classify-character.js")
+var chunkedSplice = __webpack_require__(/*! micromark/dist/util/chunked-splice */ "./node_modules/micromark/dist/util/chunked-splice.js")
+var resolveAll = __webpack_require__(/*! micromark/dist/util/resolve-all */ "./node_modules/micromark/dist/util/resolve-all.js")
+var shallow = __webpack_require__(/*! micromark/dist/util/shallow */ "./node_modules/micromark/dist/util/shallow.js")
+
+function create(options) {
+  var settings = options || {}
+  var single = settings.singleTilde
+  var tokenizer = {
+    tokenize: tokenizeStrikethrough,
+    resolveAll: resolveAllStrikethrough
+  }
+
+  if (single === null || single === undefined) {
+    single = true
+  }
+
+  return {text: {126: tokenizer}, insideSpan: {null: tokenizer}}
+
+  // Take events and resolve strikethrough.
+  function resolveAllStrikethrough(events, context) {
+    var index = -1
+    var strikethrough
+    var text
+    var open
+    var nextEvents
+
+    // Walk through all events.
+    while (++index < events.length) {
+      // Find a token that can close.
+      if (
+        events[index][0] === 'enter' &&
+        events[index][1].type === 'strikethroughSequenceTemporary' &&
+        events[index][1]._close
+      ) {
+        open = index
+
+        // Now walk back to find an opener.
+        while (open--) {
+          // Find a token that can open the closer.
+          if (
+            events[open][0] === 'exit' &&
+            events[open][1].type === 'strikethroughSequenceTemporary' &&
+            events[open][1]._open &&
+            // If the sizes are the same:
+            events[index][1].end.offset - events[index][1].start.offset ===
+              events[open][1].end.offset - events[open][1].start.offset
+          ) {
+            events[index][1].type = 'strikethroughSequence'
+            events[open][1].type = 'strikethroughSequence'
+
+            strikethrough = {
+              type: 'strikethrough',
+              start: shallow(events[open][1].start),
+              end: shallow(events[index][1].end)
+            }
+
+            text = {
+              type: 'strikethroughText',
+              start: shallow(events[open][1].end),
+              end: shallow(events[index][1].start)
+            }
+
+            // Opening.
+            nextEvents = [
+              ['enter', strikethrough, context],
+              ['enter', events[open][1], context],
+              ['exit', events[open][1], context],
+              ['enter', text, context]
+            ]
+
+            // Between.
+            chunkedSplice(
+              nextEvents,
+              nextEvents.length,
+              0,
+              resolveAll(
+                context.parser.constructs.insideSpan.null,
+                events.slice(open + 1, index),
+                context
+              )
+            )
+
+            // Closing.
+            chunkedSplice(nextEvents, nextEvents.length, 0, [
+              ['exit', text, context],
+              ['enter', events[index][1], context],
+              ['exit', events[index][1], context],
+              ['exit', strikethrough, context]
+            ])
+
+            chunkedSplice(events, open - 1, index - open + 3, nextEvents)
+
+            index = open + nextEvents.length - 2
+            break
+          }
+        }
+      }
+    }
+
+    return removeRemainingSequences(events)
+  }
+
+  function removeRemainingSequences(events) {
+    var index = -1
+    var length = events.length
+
+    while (++index < length) {
+      if (events[index][1].type === 'strikethroughSequenceTemporary') {
+        events[index][1].type = 'data'
+      }
+    }
+
+    return events
+  }
+
+  function tokenizeStrikethrough(effects, ok, nok) {
+    var previous = this.previous
+    var events = this.events
+    var size = 0
+
+    return start
+
+    function start(code) {
+      if (
+        code !== 126 ||
+        (previous === 126 &&
+          events[events.length - 1][1].type !== 'characterEscape')
+      ) {
+        return nok(code)
+      }
+
+      effects.enter('strikethroughSequenceTemporary')
+      return more(code)
+    }
+
+    function more(code) {
+      var before = classifyCharacter(previous)
+      var token
+      var after
+
+      if (code === 126) {
+        // If this is the third marker, exit.
+        if (size > 1) return nok(code)
+        effects.consume(code)
+        size++
+        return more
+      }
+
+      if (size < 2 && !single) return nok(code)
+      token = effects.exit('strikethroughSequenceTemporary')
+      after = classifyCharacter(code)
+      token._open = !after || (after === 2 && before)
+      token._close = !before || (before === 2 && after)
+      return ok(code)
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark-extension-gfm-table/index.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/micromark-extension-gfm-table/index.js ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__(/*! ./syntax */ "./node_modules/micromark-extension-gfm-table/syntax.js")
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark-extension-gfm-table/syntax.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/micromark-extension-gfm-table/syntax.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+exports.flow = {
+  null: {tokenize: tokenizeTable, resolve: resolveTable, interruptible: true}
+}
+
+var createSpace = __webpack_require__(/*! micromark/dist/tokenize/factory-space */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+
+var setextUnderlineMini = {tokenize: tokenizeSetextUnderlineMini, partial: true}
+var nextPrefixedOrBlank = {tokenize: tokenizeNextPrefixedOrBlank, partial: true}
+
+function resolveTable(events, context) {
+  var length = events.length
+  var index = -1
+  var token
+  var inHead
+  var inDelimiterRow
+  var inRow
+  var cell
+  var content
+  var text
+  var contentStart
+  var contentEnd
+  var cellStart
+
+  while (++index < length) {
+    token = events[index][1]
+
+    if (inRow) {
+      if (token.type === 'temporaryTableCellContent') {
+        contentStart = contentStart || index
+        contentEnd = index
+      }
+
+      if (
+        // Combine separate content parts into one.
+        (token.type === 'tableCellDivider' || token.type === 'tableRow') &&
+        contentEnd
+      ) {
+        content = {
+          type: 'tableContent',
+          start: events[contentStart][1].start,
+          end: events[contentEnd][1].end
+        }
+        text = {
+          type: 'chunkText',
+          start: content.start,
+          end: content.end,
+          contentType: 'text'
+        }
+
+        events.splice(
+          contentStart,
+          contentEnd - contentStart + 1,
+          ['enter', content, context],
+          ['enter', text, context],
+          ['exit', text, context],
+          ['exit', content, context]
+        )
+        index -= contentEnd - contentStart - 3
+        length = events.length
+        contentStart = undefined
+        contentEnd = undefined
+      }
+    }
+
+    if (
+      events[index][0] === 'exit' &&
+      cellStart &&
+      cellStart + 1 < index &&
+      (token.type === 'tableCellDivider' ||
+        (token.type === 'tableRow' &&
+          (cellStart + 3 < index ||
+            events[cellStart][1].type !== 'whitespace')))
+    ) {
+      cell = {
+        type: inDelimiterRow
+          ? 'tableDelimiter'
+          : inHead
+          ? 'tableHeader'
+          : 'tableData',
+        start: events[cellStart][1].start,
+        end: events[index][1].end
+      }
+      events.splice(index + (token.type === 'tableCellDivider' ? 1 : 0), 0, [
+        'exit',
+        cell,
+        context
+      ])
+      events.splice(cellStart, 0, ['enter', cell, context])
+      index += 2
+      length = events.length
+      cellStart = index + 1
+    }
+
+    if (token.type === 'tableRow') {
+      inRow = events[index][0] === 'enter'
+
+      if (inRow) {
+        cellStart = index + 1
+      }
+    }
+
+    if (token.type === 'tableDelimiterRow') {
+      inDelimiterRow = events[index][0] === 'enter'
+
+      if (inDelimiterRow) {
+        cellStart = index + 1
+      }
+    }
+
+    if (token.type === 'tableHead') {
+      inHead = events[index][0] === 'enter'
+    }
+  }
+
+  return events
+}
+
+function tokenizeTable(effects, ok, nok) {
+  var align = []
+  var tableHeaderCount = 0
+  var seenDelimiter
+  var hasDash
+
+  return start
+
+  function start(code) {
+    /* istanbul ignore if - used to be passed in beta micromark versions. */
+    if (code === null || code === -5 || code === -4 || code === -3) {
+      return nok(code)
+    }
+
+    effects.enter('table')._align = align
+    effects.enter('tableHead')
+    effects.enter('tableRow')
+
+    // If we start with a pipe, we open a cell marker.
+    if (code === 124) {
+      return cellDividerHead(code)
+    }
+
+    tableHeaderCount++
+    effects.enter('temporaryTableCellContent')
+    // Can’t be space or eols at the start of a construct, so we’re in a cell.
+    return inCellContentHead(code)
+  }
+
+  function cellDividerHead(code) {
+    // Always a pipe.
+    effects.enter('tableCellDivider')
+    effects.consume(code)
+    effects.exit('tableCellDivider')
+    seenDelimiter = true
+    return cellBreakHead
+  }
+
+  function cellBreakHead(code) {
+    // EOF, CR, LF, CRLF.
+    if (code === null || code === -5 || code === -4 || code === -3) {
+      return atRowEndHead(code)
+    }
+
+    // HT, VS, SP.
+    if (code === -2 || code === -1 || code === 32) {
+      effects.enter('whitespace')
+      effects.consume(code)
+      return inWhitespaceHead
+    }
+
+    if (seenDelimiter) {
+      seenDelimiter = undefined
+      tableHeaderCount++
+    }
+
+    // `|`
+    if (code === 124) {
+      return cellDividerHead(code)
+    }
+
+    // Anything else is cell content.
+    effects.enter('temporaryTableCellContent')
+    return inCellContentHead(code)
+  }
+
+  function inWhitespaceHead(code) {
+    // HT, VS, SP.
+    if (code === -2 || code === -1 || code === 32) {
+      effects.consume(code)
+      return inWhitespaceHead
+    }
+
+    effects.exit('whitespace')
+    return cellBreakHead(code)
+  }
+
+  function inCellContentHead(code) {
+    // EOF, whitespace, pipe
+    if (code === null || code < 0 || code === 32 || code === 124) {
+      effects.exit('temporaryTableCellContent')
+      return cellBreakHead(code)
+    }
+
+    effects.consume(code)
+    // `\`
+    return code === 92 ? inCellContentEscapeHead : inCellContentHead
+  }
+
+  function inCellContentEscapeHead(code) {
+    // `\` or `|`
+    if (code === 92 || code === 124) {
+      effects.consume(code)
+      return inCellContentHead
+    }
+
+    // Anything else.
+    return inCellContentHead(code)
+  }
+
+  function atRowEndHead(code) {
+    if (code === null) {
+      return nok(code)
+    }
+
+    effects.exit('tableRow')
+    effects.exit('tableHead')
+
+    // Always a line ending.
+    effects.enter('lineEnding')
+    effects.consume(code)
+    effects.exit('lineEnding')
+
+    // If a setext heading, exit.
+    return effects.check(
+      setextUnderlineMini,
+      nok,
+      // Support an indent before the delimiter row.
+      createSpace(effects, rowStartDelimiter, 'linePrefix', 4)
+    )
+  }
+
+  function rowStartDelimiter(code) {
+    // If there’s another space, or we’re at the EOL/EOF, exit.
+    if (code === null || code < 0 || code === 32) {
+      return nok(code)
+    }
+
+    effects.enter('tableDelimiterRow')
+    return atDelimiterRowBreak(code)
+  }
+
+  function atDelimiterRowBreak(code) {
+    // EOF, CR, LF, CRLF.
+    if (code === null || code === -5 || code === -4 || code === -3) {
+      return rowEndDelimiter(code)
+    }
+
+    // HT, VS, SP.
+    if (code === -2 || code === -1 || code === 32) {
+      effects.enter('whitespace')
+      effects.consume(code)
+      return inWhitespaceDelimiter
+    }
+
+    // `-`
+    if (code === 45) {
+      effects.enter('tableDelimiterFiller')
+      effects.consume(code)
+      hasDash = true
+      align.push(null)
+      return inFillerDelimiter
+    }
+
+    // `:`
+    if (code === 58) {
+      effects.enter('tableDelimiterAlignment')
+      effects.consume(code)
+      effects.exit('tableDelimiterAlignment')
+      align.push('left')
+      return afterLeftAlignment
+    }
+
+    // If we start with a pipe, we open a cell marker.
+    if (code === 124) {
+      effects.enter('tableCellDivider')
+      effects.consume(code)
+      effects.exit('tableCellDivider')
+      return atDelimiterRowBreak
+    }
+
+    return nok(code)
+  }
+
+  function inWhitespaceDelimiter(code) {
+    // HT, VS, SP.
+    if (code === -2 || code === -1 || code === 32) {
+      effects.consume(code)
+      return inWhitespaceDelimiter
+    }
+
+    effects.exit('whitespace')
+    return atDelimiterRowBreak(code)
+  }
+
+  function inFillerDelimiter(code) {
+    // `-`
+    if (code === 45) {
+      effects.consume(code)
+      return inFillerDelimiter
+    }
+
+    effects.exit('tableDelimiterFiller')
+
+    // `:`
+    if (code === 58) {
+      effects.enter('tableDelimiterAlignment')
+      effects.consume(code)
+      effects.exit('tableDelimiterAlignment')
+
+      align[align.length - 1] =
+        align[align.length - 1] === 'left' ? 'center' : 'right'
+
+      return afterRightAlignment
+    }
+
+    return atDelimiterRowBreak(code)
+  }
+
+  function afterLeftAlignment(code) {
+    // `-`
+    if (code === 45) {
+      effects.enter('tableDelimiterFiller')
+      effects.consume(code)
+      hasDash = true
+      return inFillerDelimiter
+    }
+
+    // Anything else is not ok.
+    return nok(code)
+  }
+
+  function afterRightAlignment(code) {
+    // EOF, CR, LF, CRLF.
+    if (code === null || code === -5 || code === -4 || code === -3) {
+      return rowEndDelimiter(code)
+    }
+
+    // HT, VS, SP.
+    if (code === -2 || code === -1 || code === 32) {
+      effects.enter('whitespace')
+      effects.consume(code)
+      return inWhitespaceDelimiter
+    }
+
+    // `|`
+    if (code === 124) {
+      effects.enter('tableCellDivider')
+      effects.consume(code)
+      effects.exit('tableCellDivider')
+      return atDelimiterRowBreak
+    }
+
+    return nok(code)
+  }
+
+  function rowEndDelimiter(code) {
+    effects.exit('tableDelimiterRow')
+
+    // Exit if there was no dash at all, or if the header cell count is not the
+    // delimiter cell count.
+    if (!hasDash || tableHeaderCount !== align.length) {
+      return nok(code)
+    }
+
+    if (code === null) {
+      return tableClose(code)
+    }
+
+    return effects.check(nextPrefixedOrBlank, tableClose, tableContinue)(code)
+  }
+
+  function tableClose(code) {
+    effects.exit('table')
+    return ok(code)
+  }
+
+  function tableContinue(code) {
+    // Always a line ending.
+    effects.enter('lineEnding')
+    effects.consume(code)
+    effects.exit('lineEnding')
+    // We checked that it’s not a prefixed or blank line, so we’re certain a
+    // body is coming, though it may be indented.
+    return createSpace(effects, bodyStart, 'linePrefix', 4)
+  }
+
+  function bodyStart(code) {
+    effects.enter('tableBody')
+    return rowStartBody(code)
+  }
+
+  function rowStartBody(code) {
+    effects.enter('tableRow')
+
+    // If we start with a pipe, we open a cell marker.
+    if (code === 124) {
+      return cellDividerBody(code)
+    }
+
+    effects.enter('temporaryTableCellContent')
+    // Can’t be space or eols at the start of a construct, so we’re in a cell.
+    return inCellContentBody(code)
+  }
+
+  function cellDividerBody(code) {
+    // Always a pipe.
+    effects.enter('tableCellDivider')
+    effects.consume(code)
+    effects.exit('tableCellDivider')
+    return cellBreakBody
+  }
+
+  function cellBreakBody(code) {
+    // EOF, CR, LF, CRLF.
+    if (code === null || code === -5 || code === -4 || code === -3) {
+      return atRowEndBody(code)
+    }
+
+    // HT, VS, SP.
+    if (code === -2 || code === -1 || code === 32) {
+      effects.enter('whitespace')
+      effects.consume(code)
+      return inWhitespaceBody
+    }
+
+    // `|`
+    if (code === 124) {
+      return cellDividerBody(code)
+    }
+
+    // Anything else is cell content.
+    effects.enter('temporaryTableCellContent')
+    return inCellContentBody(code)
+  }
+
+  function inWhitespaceBody(code) {
+    // HT, VS, SP.
+    if (code === -2 || code === -1 || code === 32) {
+      effects.consume(code)
+      return inWhitespaceBody
+    }
+
+    effects.exit('whitespace')
+    return cellBreakBody(code)
+  }
+
+  function inCellContentBody(code) {
+    // EOF, whitespace, pipe
+    if (code === null || code < 0 || code === 32 || code === 124) {
+      effects.exit('temporaryTableCellContent')
+      return cellBreakBody(code)
+    }
+
+    effects.consume(code)
+    // `\`
+    return code === 92 ? inCellContentEscapeBody : inCellContentBody
+  }
+
+  function inCellContentEscapeBody(code) {
+    // `\` or `|`
+    if (code === 92 || code === 124) {
+      effects.consume(code)
+      return inCellContentBody
+    }
+
+    // Anything else.
+    return inCellContentBody(code)
+  }
+
+  function atRowEndBody(code) {
+    effects.exit('tableRow')
+
+    if (code === null) {
+      return tableBodyClose(code)
+    }
+
+    return effects.check(
+      nextPrefixedOrBlank,
+      tableBodyClose,
+      tableBodyContinue
+    )(code)
+  }
+
+  function tableBodyClose(code) {
+    effects.exit('tableBody')
+    return tableClose(code)
+  }
+
+  function tableBodyContinue(code) {
+    // Always a line ending.
+    effects.enter('lineEnding')
+    effects.consume(code)
+    effects.exit('lineEnding')
+    // Support an optional prefix, then start a body row.
+    return createSpace(effects, rowStartBody, 'linePrefix', 4)
+  }
+}
+
+// Based on micromark, but that won’t work as we’re in a table, and that expects
+// content.
+// <https://github.com/micromark/micromark/blob/main/lib/tokenize/setext-underline.js>
+function tokenizeSetextUnderlineMini(effects, ok, nok) {
+  return start
+
+  function start(code) {
+    // `-`
+    if (code !== 45) {
+      return nok(code)
+    }
+
+    effects.enter('setextUnderline')
+    return sequence(code)
+  }
+
+  function sequence(code) {
+    if (code === 45) {
+      effects.consume(code)
+      return sequence
+    }
+
+    return whitespace(code)
+  }
+
+  function whitespace(code) {
+    if (code === -2 || code === -1 || code === 32) {
+      effects.consume(code)
+      return whitespace
+    }
+
+    if (code === null || code === -5 || code === -4 || code === -3) {
+      return ok(code)
+    }
+
+    return nok(code)
+  }
+}
+
+function tokenizeNextPrefixedOrBlank(effects, ok, nok) {
+  var size = 0
+
+  return start
+
+  function start(code) {
+    // This is a check, so we don’t care about tokens, but we open a bogus one
+    // so we’re valid.
+    effects.enter('check')
+    // EOL.
+    effects.consume(code)
+    return whitespace
+  }
+
+  function whitespace(code) {
+    // VS or SP.
+    if (code === -1 || code === 32) {
+      effects.consume(code)
+      size++
+      return size === 4 ? ok : whitespace
+    }
+
+    // EOF or whitespace
+    if (code === null || code < 0) {
+      return ok(code)
+    }
+
+    // Anything else.
+    return nok(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark-extension-gfm-task-list-item/index.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/micromark-extension-gfm-task-list-item/index.js ***!
+  \**********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__(/*! ./syntax */ "./node_modules/micromark-extension-gfm-task-list-item/syntax.js")
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark-extension-gfm-task-list-item/syntax.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/micromark-extension-gfm-task-list-item/syntax.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+var markdownLineEndingOrSpace = __webpack_require__(/*! micromark/dist/character/markdown-line-ending-or-space */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
+var spaceFactory = __webpack_require__(/*! micromark/dist/tokenize/factory-space */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+var prefixSize = __webpack_require__(/*! micromark/dist/util/prefix-size */ "./node_modules/micromark/dist/util/prefix-size.js")
+
+var tasklistCheck = {tokenize: tokenizeTasklistCheck}
+
+exports.text = {91: tasklistCheck}
+
+function tokenizeTasklistCheck(effects, ok, nok) {
+  var self = this
+
+  return open
+
+  function open(code) {
+    if (
+      // Exit if not `[`.
+      code !== 91 ||
+      // Exit if there’s stuff before.
+      self.previous !== null ||
+      // Exit if not in the first content that is the first child of a list
+      // item.
+      !self._gfmTasklistFirstContentOfListItem
+    ) {
+      return nok(code)
+    }
+
+    effects.enter('taskListCheck')
+    effects.enter('taskListCheckMarker')
+    effects.consume(code)
+    effects.exit('taskListCheckMarker')
+    return inside
+  }
+
+  function inside(code) {
+    // Tab or space.
+    if (code === -2 || code === 32) {
+      effects.enter('taskListCheckValueUnchecked')
+      effects.consume(code)
+      effects.exit('taskListCheckValueUnchecked')
+      return close
+    }
+
+    // Upper- and lower `x`.
+    if (code === 88 || code === 120) {
+      effects.enter('taskListCheckValueChecked')
+      effects.consume(code)
+      effects.exit('taskListCheckValueChecked')
+      return close
+    }
+
+    return nok(code)
+  }
+
+  function close(code) {
+    // `]`
+    if (code === 93) {
+      effects.enter('taskListCheckMarker')
+      effects.consume(code)
+      effects.exit('taskListCheckMarker')
+      effects.exit('taskListCheck')
+      return effects.check({tokenize: spaceThenNonSpace}, ok, nok)
+    }
+
+    return nok(code)
+  }
+}
+
+function spaceThenNonSpace(effects, ok, nok) {
+  var self = this
+
+  return spaceFactory(effects, after, 'whitespace')
+
+  function after(code) {
+    return prefixSize(self.events, 'whitespace') &&
+      code !== null &&
+      !markdownLineEndingOrSpace(code)
+      ? ok(code)
+      : nok(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark-extension-gfm/index.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/micromark-extension-gfm/index.js ***!
+  \*******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__(/*! ./syntax */ "./node_modules/micromark-extension-gfm/syntax.js")
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark-extension-gfm/syntax.js":
+/*!********************************************************!*\
+  !*** ./node_modules/micromark-extension-gfm/syntax.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var combine = __webpack_require__(/*! micromark/dist/util/combine-extensions */ "./node_modules/micromark/dist/util/combine-extensions.js")
+var autolink = __webpack_require__(/*! micromark-extension-gfm-autolink-literal */ "./node_modules/micromark-extension-gfm-autolink-literal/index.js")
+var strikethrough = __webpack_require__(/*! micromark-extension-gfm-strikethrough */ "./node_modules/micromark-extension-gfm-strikethrough/index.js")
+var table = __webpack_require__(/*! micromark-extension-gfm-table */ "./node_modules/micromark-extension-gfm-table/index.js")
+var tasklist = __webpack_require__(/*! micromark-extension-gfm-task-list-item */ "./node_modules/micromark-extension-gfm-task-list-item/index.js")
+
+module.exports = create
+
+function create(options) {
+  return combine([autolink, strikethrough(options), table, tasklist])
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/character/ascii-alpha.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/micromark/dist/character/ascii-alpha.js ***!
+  \**************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var regexCheck = __webpack_require__(/*! ../util/regex-check.js */ "./node_modules/micromark/dist/util/regex-check.js")
+
+var asciiAlpha = regexCheck(/[A-Za-z]/)
+
+module.exports = asciiAlpha
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/character/ascii-alphanumeric.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/micromark/dist/character/ascii-alphanumeric.js ***!
+  \*********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var regexCheck = __webpack_require__(/*! ../util/regex-check.js */ "./node_modules/micromark/dist/util/regex-check.js")
+
+var asciiAlphanumeric = regexCheck(/[\dA-Za-z]/)
+
+module.exports = asciiAlphanumeric
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/character/ascii-atext.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/micromark/dist/character/ascii-atext.js ***!
+  \**************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var regexCheck = __webpack_require__(/*! ../util/regex-check.js */ "./node_modules/micromark/dist/util/regex-check.js")
+
+var asciiAtext = regexCheck(/[#-'*+\--9=?A-Z^-~]/)
+
+module.exports = asciiAtext
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/character/ascii-control.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/micromark/dist/character/ascii-control.js ***!
+  \****************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+// Note: EOF is seen as ASCII control here, because `null < 32 == true`.
+function asciiControl(code) {
+  return (
+    // Special whitespace codes (which have negative values), C0 and Control
+    // character DEL
+    code < 32 || code === 127
+  )
+}
+
+module.exports = asciiControl
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/character/ascii-digit.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/micromark/dist/character/ascii-digit.js ***!
+  \**************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var regexCheck = __webpack_require__(/*! ../util/regex-check.js */ "./node_modules/micromark/dist/util/regex-check.js")
+
+var asciiDigit = regexCheck(/\d/)
+
+module.exports = asciiDigit
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/character/ascii-hex-digit.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/micromark/dist/character/ascii-hex-digit.js ***!
+  \******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var regexCheck = __webpack_require__(/*! ../util/regex-check.js */ "./node_modules/micromark/dist/util/regex-check.js")
+
+var asciiHexDigit = regexCheck(/[\dA-Fa-f]/)
+
+module.exports = asciiHexDigit
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/character/ascii-punctuation.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/micromark/dist/character/ascii-punctuation.js ***!
+  \********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var regexCheck = __webpack_require__(/*! ../util/regex-check.js */ "./node_modules/micromark/dist/util/regex-check.js")
+
+var asciiPunctuation = regexCheck(/[!-/:-@[-`{-~]/)
+
+module.exports = asciiPunctuation
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/micromark/dist/character/markdown-line-ending-or-space.js ***!
+  \********************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+function markdownLineEndingOrSpace(code) {
+  return code < 0 || code === 32
+}
+
+module.exports = markdownLineEndingOrSpace
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/character/markdown-line-ending.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/micromark/dist/character/markdown-line-ending.js ***!
+  \***********************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+function markdownLineEnding(code) {
+  return code < -2
+}
+
+module.exports = markdownLineEnding
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/character/markdown-space.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/micromark/dist/character/markdown-space.js ***!
+  \*****************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+function markdownSpace(code) {
+  return code === -2 || code === -1 || code === 32
+}
+
+module.exports = markdownSpace
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/character/unicode-punctuation.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/micromark/dist/character/unicode-punctuation.js ***!
+  \**********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var unicodePunctuationRegex = __webpack_require__(/*! ../constant/unicode-punctuation-regex.js */ "./node_modules/micromark/dist/constant/unicode-punctuation-regex.js")
+var regexCheck = __webpack_require__(/*! ../util/regex-check.js */ "./node_modules/micromark/dist/util/regex-check.js")
+
+// In fact adds to the bundle size.
+
+var unicodePunctuation = regexCheck(unicodePunctuationRegex)
+
+module.exports = unicodePunctuation
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/character/unicode-whitespace.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/micromark/dist/character/unicode-whitespace.js ***!
+  \*********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var regexCheck = __webpack_require__(/*! ../util/regex-check.js */ "./node_modules/micromark/dist/util/regex-check.js")
+
+var unicodeWhitespace = regexCheck(/\s/)
+
+module.exports = unicodeWhitespace
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/constant/assign.js":
+/*!********************************************************!*\
+  !*** ./node_modules/micromark/dist/constant/assign.js ***!
+  \********************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+var assign = Object.assign
+
+module.exports = assign
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/constant/from-char-code.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/micromark/dist/constant/from-char-code.js ***!
+  \****************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+var fromCharCode = String.fromCharCode
+
+module.exports = fromCharCode
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/constant/has-own-property.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/micromark/dist/constant/has-own-property.js ***!
+  \******************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+var own = {}.hasOwnProperty
+
+module.exports = own
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/constant/html-block-names.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/micromark/dist/constant/html-block-names.js ***!
+  \******************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+// This module is copied from <https://spec.commonmark.org/0.29/#html-blocks>.
+var basics = [
+  'address',
+  'article',
+  'aside',
+  'base',
+  'basefont',
+  'blockquote',
+  'body',
+  'caption',
+  'center',
+  'col',
+  'colgroup',
+  'dd',
+  'details',
+  'dialog',
+  'dir',
+  'div',
+  'dl',
+  'dt',
+  'fieldset',
+  'figcaption',
+  'figure',
+  'footer',
+  'form',
+  'frame',
+  'frameset',
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'head',
+  'header',
+  'hr',
+  'html',
+  'iframe',
+  'legend',
+  'li',
+  'link',
+  'main',
+  'menu',
+  'menuitem',
+  'nav',
+  'noframes',
+  'ol',
+  'optgroup',
+  'option',
+  'p',
+  'param',
+  'section',
+  'source',
+  'summary',
+  'table',
+  'tbody',
+  'td',
+  'tfoot',
+  'th',
+  'thead',
+  'title',
+  'tr',
+  'track',
+  'ul'
+]
+
+module.exports = basics
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/constant/html-raw-names.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/micromark/dist/constant/html-raw-names.js ***!
+  \****************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+// This module is copied from <https://spec.commonmark.org/0.29/#html-blocks>.
+var raws = ['pre', 'script', 'style', 'textarea']
+
+module.exports = raws
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/constant/splice.js":
+/*!********************************************************!*\
+  !*** ./node_modules/micromark/dist/constant/splice.js ***!
+  \********************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+var splice = [].splice
+
+module.exports = splice
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/constant/unicode-punctuation-regex.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/micromark/dist/constant/unicode-punctuation-regex.js ***!
+  \***************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+// This module is generated by `script/`.
+//
+// CommonMark handles attention (emphasis, strong) markers based on what comes
+// before or after them.
+// One such difference is if those characters are Unicode punctuation.
+// This script is generated from the Unicode data.
+var unicodePunctuation = /[!-\/:-@\[-`\{-~\xA1\xA7\xAB\xB6\xB7\xBB\xBF\u037E\u0387\u055A-\u055F\u0589\u058A\u05BE\u05C0\u05C3\u05C6\u05F3\u05F4\u0609\u060A\u060C\u060D\u061B\u061E\u061F\u066A-\u066D\u06D4\u0700-\u070D\u07F7-\u07F9\u0830-\u083E\u085E\u0964\u0965\u0970\u09FD\u0A76\u0AF0\u0C77\u0C84\u0DF4\u0E4F\u0E5A\u0E5B\u0F04-\u0F12\u0F14\u0F3A-\u0F3D\u0F85\u0FD0-\u0FD4\u0FD9\u0FDA\u104A-\u104F\u10FB\u1360-\u1368\u1400\u166E\u169B\u169C\u16EB-\u16ED\u1735\u1736\u17D4-\u17D6\u17D8-\u17DA\u1800-\u180A\u1944\u1945\u1A1E\u1A1F\u1AA0-\u1AA6\u1AA8-\u1AAD\u1B5A-\u1B60\u1BFC-\u1BFF\u1C3B-\u1C3F\u1C7E\u1C7F\u1CC0-\u1CC7\u1CD3\u2010-\u2027\u2030-\u2043\u2045-\u2051\u2053-\u205E\u207D\u207E\u208D\u208E\u2308-\u230B\u2329\u232A\u2768-\u2775\u27C5\u27C6\u27E6-\u27EF\u2983-\u2998\u29D8-\u29DB\u29FC\u29FD\u2CF9-\u2CFC\u2CFE\u2CFF\u2D70\u2E00-\u2E2E\u2E30-\u2E4F\u2E52\u3001-\u3003\u3008-\u3011\u3014-\u301F\u3030\u303D\u30A0\u30FB\uA4FE\uA4FF\uA60D-\uA60F\uA673\uA67E\uA6F2-\uA6F7\uA874-\uA877\uA8CE\uA8CF\uA8F8-\uA8FA\uA8FC\uA92E\uA92F\uA95F\uA9C1-\uA9CD\uA9DE\uA9DF\uAA5C-\uAA5F\uAADE\uAADF\uAAF0\uAAF1\uABEB\uFD3E\uFD3F\uFE10-\uFE19\uFE30-\uFE52\uFE54-\uFE61\uFE63\uFE68\uFE6A\uFE6B\uFF01-\uFF03\uFF05-\uFF0A\uFF0C-\uFF0F\uFF1A\uFF1B\uFF1F\uFF20\uFF3B-\uFF3D\uFF3F\uFF5B\uFF5D\uFF5F-\uFF65]/
+
+module.exports = unicodePunctuation
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/constructs.js":
+/*!***************************************************!*\
+  !*** ./node_modules/micromark/dist/constructs.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({value: true}))
+
+var text$1 = __webpack_require__(/*! ./initialize/text.js */ "./node_modules/micromark/dist/initialize/text.js")
+var attention = __webpack_require__(/*! ./tokenize/attention.js */ "./node_modules/micromark/dist/tokenize/attention.js")
+var autolink = __webpack_require__(/*! ./tokenize/autolink.js */ "./node_modules/micromark/dist/tokenize/autolink.js")
+var blockQuote = __webpack_require__(/*! ./tokenize/block-quote.js */ "./node_modules/micromark/dist/tokenize/block-quote.js")
+var characterEscape = __webpack_require__(/*! ./tokenize/character-escape.js */ "./node_modules/micromark/dist/tokenize/character-escape.js")
+var characterReference = __webpack_require__(/*! ./tokenize/character-reference.js */ "./node_modules/micromark/dist/tokenize/character-reference.js")
+var codeFenced = __webpack_require__(/*! ./tokenize/code-fenced.js */ "./node_modules/micromark/dist/tokenize/code-fenced.js")
+var codeIndented = __webpack_require__(/*! ./tokenize/code-indented.js */ "./node_modules/micromark/dist/tokenize/code-indented.js")
+var codeText = __webpack_require__(/*! ./tokenize/code-text.js */ "./node_modules/micromark/dist/tokenize/code-text.js")
+var definition = __webpack_require__(/*! ./tokenize/definition.js */ "./node_modules/micromark/dist/tokenize/definition.js")
+var hardBreakEscape = __webpack_require__(/*! ./tokenize/hard-break-escape.js */ "./node_modules/micromark/dist/tokenize/hard-break-escape.js")
+var headingAtx = __webpack_require__(/*! ./tokenize/heading-atx.js */ "./node_modules/micromark/dist/tokenize/heading-atx.js")
+var htmlFlow = __webpack_require__(/*! ./tokenize/html-flow.js */ "./node_modules/micromark/dist/tokenize/html-flow.js")
+var htmlText = __webpack_require__(/*! ./tokenize/html-text.js */ "./node_modules/micromark/dist/tokenize/html-text.js")
+var labelEnd = __webpack_require__(/*! ./tokenize/label-end.js */ "./node_modules/micromark/dist/tokenize/label-end.js")
+var labelStartImage = __webpack_require__(/*! ./tokenize/label-start-image.js */ "./node_modules/micromark/dist/tokenize/label-start-image.js")
+var labelStartLink = __webpack_require__(/*! ./tokenize/label-start-link.js */ "./node_modules/micromark/dist/tokenize/label-start-link.js")
+var lineEnding = __webpack_require__(/*! ./tokenize/line-ending.js */ "./node_modules/micromark/dist/tokenize/line-ending.js")
+var list = __webpack_require__(/*! ./tokenize/list.js */ "./node_modules/micromark/dist/tokenize/list.js")
+var setextUnderline = __webpack_require__(/*! ./tokenize/setext-underline.js */ "./node_modules/micromark/dist/tokenize/setext-underline.js")
+var thematicBreak = __webpack_require__(/*! ./tokenize/thematic-break.js */ "./node_modules/micromark/dist/tokenize/thematic-break.js")
+
+var document = {
+  42: list,
+  // Asterisk
+  43: list,
+  // Plus sign
+  45: list,
+  // Dash
+  48: list,
+  // 0
+  49: list,
+  // 1
+  50: list,
+  // 2
+  51: list,
+  // 3
+  52: list,
+  // 4
+  53: list,
+  // 5
+  54: list,
+  // 6
+  55: list,
+  // 7
+  56: list,
+  // 8
+  57: list,
+  // 9
+  62: blockQuote // Greater than
+}
+var contentInitial = {
+  91: definition // Left square bracket
+}
+var flowInitial = {
+  '-2': codeIndented,
+  // Horizontal tab
+  '-1': codeIndented,
+  // Virtual space
+  32: codeIndented // Space
+}
+var flow = {
+  35: headingAtx,
+  // Number sign
+  42: thematicBreak,
+  // Asterisk
+  45: [setextUnderline, thematicBreak],
+  // Dash
+  60: htmlFlow,
+  // Less than
+  61: setextUnderline,
+  // Equals to
+  95: thematicBreak,
+  // Underscore
+  96: codeFenced,
+  // Grave accent
+  126: codeFenced // Tilde
+}
+var string = {
+  38: characterReference,
+  // Ampersand
+  92: characterEscape // Backslash
+}
+var text = {
+  '-5': lineEnding,
+  // Carriage return
+  '-4': lineEnding,
+  // Line feed
+  '-3': lineEnding,
+  // Carriage return + line feed
+  33: labelStartImage,
+  // Exclamation mark
+  38: characterReference,
+  // Ampersand
+  42: attention,
+  // Asterisk
+  60: [autolink, htmlText],
+  // Less than
+  91: labelStartLink,
+  // Left square bracket
+  92: [hardBreakEscape, characterEscape],
+  // Backslash
+  93: labelEnd,
+  // Right square bracket
+  95: attention,
+  // Underscore
+  96: codeText // Grave accent
+}
+var insideSpan = {
+  null: [attention, text$1.resolver]
+}
+var disable = {
+  null: []
+}
+
+exports.contentInitial = contentInitial
+exports.disable = disable
+exports.document = document
+exports.flow = flow
+exports.flowInitial = flowInitial
+exports.insideSpan = insideSpan
+exports.string = string
+exports.text = text
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/initialize/content.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/micromark/dist/initialize/content.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({value: true}))
+
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var factorySpace = __webpack_require__(/*! ../tokenize/factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+
+var tokenize = initializeContent
+
+function initializeContent(effects) {
+  var contentStart = effects.attempt(
+    this.parser.constructs.contentInitial,
+    afterContentStartConstruct,
+    paragraphInitial
+  )
+  var previous
+  return contentStart
+
+  function afterContentStartConstruct(code) {
+    if (code === null) {
+      effects.consume(code)
+      return
+    }
+
+    effects.enter('lineEnding')
+    effects.consume(code)
+    effects.exit('lineEnding')
+    return factorySpace(effects, contentStart, 'linePrefix')
+  }
+
+  function paragraphInitial(code) {
+    effects.enter('paragraph')
+    return lineStart(code)
+  }
+
+  function lineStart(code) {
+    var token = effects.enter('chunkText', {
+      contentType: 'text',
+      previous: previous
+    })
+
+    if (previous) {
+      previous.next = token
+    }
+
+    previous = token
+    return data(code)
+  }
+
+  function data(code) {
+    if (code === null) {
+      effects.exit('chunkText')
+      effects.exit('paragraph')
+      effects.consume(code)
+      return
+    }
+
+    if (markdownLineEnding(code)) {
+      effects.consume(code)
+      effects.exit('chunkText')
+      return lineStart
+    } // Data.
+
+    effects.consume(code)
+    return data
+  }
+}
+
+exports.tokenize = tokenize
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/initialize/document.js":
+/*!************************************************************!*\
+  !*** ./node_modules/micromark/dist/initialize/document.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({value: true}))
+
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var factorySpace = __webpack_require__(/*! ../tokenize/factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+var partialBlankLine = __webpack_require__(/*! ../tokenize/partial-blank-line.js */ "./node_modules/micromark/dist/tokenize/partial-blank-line.js")
+
+var tokenize = initializeDocument
+var containerConstruct = {
+  tokenize: tokenizeContainer
+}
+var lazyFlowConstruct = {
+  tokenize: tokenizeLazyFlow
+}
+
+function initializeDocument(effects) {
+  var self = this
+  var stack = []
+  var continued = 0
+  var inspectConstruct = {
+    tokenize: tokenizeInspect,
+    partial: true
+  }
+  var inspectResult
+  var childFlow
+  var childToken
+  return start
+
+  function start(code) {
+    if (continued < stack.length) {
+      self.containerState = stack[continued][1]
+      return effects.attempt(
+        stack[continued][0].continuation,
+        documentContinue,
+        documentContinued
+      )(code)
+    }
+
+    return documentContinued(code)
+  }
+
+  function documentContinue(code) {
+    continued++
+    return start(code)
+  }
+
+  function documentContinued(code) {
+    // If we’re in a concrete construct (such as when expecting another line of
+    // HTML, or we resulted in lazy content), we can immediately start flow.
+    if (inspectResult && inspectResult.flowContinue) {
+      return flowStart(code)
+    }
+
+    self.interrupt =
+      childFlow &&
+      childFlow.currentConstruct &&
+      childFlow.currentConstruct.interruptible
+    self.containerState = {}
+    return effects.attempt(
+      containerConstruct,
+      containerContinue,
+      flowStart
+    )(code)
+  }
+
+  function containerContinue(code) {
+    stack.push([self.currentConstruct, self.containerState])
+    self.containerState = undefined
+    return documentContinued(code)
+  }
+
+  function flowStart(code) {
+    if (code === null) {
+      exitContainers(0, true)
+      effects.consume(code)
+      return
+    }
+
+    childFlow = childFlow || self.parser.flow(self.now())
+    effects.enter('chunkFlow', {
+      contentType: 'flow',
+      previous: childToken,
+      _tokenizer: childFlow
+    })
+    return flowContinue(code)
+  }
+
+  function flowContinue(code) {
+    if (code === null) {
+      continueFlow(effects.exit('chunkFlow'))
+      return flowStart(code)
+    }
+
+    if (markdownLineEnding(code)) {
+      effects.consume(code)
+      continueFlow(effects.exit('chunkFlow'))
+      return effects.check(inspectConstruct, documentAfterPeek)
+    }
+
+    effects.consume(code)
+    return flowContinue
+  }
+
+  function documentAfterPeek(code) {
+    exitContainers(
+      inspectResult.continued,
+      inspectResult && inspectResult.flowEnd
+    )
+    continued = 0
+    return start(code)
+  }
+
+  function continueFlow(token) {
+    if (childToken) childToken.next = token
+    childToken = token
+    childFlow.lazy = inspectResult && inspectResult.lazy
+    childFlow.defineSkip(token.start)
+    childFlow.write(self.sliceStream(token))
+  }
+
+  function exitContainers(size, end) {
+    var index = stack.length // Close the flow.
+
+    if (childFlow && end) {
+      childFlow.write([null])
+      childToken = childFlow = undefined
+    } // Exit open containers.
+
+    while (index-- > size) {
+      self.containerState = stack[index][1]
+      stack[index][0].exit.call(self, effects)
+    }
+
+    stack.length = size
+  }
+
+  function tokenizeInspect(effects, ok) {
+    var subcontinued = 0
+    inspectResult = {}
+    return inspectStart
+
+    function inspectStart(code) {
+      if (subcontinued < stack.length) {
+        self.containerState = stack[subcontinued][1]
+        return effects.attempt(
+          stack[subcontinued][0].continuation,
+          inspectContinue,
+          inspectLess
+        )(code)
+      } // If we’re continued but in a concrete flow, we can’t have more
+      // containers.
+
+      if (childFlow.currentConstruct && childFlow.currentConstruct.concrete) {
+        inspectResult.flowContinue = true
+        return inspectDone(code)
+      }
+
+      self.interrupt =
+        childFlow.currentConstruct && childFlow.currentConstruct.interruptible
+      self.containerState = {}
+      return effects.attempt(
+        containerConstruct,
+        inspectFlowEnd,
+        inspectDone
+      )(code)
+    }
+
+    function inspectContinue(code) {
+      subcontinued++
+      return self.containerState._closeFlow
+        ? inspectFlowEnd(code)
+        : inspectStart(code)
+    }
+
+    function inspectLess(code) {
+      if (childFlow.currentConstruct && childFlow.currentConstruct.lazy) {
+        // Maybe another container?
+        self.containerState = {}
+        return effects.attempt(
+          containerConstruct,
+          inspectFlowEnd, // Maybe flow, or a blank line?
+          effects.attempt(
+            lazyFlowConstruct,
+            inspectFlowEnd,
+            effects.check(partialBlankLine, inspectFlowEnd, inspectLazy)
+          )
+        )(code)
+      } // Otherwise we’re interrupting.
+
+      return inspectFlowEnd(code)
+    }
+
+    function inspectLazy(code) {
+      // Act as if all containers are continued.
+      subcontinued = stack.length
+      inspectResult.lazy = true
+      inspectResult.flowContinue = true
+      return inspectDone(code)
+    } // We’re done with flow if we have more containers, or an interruption.
+
+    function inspectFlowEnd(code) {
+      inspectResult.flowEnd = true
+      return inspectDone(code)
+    }
+
+    function inspectDone(code) {
+      inspectResult.continued = subcontinued
+      self.interrupt = self.containerState = undefined
+      return ok(code)
+    }
+  }
+}
+
+function tokenizeContainer(effects, ok, nok) {
+  return factorySpace(
+    effects,
+    effects.attempt(this.parser.constructs.document, ok, nok),
+    'linePrefix',
+    this.parser.constructs.disable.null.indexOf('codeIndented') > -1
+      ? undefined
+      : 4
+  )
+}
+
+function tokenizeLazyFlow(effects, ok, nok) {
+  return factorySpace(
+    effects,
+    effects.lazy(this.parser.constructs.flow, ok, nok),
+    'linePrefix',
+    this.parser.constructs.disable.null.indexOf('codeIndented') > -1
+      ? undefined
+      : 4
+  )
+}
+
+exports.tokenize = tokenize
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/initialize/flow.js":
+/*!********************************************************!*\
+  !*** ./node_modules/micromark/dist/initialize/flow.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({value: true}))
+
+var content = __webpack_require__(/*! ../tokenize/content.js */ "./node_modules/micromark/dist/tokenize/content.js")
+var factorySpace = __webpack_require__(/*! ../tokenize/factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+var partialBlankLine = __webpack_require__(/*! ../tokenize/partial-blank-line.js */ "./node_modules/micromark/dist/tokenize/partial-blank-line.js")
+
+var tokenize = initializeFlow
+
+function initializeFlow(effects) {
+  var self = this
+  var initial = effects.attempt(
+    // Try to parse a blank line.
+    partialBlankLine,
+    atBlankEnding, // Try to parse initial flow (essentially, only code).
+    effects.attempt(
+      this.parser.constructs.flowInitial,
+      afterConstruct,
+      factorySpace(
+        effects,
+        effects.attempt(
+          this.parser.constructs.flow,
+          afterConstruct,
+          effects.attempt(content, afterConstruct)
+        ),
+        'linePrefix'
+      )
+    )
+  )
+  return initial
+
+  function atBlankEnding(code) {
+    if (code === null) {
+      effects.consume(code)
+      return
+    }
+
+    effects.enter('lineEndingBlank')
+    effects.consume(code)
+    effects.exit('lineEndingBlank')
+    self.currentConstruct = undefined
+    return initial
+  }
+
+  function afterConstruct(code) {
+    if (code === null) {
+      effects.consume(code)
+      return
+    }
+
+    effects.enter('lineEnding')
+    effects.consume(code)
+    effects.exit('lineEnding')
+    self.currentConstruct = undefined
+    return initial
+  }
+}
+
+exports.tokenize = tokenize
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/initialize/text.js":
+/*!********************************************************!*\
+  !*** ./node_modules/micromark/dist/initialize/text.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({value: true}))
+
+var assign = __webpack_require__(/*! ../constant/assign.js */ "./node_modules/micromark/dist/constant/assign.js")
+var shallow = __webpack_require__(/*! ../util/shallow.js */ "./node_modules/micromark/dist/util/shallow.js")
+
+var text = initializeFactory('text')
+var string = initializeFactory('string')
+var resolver = {
+  resolveAll: createResolver()
+}
+
+function initializeFactory(field) {
+  return {
+    tokenize: initializeText,
+    resolveAll: createResolver(
+      field === 'text' ? resolveAllLineSuffixes : undefined
+    )
+  }
+
+  function initializeText(effects) {
+    var self = this
+    var constructs = this.parser.constructs[field]
+    var text = effects.attempt(constructs, start, notText)
+    return start
+
+    function start(code) {
+      return atBreak(code) ? text(code) : notText(code)
+    }
+
+    function notText(code) {
+      if (code === null) {
+        effects.consume(code)
+        return
+      }
+
+      effects.enter('data')
+      effects.consume(code)
+      return data
+    }
+
+    function data(code) {
+      if (atBreak(code)) {
+        effects.exit('data')
+        return text(code)
+      } // Data.
+
+      effects.consume(code)
+      return data
+    }
+
+    function atBreak(code) {
+      var list = constructs[code]
+      var index = -1
+
+      if (code === null) {
+        return true
+      }
+
+      if (list) {
+        while (++index < list.length) {
+          if (
+            !list[index].previous ||
+            list[index].previous.call(self, self.previous)
+          ) {
+            return true
+          }
+        }
+      }
+    }
+  }
+}
+
+function createResolver(extraResolver) {
+  return resolveAllText
+
+  function resolveAllText(events, context) {
+    var index = -1
+    var enter // A rather boring computation (to merge adjacent `data` events) which
+    // improves mm performance by 29%.
+
+    while (++index <= events.length) {
+      if (enter === undefined) {
+        if (events[index] && events[index][1].type === 'data') {
+          enter = index
+          index++
+        }
+      } else if (!events[index] || events[index][1].type !== 'data') {
+        // Don’t do anything if there is one data token.
+        if (index !== enter + 2) {
+          events[enter][1].end = events[index - 1][1].end
+          events.splice(enter + 2, index - enter - 2)
+          index = enter + 2
+        }
+
+        enter = undefined
+      }
+    }
+
+    return extraResolver ? extraResolver(events, context) : events
+  }
+} // A rather ugly set of instructions which again looks at chunks in the input
+// stream.
+// The reason to do this here is that it is *much* faster to parse in reverse.
+// And that we can’t hook into `null` to split the line suffix before an EOF.
+// To do: figure out if we can make this into a clean utility, or even in core.
+// As it will be useful for GFMs literal autolink extension (and maybe even
+// tables?)
+
+function resolveAllLineSuffixes(events, context) {
+  var eventIndex = -1
+  var chunks
+  var data
+  var chunk
+  var index
+  var bufferIndex
+  var size
+  var tabs
+  var token
+
+  while (++eventIndex <= events.length) {
+    if (
+      (eventIndex === events.length ||
+        events[eventIndex][1].type === 'lineEnding') &&
+      events[eventIndex - 1][1].type === 'data'
+    ) {
+      data = events[eventIndex - 1][1]
+      chunks = context.sliceStream(data)
+      index = chunks.length
+      bufferIndex = -1
+      size = 0
+      tabs = undefined
+
+      while (index--) {
+        chunk = chunks[index]
+
+        if (typeof chunk === 'string') {
+          bufferIndex = chunk.length
+
+          while (chunk.charCodeAt(bufferIndex - 1) === 32) {
+            size++
+            bufferIndex--
+          }
+
+          if (bufferIndex) break
+          bufferIndex = -1
+        } // Number
+        else if (chunk === -2) {
+          tabs = true
+          size++
+        } else if (chunk === -1);
+        else {
+          // Replacement character, exit.
+          index++
+          break
+        }
+      }
+
+      if (size) {
+        token = {
+          type:
+            eventIndex === events.length || tabs || size < 2
+              ? 'lineSuffix'
+              : 'hardBreakTrailing',
+          start: {
+            line: data.end.line,
+            column: data.end.column - size,
+            offset: data.end.offset - size,
+            _index: data.start._index + index,
+            _bufferIndex: index
+              ? bufferIndex
+              : data.start._bufferIndex + bufferIndex
+          },
+          end: shallow(data.end)
+        }
+        data.end = shallow(token.start)
+
+        if (data.start.offset === data.end.offset) {
+          assign(data, token)
+        } else {
+          events.splice(
+            eventIndex,
+            0,
+            ['enter', token, context],
+            ['exit', token, context]
+          )
+          eventIndex += 2
+        }
+      }
+
+      eventIndex++
+    }
+  }
+
+  return events
+}
+
+exports.resolver = resolver
+exports.string = string
+exports.text = text
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/parse.js":
+/*!**********************************************!*\
+  !*** ./node_modules/micromark/dist/parse.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var content = __webpack_require__(/*! ./initialize/content.js */ "./node_modules/micromark/dist/initialize/content.js")
+var document = __webpack_require__(/*! ./initialize/document.js */ "./node_modules/micromark/dist/initialize/document.js")
+var flow = __webpack_require__(/*! ./initialize/flow.js */ "./node_modules/micromark/dist/initialize/flow.js")
+var text = __webpack_require__(/*! ./initialize/text.js */ "./node_modules/micromark/dist/initialize/text.js")
+var combineExtensions = __webpack_require__(/*! ./util/combine-extensions.js */ "./node_modules/micromark/dist/util/combine-extensions.js")
+var createTokenizer = __webpack_require__(/*! ./util/create-tokenizer.js */ "./node_modules/micromark/dist/util/create-tokenizer.js")
+var miniflat = __webpack_require__(/*! ./util/miniflat.js */ "./node_modules/micromark/dist/util/miniflat.js")
+var constructs = __webpack_require__(/*! ./constructs.js */ "./node_modules/micromark/dist/constructs.js")
+
+function parse(options) {
+  var settings = options || {}
+  var parser = {
+    defined: [],
+    constructs: combineExtensions(
+      [constructs].concat(miniflat(settings.extensions))
+    ),
+    content: create(content),
+    document: create(document),
+    flow: create(flow),
+    string: create(text.string),
+    text: create(text.text)
+  }
+  return parser
+
+  function create(initializer) {
+    return creator
+
+    function creator(from) {
+      return createTokenizer(parser, initializer, from)
+    }
+  }
+}
+
+module.exports = parse
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/postprocess.js":
+/*!****************************************************!*\
+  !*** ./node_modules/micromark/dist/postprocess.js ***!
+  \****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var subtokenize = __webpack_require__(/*! ./util/subtokenize.js */ "./node_modules/micromark/dist/util/subtokenize.js")
+
+function postprocess(events) {
+  while (!subtokenize(events)) {
+    // Empty
+  }
+
+  return events
+}
+
+module.exports = postprocess
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/preprocess.js":
+/*!***************************************************!*\
+  !*** ./node_modules/micromark/dist/preprocess.js ***!
+  \***************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+var search = /[\0\t\n\r]/g
+
+function preprocess() {
+  var start = true
+  var column = 1
+  var buffer = ''
+  var atCarriageReturn
+  return preprocessor
+
+  function preprocessor(value, encoding, end) {
+    var chunks = []
+    var match
+    var next
+    var startPosition
+    var endPosition
+    var code
+    value = buffer + value.toString(encoding)
+    startPosition = 0
+    buffer = ''
+
+    if (start) {
+      if (value.charCodeAt(0) === 65279) {
+        startPosition++
+      }
+
+      start = undefined
+    }
+
+    while (startPosition < value.length) {
+      search.lastIndex = startPosition
+      match = search.exec(value)
+      endPosition = match ? match.index : value.length
+      code = value.charCodeAt(endPosition)
+
+      if (!match) {
+        buffer = value.slice(startPosition)
+        break
+      }
+
+      if (code === 10 && startPosition === endPosition && atCarriageReturn) {
+        chunks.push(-3)
+        atCarriageReturn = undefined
+      } else {
+        if (atCarriageReturn) {
+          chunks.push(-5)
+          atCarriageReturn = undefined
+        }
+
+        if (startPosition < endPosition) {
+          chunks.push(value.slice(startPosition, endPosition))
+          column += endPosition - startPosition
+        }
+
+        if (code === 0) {
+          chunks.push(65533)
+          column++
+        } else if (code === 9) {
+          next = Math.ceil(column / 4) * 4
+          chunks.push(-2)
+
+          while (column++ < next) chunks.push(-1)
+        } else if (code === 10) {
+          chunks.push(-4)
+          column = 1
+        } // Must be carriage return.
+        else {
+          atCarriageReturn = true
+          column = 1
+        }
+      }
+
+      startPosition = endPosition + 1
+    }
+
+    if (end) {
+      if (atCarriageReturn) chunks.push(-5)
+      if (buffer) chunks.push(buffer)
+      chunks.push(null)
+    }
+
+    return chunks
+  }
+}
+
+module.exports = preprocess
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/attention.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/attention.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var chunkedPush = __webpack_require__(/*! ../util/chunked-push.js */ "./node_modules/micromark/dist/util/chunked-push.js")
+var chunkedSplice = __webpack_require__(/*! ../util/chunked-splice.js */ "./node_modules/micromark/dist/util/chunked-splice.js")
+var classifyCharacter = __webpack_require__(/*! ../util/classify-character.js */ "./node_modules/micromark/dist/util/classify-character.js")
+var movePoint = __webpack_require__(/*! ../util/move-point.js */ "./node_modules/micromark/dist/util/move-point.js")
+var resolveAll = __webpack_require__(/*! ../util/resolve-all.js */ "./node_modules/micromark/dist/util/resolve-all.js")
+var shallow = __webpack_require__(/*! ../util/shallow.js */ "./node_modules/micromark/dist/util/shallow.js")
+
+var attention = {
+  name: 'attention',
+  tokenize: tokenizeAttention,
+  resolveAll: resolveAllAttention
+}
+
+function resolveAllAttention(events, context) {
+  var index = -1
+  var open
+  var group
+  var text
+  var openingSequence
+  var closingSequence
+  var use
+  var nextEvents
+  var offset // Walk through all events.
+  //
+  // Note: performance of this is fine on an mb of normal markdown, but it’s
+  // a bottleneck for malicious stuff.
+
+  while (++index < events.length) {
+    // Find a token that can close.
+    if (
+      events[index][0] === 'enter' &&
+      events[index][1].type === 'attentionSequence' &&
+      events[index][1]._close
+    ) {
+      open = index // Now walk back to find an opener.
+
+      while (open--) {
+        // Find a token that can open the closer.
+        if (
+          events[open][0] === 'exit' &&
+          events[open][1].type === 'attentionSequence' &&
+          events[open][1]._open && // If the markers are the same:
+          context.sliceSerialize(events[open][1]).charCodeAt(0) ===
+            context.sliceSerialize(events[index][1]).charCodeAt(0)
+        ) {
+          // If the opening can close or the closing can open,
+          // and the close size *is not* a multiple of three,
+          // but the sum of the opening and closing size *is* multiple of three,
+          // then don’t match.
+          if (
+            (events[open][1]._close || events[index][1]._open) &&
+            (events[index][1].end.offset - events[index][1].start.offset) % 3 &&
+            !(
+              (events[open][1].end.offset -
+                events[open][1].start.offset +
+                events[index][1].end.offset -
+                events[index][1].start.offset) %
+              3
+            )
+          ) {
+            continue
+          } // Number of markers to use from the sequence.
+
+          use =
+            events[open][1].end.offset - events[open][1].start.offset > 1 &&
+            events[index][1].end.offset - events[index][1].start.offset > 1
+              ? 2
+              : 1
+          openingSequence = {
+            type: use > 1 ? 'strongSequence' : 'emphasisSequence',
+            start: movePoint(shallow(events[open][1].end), -use),
+            end: shallow(events[open][1].end)
+          }
+          closingSequence = {
+            type: use > 1 ? 'strongSequence' : 'emphasisSequence',
+            start: shallow(events[index][1].start),
+            end: movePoint(shallow(events[index][1].start), use)
+          }
+          text = {
+            type: use > 1 ? 'strongText' : 'emphasisText',
+            start: shallow(events[open][1].end),
+            end: shallow(events[index][1].start)
+          }
+          group = {
+            type: use > 1 ? 'strong' : 'emphasis',
+            start: shallow(openingSequence.start),
+            end: shallow(closingSequence.end)
+          }
+          events[open][1].end = shallow(openingSequence.start)
+          events[index][1].start = shallow(closingSequence.end)
+          nextEvents = [] // If there are more markers in the opening, add them before.
+
+          if (events[open][1].end.offset - events[open][1].start.offset) {
+            nextEvents = chunkedPush(nextEvents, [
+              ['enter', events[open][1], context],
+              ['exit', events[open][1], context]
+            ])
+          } // Opening.
+
+          nextEvents = chunkedPush(nextEvents, [
+            ['enter', group, context],
+            ['enter', openingSequence, context],
+            ['exit', openingSequence, context],
+            ['enter', text, context]
+          ]) // Between.
+
+          nextEvents = chunkedPush(
+            nextEvents,
+            resolveAll(
+              context.parser.constructs.insideSpan.null,
+              events.slice(open + 1, index),
+              context
+            )
+          ) // Closing.
+
+          nextEvents = chunkedPush(nextEvents, [
+            ['exit', text, context],
+            ['enter', closingSequence, context],
+            ['exit', closingSequence, context],
+            ['exit', group, context]
+          ]) // If there are more markers in the closing, add them after.
+
+          if (events[index][1].end.offset - events[index][1].start.offset) {
+            offset = 2
+            nextEvents = chunkedPush(nextEvents, [
+              ['enter', events[index][1], context],
+              ['exit', events[index][1], context]
+            ])
+          } else {
+            offset = 0
+          }
+
+          chunkedSplice(events, open - 1, index - open + 3, nextEvents)
+          index = open + nextEvents.length - offset - 2
+          break
+        }
+      }
+    }
+  } // Remove remaining sequences.
+
+  index = -1
+
+  while (++index < events.length) {
+    if (events[index][1].type === 'attentionSequence') {
+      events[index][1].type = 'data'
+    }
+  }
+
+  return events
+}
+
+function tokenizeAttention(effects, ok) {
+  var before = classifyCharacter(this.previous)
+  var marker
+  return start
+
+  function start(code) {
+    effects.enter('attentionSequence')
+    marker = code
+    return sequence(code)
+  }
+
+  function sequence(code) {
+    var token
+    var after
+    var open
+    var close
+
+    if (code === marker) {
+      effects.consume(code)
+      return sequence
+    }
+
+    token = effects.exit('attentionSequence')
+    after = classifyCharacter(code)
+    open = !after || (after === 2 && before)
+    close = !before || (before === 2 && after)
+    token._open = marker === 42 ? open : open && (before || !close)
+    token._close = marker === 42 ? close : close && (after || !open)
+    return ok(code)
+  }
+}
+
+module.exports = attention
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/autolink.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/autolink.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var asciiAlpha = __webpack_require__(/*! ../character/ascii-alpha.js */ "./node_modules/micromark/dist/character/ascii-alpha.js")
+var asciiAlphanumeric = __webpack_require__(/*! ../character/ascii-alphanumeric.js */ "./node_modules/micromark/dist/character/ascii-alphanumeric.js")
+var asciiAtext = __webpack_require__(/*! ../character/ascii-atext.js */ "./node_modules/micromark/dist/character/ascii-atext.js")
+var asciiControl = __webpack_require__(/*! ../character/ascii-control.js */ "./node_modules/micromark/dist/character/ascii-control.js")
+
+var autolink = {
+  name: 'autolink',
+  tokenize: tokenizeAutolink
+}
+
+function tokenizeAutolink(effects, ok, nok) {
+  var size = 1
+  return start
+
+  function start(code) {
+    effects.enter('autolink')
+    effects.enter('autolinkMarker')
+    effects.consume(code)
+    effects.exit('autolinkMarker')
+    effects.enter('autolinkProtocol')
+    return open
+  }
+
+  function open(code) {
+    if (asciiAlpha(code)) {
+      effects.consume(code)
+      return schemeOrEmailAtext
+    }
+
+    return asciiAtext(code) ? emailAtext(code) : nok(code)
+  }
+
+  function schemeOrEmailAtext(code) {
+    return code === 43 || code === 45 || code === 46 || asciiAlphanumeric(code)
+      ? schemeInsideOrEmailAtext(code)
+      : emailAtext(code)
+  }
+
+  function schemeInsideOrEmailAtext(code) {
+    if (code === 58) {
+      effects.consume(code)
+      return urlInside
+    }
+
+    if (
+      (code === 43 || code === 45 || code === 46 || asciiAlphanumeric(code)) &&
+      size++ < 32
+    ) {
+      effects.consume(code)
+      return schemeInsideOrEmailAtext
+    }
+
+    return emailAtext(code)
+  }
+
+  function urlInside(code) {
+    if (code === 62) {
+      effects.exit('autolinkProtocol')
+      return end(code)
+    }
+
+    if (code === 32 || code === 60 || asciiControl(code)) {
+      return nok(code)
+    }
+
+    effects.consume(code)
+    return urlInside
+  }
+
+  function emailAtext(code) {
+    if (code === 64) {
+      effects.consume(code)
+      size = 0
+      return emailAtSignOrDot
+    }
+
+    if (asciiAtext(code)) {
+      effects.consume(code)
+      return emailAtext
+    }
+
+    return nok(code)
+  }
+
+  function emailAtSignOrDot(code) {
+    return asciiAlphanumeric(code) ? emailLabel(code) : nok(code)
+  }
+
+  function emailLabel(code) {
+    if (code === 46) {
+      effects.consume(code)
+      size = 0
+      return emailAtSignOrDot
+    }
+
+    if (code === 62) {
+      // Exit, then change the type.
+      effects.exit('autolinkProtocol').type = 'autolinkEmail'
+      return end(code)
+    }
+
+    return emailValue(code)
+  }
+
+  function emailValue(code) {
+    if ((code === 45 || asciiAlphanumeric(code)) && size++ < 63) {
+      effects.consume(code)
+      return code === 45 ? emailValue : emailLabel
+    }
+
+    return nok(code)
+  }
+
+  function end(code) {
+    effects.enter('autolinkMarker')
+    effects.consume(code)
+    effects.exit('autolinkMarker')
+    effects.exit('autolink')
+    return ok
+  }
+}
+
+module.exports = autolink
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/block-quote.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/block-quote.js ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var markdownSpace = __webpack_require__(/*! ../character/markdown-space.js */ "./node_modules/micromark/dist/character/markdown-space.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+
+var blockQuote = {
+  name: 'blockQuote',
+  tokenize: tokenizeBlockQuoteStart,
+  continuation: {
+    tokenize: tokenizeBlockQuoteContinuation
+  },
+  exit: exit
+}
+
+function tokenizeBlockQuoteStart(effects, ok, nok) {
+  var self = this
+  return start
+
+  function start(code) {
+    if (code === 62) {
+      if (!self.containerState.open) {
+        effects.enter('blockQuote', {
+          _container: true
+        })
+        self.containerState.open = true
+      }
+
+      effects.enter('blockQuotePrefix')
+      effects.enter('blockQuoteMarker')
+      effects.consume(code)
+      effects.exit('blockQuoteMarker')
+      return after
+    }
+
+    return nok(code)
+  }
+
+  function after(code) {
+    if (markdownSpace(code)) {
+      effects.enter('blockQuotePrefixWhitespace')
+      effects.consume(code)
+      effects.exit('blockQuotePrefixWhitespace')
+      effects.exit('blockQuotePrefix')
+      return ok
+    }
+
+    effects.exit('blockQuotePrefix')
+    return ok(code)
+  }
+}
+
+function tokenizeBlockQuoteContinuation(effects, ok, nok) {
+  return factorySpace(
+    effects,
+    effects.attempt(blockQuote, ok, nok),
+    'linePrefix',
+    this.parser.constructs.disable.null.indexOf('codeIndented') > -1
+      ? undefined
+      : 4
+  )
+}
+
+function exit(effects) {
+  effects.exit('blockQuote')
+}
+
+module.exports = blockQuote
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/character-escape.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/character-escape.js ***!
+  \******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var asciiPunctuation = __webpack_require__(/*! ../character/ascii-punctuation.js */ "./node_modules/micromark/dist/character/ascii-punctuation.js")
+
+var characterEscape = {
+  name: 'characterEscape',
+  tokenize: tokenizeCharacterEscape
+}
+
+function tokenizeCharacterEscape(effects, ok, nok) {
+  return start
+
+  function start(code) {
+    effects.enter('characterEscape')
+    effects.enter('escapeMarker')
+    effects.consume(code)
+    effects.exit('escapeMarker')
+    return open
+  }
+
+  function open(code) {
+    if (asciiPunctuation(code)) {
+      effects.enter('characterEscapeValue')
+      effects.consume(code)
+      effects.exit('characterEscapeValue')
+      effects.exit('characterEscape')
+      return ok
+    }
+
+    return nok(code)
+  }
+}
+
+module.exports = characterEscape
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/character-reference.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/character-reference.js ***!
+  \*********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var decodeEntity = __webpack_require__(/*! parse-entities/decode-entity.js */ "./node_modules/parse-entities/decode-entity.browser.js")
+var asciiAlphanumeric = __webpack_require__(/*! ../character/ascii-alphanumeric.js */ "./node_modules/micromark/dist/character/ascii-alphanumeric.js")
+var asciiDigit = __webpack_require__(/*! ../character/ascii-digit.js */ "./node_modules/micromark/dist/character/ascii-digit.js")
+var asciiHexDigit = __webpack_require__(/*! ../character/ascii-hex-digit.js */ "./node_modules/micromark/dist/character/ascii-hex-digit.js")
+
+function _interopDefaultLegacy(e) {
+  return e && typeof e === 'object' && 'default' in e ? e : {default: e}
+}
+
+var decodeEntity__default = /*#__PURE__*/ _interopDefaultLegacy(decodeEntity)
+
+var characterReference = {
+  name: 'characterReference',
+  tokenize: tokenizeCharacterReference
+}
+
+function tokenizeCharacterReference(effects, ok, nok) {
+  var self = this
+  var size = 0
+  var max
+  var test
+  return start
+
+  function start(code) {
+    effects.enter('characterReference')
+    effects.enter('characterReferenceMarker')
+    effects.consume(code)
+    effects.exit('characterReferenceMarker')
+    return open
+  }
+
+  function open(code) {
+    if (code === 35) {
+      effects.enter('characterReferenceMarkerNumeric')
+      effects.consume(code)
+      effects.exit('characterReferenceMarkerNumeric')
+      return numeric
+    }
+
+    effects.enter('characterReferenceValue')
+    max = 31
+    test = asciiAlphanumeric
+    return value(code)
+  }
+
+  function numeric(code) {
+    if (code === 88 || code === 120) {
+      effects.enter('characterReferenceMarkerHexadecimal')
+      effects.consume(code)
+      effects.exit('characterReferenceMarkerHexadecimal')
+      effects.enter('characterReferenceValue')
+      max = 6
+      test = asciiHexDigit
+      return value
+    }
+
+    effects.enter('characterReferenceValue')
+    max = 7
+    test = asciiDigit
+    return value(code)
+  }
+
+  function value(code) {
+    var token
+
+    if (code === 59 && size) {
+      token = effects.exit('characterReferenceValue')
+
+      if (
+        test === asciiAlphanumeric &&
+        !decodeEntity__default['default'](self.sliceSerialize(token))
+      ) {
+        return nok(code)
+      }
+
+      effects.enter('characterReferenceMarker')
+      effects.consume(code)
+      effects.exit('characterReferenceMarker')
+      effects.exit('characterReference')
+      return ok
+    }
+
+    if (test(code) && size++ < max) {
+      effects.consume(code)
+      return value
+    }
+
+    return nok(code)
+  }
+}
+
+module.exports = characterReference
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/code-fenced.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/code-fenced.js ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space.js */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
+var prefixSize = __webpack_require__(/*! ../util/prefix-size.js */ "./node_modules/micromark/dist/util/prefix-size.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+
+var codeFenced = {
+  name: 'codeFenced',
+  tokenize: tokenizeCodeFenced,
+  concrete: true
+}
+
+function tokenizeCodeFenced(effects, ok, nok) {
+  var self = this
+  var closingFenceConstruct = {
+    tokenize: tokenizeClosingFence,
+    partial: true
+  }
+  var initialPrefix = prefixSize(this.events, 'linePrefix')
+  var sizeOpen = 0
+  var marker
+  return start
+
+  function start(code) {
+    effects.enter('codeFenced')
+    effects.enter('codeFencedFence')
+    effects.enter('codeFencedFenceSequence')
+    marker = code
+    return sequenceOpen(code)
+  }
+
+  function sequenceOpen(code) {
+    if (code === marker) {
+      effects.consume(code)
+      sizeOpen++
+      return sequenceOpen
+    }
+
+    effects.exit('codeFencedFenceSequence')
+    return sizeOpen < 3
+      ? nok(code)
+      : factorySpace(effects, infoOpen, 'whitespace')(code)
+  }
+
+  function infoOpen(code) {
+    if (code === null || markdownLineEnding(code)) {
+      return openAfter(code)
+    }
+
+    effects.enter('codeFencedFenceInfo')
+    effects.enter('chunkString', {
+      contentType: 'string'
+    })
+    return info(code)
+  }
+
+  function info(code) {
+    if (code === null || markdownLineEndingOrSpace(code)) {
+      effects.exit('chunkString')
+      effects.exit('codeFencedFenceInfo')
+      return factorySpace(effects, infoAfter, 'whitespace')(code)
+    }
+
+    if (code === 96 && code === marker) return nok(code)
+    effects.consume(code)
+    return info
+  }
+
+  function infoAfter(code) {
+    if (code === null || markdownLineEnding(code)) {
+      return openAfter(code)
+    }
+
+    effects.enter('codeFencedFenceMeta')
+    effects.enter('chunkString', {
+      contentType: 'string'
+    })
+    return meta(code)
+  }
+
+  function meta(code) {
+    if (code === null || markdownLineEnding(code)) {
+      effects.exit('chunkString')
+      effects.exit('codeFencedFenceMeta')
+      return openAfter(code)
+    }
+
+    if (code === 96 && code === marker) return nok(code)
+    effects.consume(code)
+    return meta
+  }
+
+  function openAfter(code) {
+    effects.exit('codeFencedFence')
+    return self.interrupt ? ok(code) : content(code)
+  }
+
+  function content(code) {
+    if (code === null) {
+      return after(code)
+    }
+
+    if (markdownLineEnding(code)) {
+      effects.enter('lineEnding')
+      effects.consume(code)
+      effects.exit('lineEnding')
+      return effects.attempt(
+        closingFenceConstruct,
+        after,
+        initialPrefix
+          ? factorySpace(effects, content, 'linePrefix', initialPrefix + 1)
+          : content
+      )
+    }
+
+    effects.enter('codeFlowValue')
+    return contentContinue(code)
+  }
+
+  function contentContinue(code) {
+    if (code === null || markdownLineEnding(code)) {
+      effects.exit('codeFlowValue')
+      return content(code)
+    }
+
+    effects.consume(code)
+    return contentContinue
+  }
+
+  function after(code) {
+    effects.exit('codeFenced')
+    return ok(code)
+  }
+
+  function tokenizeClosingFence(effects, ok, nok) {
+    var size = 0
+    return factorySpace(
+      effects,
+      closingSequenceStart,
+      'linePrefix',
+      this.parser.constructs.disable.null.indexOf('codeIndented') > -1
+        ? undefined
+        : 4
+    )
+
+    function closingSequenceStart(code) {
+      effects.enter('codeFencedFence')
+      effects.enter('codeFencedFenceSequence')
+      return closingSequence(code)
+    }
+
+    function closingSequence(code) {
+      if (code === marker) {
+        effects.consume(code)
+        size++
+        return closingSequence
+      }
+
+      if (size < sizeOpen) return nok(code)
+      effects.exit('codeFencedFenceSequence')
+      return factorySpace(effects, closingSequenceEnd, 'whitespace')(code)
+    }
+
+    function closingSequenceEnd(code) {
+      if (code === null || markdownLineEnding(code)) {
+        effects.exit('codeFencedFence')
+        return ok(code)
+      }
+
+      return nok(code)
+    }
+  }
+}
+
+module.exports = codeFenced
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/code-indented.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/code-indented.js ***!
+  \***************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var chunkedSplice = __webpack_require__(/*! ../util/chunked-splice.js */ "./node_modules/micromark/dist/util/chunked-splice.js")
+var prefixSize = __webpack_require__(/*! ../util/prefix-size.js */ "./node_modules/micromark/dist/util/prefix-size.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+
+var codeIndented = {
+  name: 'codeIndented',
+  tokenize: tokenizeCodeIndented,
+  resolve: resolveCodeIndented
+}
+var indentedContentConstruct = {
+  tokenize: tokenizeIndentedContent,
+  partial: true
+}
+
+function resolveCodeIndented(events, context) {
+  var code = {
+    type: 'codeIndented',
+    start: events[0][1].start,
+    end: events[events.length - 1][1].end
+  }
+  chunkedSplice(events, 0, 0, [['enter', code, context]])
+  chunkedSplice(events, events.length, 0, [['exit', code, context]])
+  return events
+}
+
+function tokenizeCodeIndented(effects, ok, nok) {
+  return effects.attempt(indentedContentConstruct, afterPrefix, nok)
+
+  function afterPrefix(code) {
+    if (code === null) {
+      return ok(code)
+    }
+
+    if (markdownLineEnding(code)) {
+      return effects.attempt(indentedContentConstruct, afterPrefix, ok)(code)
+    }
+
+    effects.enter('codeFlowValue')
+    return content(code)
+  }
+
+  function content(code) {
+    if (code === null || markdownLineEnding(code)) {
+      effects.exit('codeFlowValue')
+      return afterPrefix(code)
+    }
+
+    effects.consume(code)
+    return content
+  }
+}
+
+function tokenizeIndentedContent(effects, ok, nok) {
+  var self = this
+  return factorySpace(effects, afterPrefix, 'linePrefix', 4 + 1)
+
+  function afterPrefix(code) {
+    if (markdownLineEnding(code)) {
+      effects.enter('lineEnding')
+      effects.consume(code)
+      effects.exit('lineEnding')
+      return factorySpace(effects, afterPrefix, 'linePrefix', 4 + 1)
+    }
+
+    return prefixSize(self.events, 'linePrefix') < 4 ? nok(code) : ok(code)
+  }
+}
+
+module.exports = codeIndented
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/code-text.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/code-text.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+
+var codeText = {
+  name: 'codeText',
+  tokenize: tokenizeCodeText,
+  resolve: resolveCodeText,
+  previous: previous
+}
+
+function resolveCodeText(events) {
+  var tailExitIndex = events.length - 4
+  var headEnterIndex = 3
+  var index
+  var enter // If we start and end with an EOL or a space.
+
+  if (
+    (events[headEnterIndex][1].type === 'lineEnding' ||
+      events[headEnterIndex][1].type === 'space') &&
+    (events[tailExitIndex][1].type === 'lineEnding' ||
+      events[tailExitIndex][1].type === 'space')
+  ) {
+    index = headEnterIndex // And we have data.
+
+    while (++index < tailExitIndex) {
+      if (events[index][1].type === 'codeTextData') {
+        // Then we have padding.
+        events[tailExitIndex][1].type = events[headEnterIndex][1].type =
+          'codeTextPadding'
+        headEnterIndex += 2
+        tailExitIndex -= 2
+        break
+      }
+    }
+  } // Merge adjacent spaces and data.
+
+  index = headEnterIndex - 1
+  tailExitIndex++
+
+  while (++index <= tailExitIndex) {
+    if (enter === undefined) {
+      if (index !== tailExitIndex && events[index][1].type !== 'lineEnding') {
+        enter = index
+      }
+    } else if (
+      index === tailExitIndex ||
+      events[index][1].type === 'lineEnding'
+    ) {
+      events[enter][1].type = 'codeTextData'
+
+      if (index !== enter + 2) {
+        events[enter][1].end = events[index - 1][1].end
+        events.splice(enter + 2, index - enter - 2)
+        tailExitIndex -= index - enter - 2
+        index = enter + 2
+      }
+
+      enter = undefined
+    }
+  }
+
+  return events
+}
+
+function previous(code) {
+  // If there is a previous code, there will always be a tail.
+  return (
+    code !== 96 ||
+    this.events[this.events.length - 1][1].type === 'characterEscape'
+  )
+}
+
+function tokenizeCodeText(effects, ok, nok) {
+  var sizeOpen = 0
+  var size
+  var token
+  return start
+
+  function start(code) {
+    effects.enter('codeText')
+    effects.enter('codeTextSequence')
+    return openingSequence(code)
+  }
+
+  function openingSequence(code) {
+    if (code === 96) {
+      effects.consume(code)
+      sizeOpen++
+      return openingSequence
+    }
+
+    effects.exit('codeTextSequence')
+    return gap(code)
+  }
+
+  function gap(code) {
+    // EOF.
+    if (code === null) {
+      return nok(code)
+    } // Closing fence?
+    // Could also be data.
+
+    if (code === 96) {
+      token = effects.enter('codeTextSequence')
+      size = 0
+      return closingSequence(code)
+    } // Tabs don’t work, and virtual spaces don’t make sense.
+
+    if (code === 32) {
+      effects.enter('space')
+      effects.consume(code)
+      effects.exit('space')
+      return gap
+    }
+
+    if (markdownLineEnding(code)) {
+      effects.enter('lineEnding')
+      effects.consume(code)
+      effects.exit('lineEnding')
+      return gap
+    } // Data.
+
+    effects.enter('codeTextData')
+    return data(code)
+  } // In code.
+
+  function data(code) {
+    if (
+      code === null ||
+      code === 32 ||
+      code === 96 ||
+      markdownLineEnding(code)
+    ) {
+      effects.exit('codeTextData')
+      return gap(code)
+    }
+
+    effects.consume(code)
+    return data
+  } // Closing fence.
+
+  function closingSequence(code) {
+    // More.
+    if (code === 96) {
+      effects.consume(code)
+      size++
+      return closingSequence
+    } // Done!
+
+    if (size === sizeOpen) {
+      effects.exit('codeTextSequence')
+      effects.exit('codeText')
+      return ok(code)
+    } // More or less accents: mark as data.
+
+    token.type = 'codeTextData'
+    return data(code)
+  }
+}
+
+module.exports = codeText
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/content.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/content.js ***!
+  \*********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var prefixSize = __webpack_require__(/*! ../util/prefix-size.js */ "./node_modules/micromark/dist/util/prefix-size.js")
+var subtokenize = __webpack_require__(/*! ../util/subtokenize.js */ "./node_modules/micromark/dist/util/subtokenize.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+
+// No name because it must not be turned off.
+var content = {
+  tokenize: tokenizeContent,
+  resolve: resolveContent,
+  interruptible: true,
+  lazy: true
+}
+var continuationConstruct = {
+  tokenize: tokenizeContinuation,
+  partial: true
+} // Content is transparent: it’s parsed right now. That way, definitions are also
+// parsed right now: before text in paragraphs (specifically, media) are parsed.
+
+function resolveContent(events) {
+  subtokenize(events)
+  return events
+}
+
+function tokenizeContent(effects, ok) {
+  var previous
+  return start
+
+  function start(code) {
+    effects.enter('content')
+    previous = effects.enter('chunkContent', {
+      contentType: 'content'
+    })
+    return data(code)
+  }
+
+  function data(code) {
+    if (code === null) {
+      return contentEnd(code)
+    }
+
+    if (markdownLineEnding(code)) {
+      return effects.check(
+        continuationConstruct,
+        contentContinue,
+        contentEnd
+      )(code)
+    } // Data.
+
+    effects.consume(code)
+    return data
+  }
+
+  function contentEnd(code) {
+    effects.exit('chunkContent')
+    effects.exit('content')
+    return ok(code)
+  }
+
+  function contentContinue(code) {
+    effects.consume(code)
+    effects.exit('chunkContent')
+    previous = previous.next = effects.enter('chunkContent', {
+      contentType: 'content',
+      previous: previous
+    })
+    return data
+  }
+}
+
+function tokenizeContinuation(effects, ok, nok) {
+  var self = this
+  return startLookahead
+
+  function startLookahead(code) {
+    effects.enter('lineEnding')
+    effects.consume(code)
+    effects.exit('lineEnding')
+    return factorySpace(effects, prefixed, 'linePrefix')
+  }
+
+  function prefixed(code) {
+    if (code === null || markdownLineEnding(code)) {
+      return nok(code)
+    }
+
+    if (
+      self.parser.constructs.disable.null.indexOf('codeIndented') > -1 ||
+      prefixSize(self.events, 'linePrefix') < 4
+    ) {
+      return effects.interrupt(self.parser.constructs.flow, nok, ok)(code)
+    }
+
+    return ok(code)
+  }
+}
+
+module.exports = content
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/definition.js":
+/*!************************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/definition.js ***!
+  \************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space.js */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
+var normalizeIdentifier = __webpack_require__(/*! ../util/normalize-identifier.js */ "./node_modules/micromark/dist/util/normalize-identifier.js")
+var factoryDestination = __webpack_require__(/*! ./factory-destination.js */ "./node_modules/micromark/dist/tokenize/factory-destination.js")
+var factoryLabel = __webpack_require__(/*! ./factory-label.js */ "./node_modules/micromark/dist/tokenize/factory-label.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+var factoryWhitespace = __webpack_require__(/*! ./factory-whitespace.js */ "./node_modules/micromark/dist/tokenize/factory-whitespace.js")
+var factoryTitle = __webpack_require__(/*! ./factory-title.js */ "./node_modules/micromark/dist/tokenize/factory-title.js")
+
+var definition = {
+  name: 'definition',
+  tokenize: tokenizeDefinition
+}
+var titleConstruct = {
+  tokenize: tokenizeTitle,
+  partial: true
+}
+
+function tokenizeDefinition(effects, ok, nok) {
+  var self = this
+  var identifier
+  return start
+
+  function start(code) {
+    effects.enter('definition')
+    return factoryLabel.call(
+      self,
+      effects,
+      labelAfter,
+      nok,
+      'definitionLabel',
+      'definitionLabelMarker',
+      'definitionLabelString'
+    )(code)
+  }
+
+  function labelAfter(code) {
+    identifier = normalizeIdentifier(
+      self.sliceSerialize(self.events[self.events.length - 1][1]).slice(1, -1)
+    )
+
+    if (code === 58) {
+      effects.enter('definitionMarker')
+      effects.consume(code)
+      effects.exit('definitionMarker') // Note: blank lines can’t exist in content.
+
+      return factoryWhitespace(
+        effects,
+        factoryDestination(
+          effects,
+          effects.attempt(
+            titleConstruct,
+            factorySpace(effects, after, 'whitespace'),
+            factorySpace(effects, after, 'whitespace')
+          ),
+          nok,
+          'definitionDestination',
+          'definitionDestinationLiteral',
+          'definitionDestinationLiteralMarker',
+          'definitionDestinationRaw',
+          'definitionDestinationString'
+        )
+      )
+    }
+
+    return nok(code)
+  }
+
+  function after(code) {
+    if (code === null || markdownLineEnding(code)) {
+      effects.exit('definition')
+
+      if (self.parser.defined.indexOf(identifier) < 0) {
+        self.parser.defined.push(identifier)
+      }
+
+      return ok(code)
+    }
+
+    return nok(code)
+  }
+}
+
+function tokenizeTitle(effects, ok, nok) {
+  return start
+
+  function start(code) {
+    return markdownLineEndingOrSpace(code)
+      ? factoryWhitespace(effects, before)(code)
+      : nok(code)
+  }
+
+  function before(code) {
+    if (code === 34 || code === 39 || code === 40) {
+      return factoryTitle(
+        effects,
+        factorySpace(effects, after, 'whitespace'),
+        nok,
+        'definitionTitle',
+        'definitionTitleMarker',
+        'definitionTitleString'
+      )(code)
+    }
+
+    return nok(code)
+  }
+
+  function after(code) {
+    return code === null || markdownLineEnding(code) ? ok(code) : nok(code)
+  }
+}
+
+module.exports = definition
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/factory-destination.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/factory-destination.js ***!
+  \*********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var asciiControl = __webpack_require__(/*! ../character/ascii-control.js */ "./node_modules/micromark/dist/character/ascii-control.js")
+var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space.js */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+
+// eslint-disable-next-line max-params
+function destinationFactory(
+  effects,
+  ok,
+  nok,
+  type,
+  literalType,
+  literalMarkerType,
+  rawType,
+  stringType,
+  max
+) {
+  var limit = max || Infinity
+  var balance = 0
+  return start
+
+  function start(code) {
+    if (code === 60) {
+      effects.enter(type)
+      effects.enter(literalType)
+      effects.enter(literalMarkerType)
+      effects.consume(code)
+      effects.exit(literalMarkerType)
+      return destinationEnclosedBefore
+    }
+
+    if (asciiControl(code) || code === 41) {
+      return nok(code)
+    }
+
+    effects.enter(type)
+    effects.enter(rawType)
+    effects.enter(stringType)
+    effects.enter('chunkString', {
+      contentType: 'string'
+    })
+    return destinationRaw(code)
+  }
+
+  function destinationEnclosedBefore(code) {
+    if (code === 62) {
+      effects.enter(literalMarkerType)
+      effects.consume(code)
+      effects.exit(literalMarkerType)
+      effects.exit(literalType)
+      effects.exit(type)
+      return ok
+    }
+
+    effects.enter(stringType)
+    effects.enter('chunkString', {
+      contentType: 'string'
+    })
+    return destinationEnclosed(code)
+  }
+
+  function destinationEnclosed(code) {
+    if (code === 62) {
+      effects.exit('chunkString')
+      effects.exit(stringType)
+      return destinationEnclosedBefore(code)
+    }
+
+    if (code === null || code === 60 || markdownLineEnding(code)) {
+      return nok(code)
+    }
+
+    effects.consume(code)
+    return code === 92 ? destinationEnclosedEscape : destinationEnclosed
+  }
+
+  function destinationEnclosedEscape(code) {
+    if (code === 60 || code === 62 || code === 92) {
+      effects.consume(code)
+      return destinationEnclosed
+    }
+
+    return destinationEnclosed(code)
+  }
+
+  function destinationRaw(code) {
+    if (code === 40) {
+      if (++balance > limit) return nok(code)
+      effects.consume(code)
+      return destinationRaw
+    }
+
+    if (code === 41) {
+      if (!balance--) {
+        effects.exit('chunkString')
+        effects.exit(stringType)
+        effects.exit(rawType)
+        effects.exit(type)
+        return ok(code)
+      }
+
+      effects.consume(code)
+      return destinationRaw
+    }
+
+    if (code === null || markdownLineEndingOrSpace(code)) {
+      if (balance) return nok(code)
+      effects.exit('chunkString')
+      effects.exit(stringType)
+      effects.exit(rawType)
+      effects.exit(type)
+      return ok(code)
+    }
+
+    if (asciiControl(code)) return nok(code)
+    effects.consume(code)
+    return code === 92 ? destinationRawEscape : destinationRaw
+  }
+
+  function destinationRawEscape(code) {
+    if (code === 40 || code === 41 || code === 92) {
+      effects.consume(code)
+      return destinationRaw
+    }
+
+    return destinationRaw(code)
+  }
+}
+
+module.exports = destinationFactory
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/factory-label.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/factory-label.js ***!
+  \***************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var markdownSpace = __webpack_require__(/*! ../character/markdown-space.js */ "./node_modules/micromark/dist/character/markdown-space.js")
+
+// eslint-disable-next-line max-params
+function labelFactory(effects, ok, nok, type, markerType, stringType) {
+  var self = this
+  var size = 0
+  var data
+  return start
+
+  function start(code) {
+    effects.enter(type)
+    effects.enter(markerType)
+    effects.consume(code)
+    effects.exit(markerType)
+    effects.enter(stringType)
+    return atBreak
+  }
+
+  function atBreak(code) {
+    if (
+      code === null ||
+      code === 91 ||
+      (code === 93 && !data) ||
+      /* c8 ignore next */
+      (code === 94 &&
+        /* c8 ignore next */
+        !size &&
+        /* c8 ignore next */
+        '_hiddenFootnoteSupport' in self.parser.constructs) ||
+      size > 999
+    ) {
+      return nok(code)
+    }
+
+    if (code === 93) {
+      effects.exit(stringType)
+      effects.enter(markerType)
+      effects.consume(code)
+      effects.exit(markerType)
+      effects.exit(type)
+      return ok
+    }
+
+    if (markdownLineEnding(code)) {
+      effects.enter('lineEnding')
+      effects.consume(code)
+      effects.exit('lineEnding')
+      return atBreak
+    }
+
+    effects.enter('chunkString', {
+      contentType: 'string'
+    })
+    return label(code)
+  }
+
+  function label(code) {
+    if (
+      code === null ||
+      code === 91 ||
+      code === 93 ||
+      markdownLineEnding(code) ||
+      size++ > 999
+    ) {
+      effects.exit('chunkString')
+      return atBreak(code)
+    }
+
+    effects.consume(code)
+    data = data || !markdownSpace(code)
+    return code === 92 ? labelEscape : label
+  }
+
+  function labelEscape(code) {
+    if (code === 91 || code === 92 || code === 93) {
+      effects.consume(code)
+      size++
+      return label
+    }
+
+    return label(code)
+  }
+}
+
+module.exports = labelFactory
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/factory-space.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/factory-space.js ***!
+  \***************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var markdownSpace = __webpack_require__(/*! ../character/markdown-space.js */ "./node_modules/micromark/dist/character/markdown-space.js")
+
+function spaceFactory(effects, ok, type, max) {
+  var limit = max ? max - 1 : Infinity
+  var size = 0
+  return start
+
+  function start(code) {
+    if (markdownSpace(code)) {
+      effects.enter(type)
+      return prefix(code)
+    }
+
+    return ok(code)
+  }
+
+  function prefix(code) {
+    if (markdownSpace(code) && size++ < limit) {
+      effects.consume(code)
+      return prefix
+    }
+
+    effects.exit(type)
+    return ok(code)
+  }
+}
+
+module.exports = spaceFactory
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/factory-title.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/factory-title.js ***!
+  \***************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+
+function titleFactory(effects, ok, nok, type, markerType, stringType) {
+  var marker
+  return start
+
+  function start(code) {
+    effects.enter(type)
+    effects.enter(markerType)
+    effects.consume(code)
+    effects.exit(markerType)
+    marker = code === 40 ? 41 : code
+    return atFirstTitleBreak
+  }
+
+  function atFirstTitleBreak(code) {
+    if (code === marker) {
+      effects.enter(markerType)
+      effects.consume(code)
+      effects.exit(markerType)
+      effects.exit(type)
+      return ok
+    }
+
+    effects.enter(stringType)
+    return atTitleBreak(code)
+  }
+
+  function atTitleBreak(code) {
+    if (code === marker) {
+      effects.exit(stringType)
+      return atFirstTitleBreak(marker)
+    }
+
+    if (code === null) {
+      return nok(code)
+    } // Note: blank lines can’t exist in content.
+
+    if (markdownLineEnding(code)) {
+      effects.enter('lineEnding')
+      effects.consume(code)
+      effects.exit('lineEnding')
+      return factorySpace(effects, atTitleBreak, 'linePrefix')
+    }
+
+    effects.enter('chunkString', {
+      contentType: 'string'
+    })
+    return title(code)
+  }
+
+  function title(code) {
+    if (code === marker || code === null || markdownLineEnding(code)) {
+      effects.exit('chunkString')
+      return atTitleBreak(code)
+    }
+
+    effects.consume(code)
+    return code === 92 ? titleEscape : title
+  }
+
+  function titleEscape(code) {
+    if (code === marker || code === 92) {
+      effects.consume(code)
+      return title
+    }
+
+    return title(code)
+  }
+}
+
+module.exports = titleFactory
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/factory-whitespace.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/factory-whitespace.js ***!
+  \********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var markdownSpace = __webpack_require__(/*! ../character/markdown-space.js */ "./node_modules/micromark/dist/character/markdown-space.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+
+function whitespaceFactory(effects, ok) {
+  var seen
+  return start
+
+  function start(code) {
+    if (markdownLineEnding(code)) {
+      effects.enter('lineEnding')
+      effects.consume(code)
+      effects.exit('lineEnding')
+      seen = true
+      return start
+    }
+
+    if (markdownSpace(code)) {
+      return factorySpace(
+        effects,
+        start,
+        seen ? 'linePrefix' : 'lineSuffix'
+      )(code)
+    }
+
+    return ok(code)
+  }
+}
+
+module.exports = whitespaceFactory
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/hard-break-escape.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/hard-break-escape.js ***!
+  \*******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+
+var hardBreakEscape = {
+  name: 'hardBreakEscape',
+  tokenize: tokenizeHardBreakEscape
+}
+
+function tokenizeHardBreakEscape(effects, ok, nok) {
+  return start
+
+  function start(code) {
+    effects.enter('hardBreakEscape')
+    effects.enter('escapeMarker')
+    effects.consume(code)
+    return open
+  }
+
+  function open(code) {
+    if (markdownLineEnding(code)) {
+      effects.exit('escapeMarker')
+      effects.exit('hardBreakEscape')
+      return ok(code)
+    }
+
+    return nok(code)
+  }
+}
+
+module.exports = hardBreakEscape
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/heading-atx.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/heading-atx.js ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space.js */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
+var markdownSpace = __webpack_require__(/*! ../character/markdown-space.js */ "./node_modules/micromark/dist/character/markdown-space.js")
+var chunkedSplice = __webpack_require__(/*! ../util/chunked-splice.js */ "./node_modules/micromark/dist/util/chunked-splice.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+
+var headingAtx = {
+  name: 'headingAtx',
+  tokenize: tokenizeHeadingAtx,
+  resolve: resolveHeadingAtx
+}
+
+function resolveHeadingAtx(events, context) {
+  var contentEnd = events.length - 2
+  var contentStart = 3
+  var content
+  var text // Prefix whitespace, part of the opening.
+
+  if (events[contentStart][1].type === 'whitespace') {
+    contentStart += 2
+  } // Suffix whitespace, part of the closing.
+
+  if (
+    contentEnd - 2 > contentStart &&
+    events[contentEnd][1].type === 'whitespace'
+  ) {
+    contentEnd -= 2
+  }
+
+  if (
+    events[contentEnd][1].type === 'atxHeadingSequence' &&
+    (contentStart === contentEnd - 1 ||
+      (contentEnd - 4 > contentStart &&
+        events[contentEnd - 2][1].type === 'whitespace'))
+  ) {
+    contentEnd -= contentStart + 1 === contentEnd ? 2 : 4
+  }
+
+  if (contentEnd > contentStart) {
+    content = {
+      type: 'atxHeadingText',
+      start: events[contentStart][1].start,
+      end: events[contentEnd][1].end
+    }
+    text = {
+      type: 'chunkText',
+      start: events[contentStart][1].start,
+      end: events[contentEnd][1].end,
+      contentType: 'text'
+    }
+    chunkedSplice(events, contentStart, contentEnd - contentStart + 1, [
+      ['enter', content, context],
+      ['enter', text, context],
+      ['exit', text, context],
+      ['exit', content, context]
+    ])
+  }
+
+  return events
+}
+
+function tokenizeHeadingAtx(effects, ok, nok) {
+  var self = this
+  var size = 0
+  return start
+
+  function start(code) {
+    effects.enter('atxHeading')
+    effects.enter('atxHeadingSequence')
+    return fenceOpenInside(code)
+  }
+
+  function fenceOpenInside(code) {
+    if (code === 35 && size++ < 6) {
+      effects.consume(code)
+      return fenceOpenInside
+    }
+
+    if (code === null || markdownLineEndingOrSpace(code)) {
+      effects.exit('atxHeadingSequence')
+      return self.interrupt ? ok(code) : headingBreak(code)
+    }
+
+    return nok(code)
+  }
+
+  function headingBreak(code) {
+    if (code === 35) {
+      effects.enter('atxHeadingSequence')
+      return sequence(code)
+    }
+
+    if (code === null || markdownLineEnding(code)) {
+      effects.exit('atxHeading')
+      return ok(code)
+    }
+
+    if (markdownSpace(code)) {
+      return factorySpace(effects, headingBreak, 'whitespace')(code)
+    }
+
+    effects.enter('atxHeadingText')
+    return data(code)
+  }
+
+  function sequence(code) {
+    if (code === 35) {
+      effects.consume(code)
+      return sequence
+    }
+
+    effects.exit('atxHeadingSequence')
+    return headingBreak(code)
+  }
+
+  function data(code) {
+    if (code === null || code === 35 || markdownLineEndingOrSpace(code)) {
+      effects.exit('atxHeadingText')
+      return headingBreak(code)
+    }
+
+    effects.consume(code)
+    return data
+  }
+}
+
+module.exports = headingAtx
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/html-flow.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/html-flow.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var asciiAlpha = __webpack_require__(/*! ../character/ascii-alpha.js */ "./node_modules/micromark/dist/character/ascii-alpha.js")
+var asciiAlphanumeric = __webpack_require__(/*! ../character/ascii-alphanumeric.js */ "./node_modules/micromark/dist/character/ascii-alphanumeric.js")
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space.js */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
+var markdownSpace = __webpack_require__(/*! ../character/markdown-space.js */ "./node_modules/micromark/dist/character/markdown-space.js")
+var fromCharCode = __webpack_require__(/*! ../constant/from-char-code.js */ "./node_modules/micromark/dist/constant/from-char-code.js")
+var htmlBlockNames = __webpack_require__(/*! ../constant/html-block-names.js */ "./node_modules/micromark/dist/constant/html-block-names.js")
+var htmlRawNames = __webpack_require__(/*! ../constant/html-raw-names.js */ "./node_modules/micromark/dist/constant/html-raw-names.js")
+var partialBlankLine = __webpack_require__(/*! ./partial-blank-line.js */ "./node_modules/micromark/dist/tokenize/partial-blank-line.js")
+
+var htmlFlow = {
+  name: 'htmlFlow',
+  tokenize: tokenizeHtmlFlow,
+  resolveTo: resolveToHtmlFlow,
+  concrete: true
+}
+var nextBlankConstruct = {
+  tokenize: tokenizeNextBlank,
+  partial: true
+}
+
+function resolveToHtmlFlow(events) {
+  var index = events.length
+
+  while (index--) {
+    if (events[index][0] === 'enter' && events[index][1].type === 'htmlFlow') {
+      break
+    }
+  }
+
+  if (index > 1 && events[index - 2][1].type === 'linePrefix') {
+    // Add the prefix start to the HTML token.
+    events[index][1].start = events[index - 2][1].start // Add the prefix start to the HTML line token.
+
+    events[index + 1][1].start = events[index - 2][1].start // Remove the line prefix.
+
+    events.splice(index - 2, 2)
+  }
+
+  return events
+}
+
+function tokenizeHtmlFlow(effects, ok, nok) {
+  var self = this
+  var kind
+  var startTag
+  var buffer
+  var index
+  var marker
+  return start
+
+  function start(code) {
+    effects.enter('htmlFlow')
+    effects.enter('htmlFlowData')
+    effects.consume(code)
+    return open
+  }
+
+  function open(code) {
+    if (code === 33) {
+      effects.consume(code)
+      return declarationStart
+    }
+
+    if (code === 47) {
+      effects.consume(code)
+      return tagCloseStart
+    }
+
+    if (code === 63) {
+      effects.consume(code)
+      kind = 3 // While we’re in an instruction instead of a declaration, we’re on a `?`
+      // right now, so we do need to search for `>`, similar to declarations.
+
+      return self.interrupt ? ok : continuationDeclarationInside
+    }
+
+    if (asciiAlpha(code)) {
+      effects.consume(code)
+      buffer = fromCharCode(code)
+      startTag = true
+      return tagName
+    }
+
+    return nok(code)
+  }
+
+  function declarationStart(code) {
+    if (code === 45) {
+      effects.consume(code)
+      kind = 2
+      return commentOpenInside
+    }
+
+    if (code === 91) {
+      effects.consume(code)
+      kind = 5
+      buffer = 'CDATA['
+      index = 0
+      return cdataOpenInside
+    }
+
+    if (asciiAlpha(code)) {
+      effects.consume(code)
+      kind = 4
+      return self.interrupt ? ok : continuationDeclarationInside
+    }
+
+    return nok(code)
+  }
+
+  function commentOpenInside(code) {
+    if (code === 45) {
+      effects.consume(code)
+      return self.interrupt ? ok : continuationDeclarationInside
+    }
+
+    return nok(code)
+  }
+
+  function cdataOpenInside(code) {
+    if (code === buffer.charCodeAt(index++)) {
+      effects.consume(code)
+      return index === buffer.length
+        ? self.interrupt
+          ? ok
+          : continuation
+        : cdataOpenInside
+    }
+
+    return nok(code)
+  }
+
+  function tagCloseStart(code) {
+    if (asciiAlpha(code)) {
+      effects.consume(code)
+      buffer = fromCharCode(code)
+      return tagName
+    }
+
+    return nok(code)
+  }
+
+  function tagName(code) {
+    if (
+      code === null ||
+      code === 47 ||
+      code === 62 ||
+      markdownLineEndingOrSpace(code)
+    ) {
+      if (
+        code !== 47 &&
+        startTag &&
+        htmlRawNames.indexOf(buffer.toLowerCase()) > -1
+      ) {
+        kind = 1
+        return self.interrupt ? ok(code) : continuation(code)
+      }
+
+      if (htmlBlockNames.indexOf(buffer.toLowerCase()) > -1) {
+        kind = 6
+
+        if (code === 47) {
+          effects.consume(code)
+          return basicSelfClosing
+        }
+
+        return self.interrupt ? ok(code) : continuation(code)
+      }
+
+      kind = 7 // Do not support complete HTML when interrupting.
+
+      return self.interrupt
+        ? nok(code)
+        : startTag
+        ? completeAttributeNameBefore(code)
+        : completeClosingTagAfter(code)
+    }
+
+    if (code === 45 || asciiAlphanumeric(code)) {
+      effects.consume(code)
+      buffer += fromCharCode(code)
+      return tagName
+    }
+
+    return nok(code)
+  }
+
+  function basicSelfClosing(code) {
+    if (code === 62) {
+      effects.consume(code)
+      return self.interrupt ? ok : continuation
+    }
+
+    return nok(code)
+  }
+
+  function completeClosingTagAfter(code) {
+    if (markdownSpace(code)) {
+      effects.consume(code)
+      return completeClosingTagAfter
+    }
+
+    return completeEnd(code)
+  }
+
+  function completeAttributeNameBefore(code) {
+    if (code === 47) {
+      effects.consume(code)
+      return completeEnd
+    }
+
+    if (code === 58 || code === 95 || asciiAlpha(code)) {
+      effects.consume(code)
+      return completeAttributeName
+    }
+
+    if (markdownSpace(code)) {
+      effects.consume(code)
+      return completeAttributeNameBefore
+    }
+
+    return completeEnd(code)
+  }
+
+  function completeAttributeName(code) {
+    if (
+      code === 45 ||
+      code === 46 ||
+      code === 58 ||
+      code === 95 ||
+      asciiAlphanumeric(code)
+    ) {
+      effects.consume(code)
+      return completeAttributeName
+    }
+
+    return completeAttributeNameAfter(code)
+  }
+
+  function completeAttributeNameAfter(code) {
+    if (code === 61) {
+      effects.consume(code)
+      return completeAttributeValueBefore
+    }
+
+    if (markdownSpace(code)) {
+      effects.consume(code)
+      return completeAttributeNameAfter
+    }
+
+    return completeAttributeNameBefore(code)
+  }
+
+  function completeAttributeValueBefore(code) {
+    if (
+      code === null ||
+      code === 60 ||
+      code === 61 ||
+      code === 62 ||
+      code === 96
+    ) {
+      return nok(code)
+    }
+
+    if (code === 34 || code === 39) {
+      effects.consume(code)
+      marker = code
+      return completeAttributeValueQuoted
+    }
+
+    if (markdownSpace(code)) {
+      effects.consume(code)
+      return completeAttributeValueBefore
+    }
+
+    marker = undefined
+    return completeAttributeValueUnquoted(code)
+  }
+
+  function completeAttributeValueQuoted(code) {
+    if (code === marker) {
+      effects.consume(code)
+      return completeAttributeValueQuotedAfter
+    }
+
+    if (code === null || markdownLineEnding(code)) {
+      return nok(code)
+    }
+
+    effects.consume(code)
+    return completeAttributeValueQuoted
+  }
+
+  function completeAttributeValueUnquoted(code) {
+    if (
+      code === null ||
+      code === 34 ||
+      code === 39 ||
+      code === 60 ||
+      code === 61 ||
+      code === 62 ||
+      code === 96 ||
+      markdownLineEndingOrSpace(code)
+    ) {
+      return completeAttributeNameAfter(code)
+    }
+
+    effects.consume(code)
+    return completeAttributeValueUnquoted
+  }
+
+  function completeAttributeValueQuotedAfter(code) {
+    if (code === 47 || code === 62 || markdownSpace(code)) {
+      return completeAttributeNameBefore(code)
+    }
+
+    return nok(code)
+  }
+
+  function completeEnd(code) {
+    if (code === 62) {
+      effects.consume(code)
+      return completeAfter
+    }
+
+    return nok(code)
+  }
+
+  function completeAfter(code) {
+    if (markdownSpace(code)) {
+      effects.consume(code)
+      return completeAfter
+    }
+
+    return code === null || markdownLineEnding(code)
+      ? continuation(code)
+      : nok(code)
+  }
+
+  function continuation(code) {
+    if (code === 45 && kind === 2) {
+      effects.consume(code)
+      return continuationCommentInside
+    }
+
+    if (code === 60 && kind === 1) {
+      effects.consume(code)
+      return continuationRawTagOpen
+    }
+
+    if (code === 62 && kind === 4) {
+      effects.consume(code)
+      return continuationClose
+    }
+
+    if (code === 63 && kind === 3) {
+      effects.consume(code)
+      return continuationDeclarationInside
+    }
+
+    if (code === 93 && kind === 5) {
+      effects.consume(code)
+      return continuationCharacterDataInside
+    }
+
+    if (markdownLineEnding(code) && (kind === 6 || kind === 7)) {
+      return effects.check(
+        nextBlankConstruct,
+        continuationClose,
+        continuationAtLineEnding
+      )(code)
+    }
+
+    if (code === null || markdownLineEnding(code)) {
+      return continuationAtLineEnding(code)
+    }
+
+    effects.consume(code)
+    return continuation
+  }
+
+  function continuationAtLineEnding(code) {
+    effects.exit('htmlFlowData')
+    return htmlContinueStart(code)
+  }
+
+  function htmlContinueStart(code) {
+    if (code === null) {
+      return done(code)
+    }
+
+    if (markdownLineEnding(code)) {
+      effects.enter('lineEnding')
+      effects.consume(code)
+      effects.exit('lineEnding')
+      return htmlContinueStart
+    }
+
+    effects.enter('htmlFlowData')
+    return continuation(code)
+  }
+
+  function continuationCommentInside(code) {
+    if (code === 45) {
+      effects.consume(code)
+      return continuationDeclarationInside
+    }
+
+    return continuation(code)
+  }
+
+  function continuationRawTagOpen(code) {
+    if (code === 47) {
+      effects.consume(code)
+      buffer = ''
+      return continuationRawEndTag
+    }
+
+    return continuation(code)
+  }
+
+  function continuationRawEndTag(code) {
+    if (code === 62 && htmlRawNames.indexOf(buffer.toLowerCase()) > -1) {
+      effects.consume(code)
+      return continuationClose
+    }
+
+    if (asciiAlpha(code) && buffer.length < 8) {
+      effects.consume(code)
+      buffer += fromCharCode(code)
+      return continuationRawEndTag
+    }
+
+    return continuation(code)
+  }
+
+  function continuationCharacterDataInside(code) {
+    if (code === 93) {
+      effects.consume(code)
+      return continuationDeclarationInside
+    }
+
+    return continuation(code)
+  }
+
+  function continuationDeclarationInside(code) {
+    if (code === 62) {
+      effects.consume(code)
+      return continuationClose
+    }
+
+    return continuation(code)
+  }
+
+  function continuationClose(code) {
+    if (code === null || markdownLineEnding(code)) {
+      effects.exit('htmlFlowData')
+      return done(code)
+    }
+
+    effects.consume(code)
+    return continuationClose
+  }
+
+  function done(code) {
+    effects.exit('htmlFlow')
+    return ok(code)
+  }
+}
+
+function tokenizeNextBlank(effects, ok, nok) {
+  return start
+
+  function start(code) {
+    effects.exit('htmlFlowData')
+    effects.enter('lineEndingBlank')
+    effects.consume(code)
+    effects.exit('lineEndingBlank')
+    return effects.attempt(partialBlankLine, ok, nok)
+  }
+}
+
+module.exports = htmlFlow
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/html-text.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/html-text.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var asciiAlpha = __webpack_require__(/*! ../character/ascii-alpha.js */ "./node_modules/micromark/dist/character/ascii-alpha.js")
+var asciiAlphanumeric = __webpack_require__(/*! ../character/ascii-alphanumeric.js */ "./node_modules/micromark/dist/character/ascii-alphanumeric.js")
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space.js */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
+var markdownSpace = __webpack_require__(/*! ../character/markdown-space.js */ "./node_modules/micromark/dist/character/markdown-space.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+
+var htmlText = {
+  name: 'htmlText',
+  tokenize: tokenizeHtmlText
+}
+
+function tokenizeHtmlText(effects, ok, nok) {
+  var self = this
+  var marker
+  var buffer
+  var index
+  var returnState
+  return start
+
+  function start(code) {
+    effects.enter('htmlText')
+    effects.enter('htmlTextData')
+    effects.consume(code)
+    return open
+  }
+
+  function open(code) {
+    if (code === 33) {
+      effects.consume(code)
+      return declarationOpen
+    }
+
+    if (code === 47) {
+      effects.consume(code)
+      return tagCloseStart
+    }
+
+    if (code === 63) {
+      effects.consume(code)
+      return instruction
+    }
+
+    if (asciiAlpha(code)) {
+      effects.consume(code)
+      return tagOpen
+    }
+
+    return nok(code)
+  }
+
+  function declarationOpen(code) {
+    if (code === 45) {
+      effects.consume(code)
+      return commentOpen
+    }
+
+    if (code === 91) {
+      effects.consume(code)
+      buffer = 'CDATA['
+      index = 0
+      return cdataOpen
+    }
+
+    if (asciiAlpha(code)) {
+      effects.consume(code)
+      return declaration
+    }
+
+    return nok(code)
+  }
+
+  function commentOpen(code) {
+    if (code === 45) {
+      effects.consume(code)
+      return commentStart
+    }
+
+    return nok(code)
+  }
+
+  function commentStart(code) {
+    if (code === null || code === 62) {
+      return nok(code)
+    }
+
+    if (code === 45) {
+      effects.consume(code)
+      return commentStartDash
+    }
+
+    return comment(code)
+  }
+
+  function commentStartDash(code) {
+    if (code === null || code === 62) {
+      return nok(code)
+    }
+
+    return comment(code)
+  }
+
+  function comment(code) {
+    if (code === null) {
+      return nok(code)
+    }
+
+    if (code === 45) {
+      effects.consume(code)
+      return commentClose
+    }
+
+    if (markdownLineEnding(code)) {
+      returnState = comment
+      return atLineEnding(code)
+    }
+
+    effects.consume(code)
+    return comment
+  }
+
+  function commentClose(code) {
+    if (code === 45) {
+      effects.consume(code)
+      return end
+    }
+
+    return comment(code)
+  }
+
+  function cdataOpen(code) {
+    if (code === buffer.charCodeAt(index++)) {
+      effects.consume(code)
+      return index === buffer.length ? cdata : cdataOpen
+    }
+
+    return nok(code)
+  }
+
+  function cdata(code) {
+    if (code === null) {
+      return nok(code)
+    }
+
+    if (code === 93) {
+      effects.consume(code)
+      return cdataClose
+    }
+
+    if (markdownLineEnding(code)) {
+      returnState = cdata
+      return atLineEnding(code)
+    }
+
+    effects.consume(code)
+    return cdata
+  }
+
+  function cdataClose(code) {
+    if (code === 93) {
+      effects.consume(code)
+      return cdataEnd
+    }
+
+    return cdata(code)
+  }
+
+  function cdataEnd(code) {
+    if (code === 62) {
+      return end(code)
+    }
+
+    if (code === 93) {
+      effects.consume(code)
+      return cdataEnd
+    }
+
+    return cdata(code)
+  }
+
+  function declaration(code) {
+    if (code === null || code === 62) {
+      return end(code)
+    }
+
+    if (markdownLineEnding(code)) {
+      returnState = declaration
+      return atLineEnding(code)
+    }
+
+    effects.consume(code)
+    return declaration
+  }
+
+  function instruction(code) {
+    if (code === null) {
+      return nok(code)
+    }
+
+    if (code === 63) {
+      effects.consume(code)
+      return instructionClose
+    }
+
+    if (markdownLineEnding(code)) {
+      returnState = instruction
+      return atLineEnding(code)
+    }
+
+    effects.consume(code)
+    return instruction
+  }
+
+  function instructionClose(code) {
+    return code === 62 ? end(code) : instruction(code)
+  }
+
+  function tagCloseStart(code) {
+    if (asciiAlpha(code)) {
+      effects.consume(code)
+      return tagClose
+    }
+
+    return nok(code)
+  }
+
+  function tagClose(code) {
+    if (code === 45 || asciiAlphanumeric(code)) {
+      effects.consume(code)
+      return tagClose
+    }
+
+    return tagCloseBetween(code)
+  }
+
+  function tagCloseBetween(code) {
+    if (markdownLineEnding(code)) {
+      returnState = tagCloseBetween
+      return atLineEnding(code)
+    }
+
+    if (markdownSpace(code)) {
+      effects.consume(code)
+      return tagCloseBetween
+    }
+
+    return end(code)
+  }
+
+  function tagOpen(code) {
+    if (code === 45 || asciiAlphanumeric(code)) {
+      effects.consume(code)
+      return tagOpen
+    }
+
+    if (code === 47 || code === 62 || markdownLineEndingOrSpace(code)) {
+      return tagOpenBetween(code)
+    }
+
+    return nok(code)
+  }
+
+  function tagOpenBetween(code) {
+    if (code === 47) {
+      effects.consume(code)
+      return end
+    }
+
+    if (code === 58 || code === 95 || asciiAlpha(code)) {
+      effects.consume(code)
+      return tagOpenAttributeName
+    }
+
+    if (markdownLineEnding(code)) {
+      returnState = tagOpenBetween
+      return atLineEnding(code)
+    }
+
+    if (markdownSpace(code)) {
+      effects.consume(code)
+      return tagOpenBetween
+    }
+
+    return end(code)
+  }
+
+  function tagOpenAttributeName(code) {
+    if (
+      code === 45 ||
+      code === 46 ||
+      code === 58 ||
+      code === 95 ||
+      asciiAlphanumeric(code)
+    ) {
+      effects.consume(code)
+      return tagOpenAttributeName
+    }
+
+    return tagOpenAttributeNameAfter(code)
+  }
+
+  function tagOpenAttributeNameAfter(code) {
+    if (code === 61) {
+      effects.consume(code)
+      return tagOpenAttributeValueBefore
+    }
+
+    if (markdownLineEnding(code)) {
+      returnState = tagOpenAttributeNameAfter
+      return atLineEnding(code)
+    }
+
+    if (markdownSpace(code)) {
+      effects.consume(code)
+      return tagOpenAttributeNameAfter
+    }
+
+    return tagOpenBetween(code)
+  }
+
+  function tagOpenAttributeValueBefore(code) {
+    if (
+      code === null ||
+      code === 60 ||
+      code === 61 ||
+      code === 62 ||
+      code === 96
+    ) {
+      return nok(code)
+    }
+
+    if (code === 34 || code === 39) {
+      effects.consume(code)
+      marker = code
+      return tagOpenAttributeValueQuoted
+    }
+
+    if (markdownLineEnding(code)) {
+      returnState = tagOpenAttributeValueBefore
+      return atLineEnding(code)
+    }
+
+    if (markdownSpace(code)) {
+      effects.consume(code)
+      return tagOpenAttributeValueBefore
+    }
+
+    effects.consume(code)
+    marker = undefined
+    return tagOpenAttributeValueUnquoted
+  }
+
+  function tagOpenAttributeValueQuoted(code) {
+    if (code === marker) {
+      effects.consume(code)
+      return tagOpenAttributeValueQuotedAfter
+    }
+
+    if (code === null) {
+      return nok(code)
+    }
+
+    if (markdownLineEnding(code)) {
+      returnState = tagOpenAttributeValueQuoted
+      return atLineEnding(code)
+    }
+
+    effects.consume(code)
+    return tagOpenAttributeValueQuoted
+  }
+
+  function tagOpenAttributeValueQuotedAfter(code) {
+    if (code === 62 || code === 47 || markdownLineEndingOrSpace(code)) {
+      return tagOpenBetween(code)
+    }
+
+    return nok(code)
+  }
+
+  function tagOpenAttributeValueUnquoted(code) {
+    if (
+      code === null ||
+      code === 34 ||
+      code === 39 ||
+      code === 60 ||
+      code === 61 ||
+      code === 96
+    ) {
+      return nok(code)
+    }
+
+    if (code === 62 || markdownLineEndingOrSpace(code)) {
+      return tagOpenBetween(code)
+    }
+
+    effects.consume(code)
+    return tagOpenAttributeValueUnquoted
+  } // We can’t have blank lines in content, so no need to worry about empty
+  // tokens.
+
+  function atLineEnding(code) {
+    effects.exit('htmlTextData')
+    effects.enter('lineEnding')
+    effects.consume(code)
+    effects.exit('lineEnding')
+    return factorySpace(
+      effects,
+      afterPrefix,
+      'linePrefix',
+      self.parser.constructs.disable.null.indexOf('codeIndented') > -1
+        ? undefined
+        : 4
+    )
+  }
+
+  function afterPrefix(code) {
+    effects.enter('htmlTextData')
+    return returnState(code)
+  }
+
+  function end(code) {
+    if (code === 62) {
+      effects.consume(code)
+      effects.exit('htmlTextData')
+      effects.exit('htmlText')
+      return ok
+    }
+
+    return nok(code)
+  }
+}
+
+module.exports = htmlText
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/label-end.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/label-end.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space.js */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
+var chunkedPush = __webpack_require__(/*! ../util/chunked-push.js */ "./node_modules/micromark/dist/util/chunked-push.js")
+var chunkedSplice = __webpack_require__(/*! ../util/chunked-splice.js */ "./node_modules/micromark/dist/util/chunked-splice.js")
+var normalizeIdentifier = __webpack_require__(/*! ../util/normalize-identifier.js */ "./node_modules/micromark/dist/util/normalize-identifier.js")
+var resolveAll = __webpack_require__(/*! ../util/resolve-all.js */ "./node_modules/micromark/dist/util/resolve-all.js")
+var shallow = __webpack_require__(/*! ../util/shallow.js */ "./node_modules/micromark/dist/util/shallow.js")
+var factoryDestination = __webpack_require__(/*! ./factory-destination.js */ "./node_modules/micromark/dist/tokenize/factory-destination.js")
+var factoryLabel = __webpack_require__(/*! ./factory-label.js */ "./node_modules/micromark/dist/tokenize/factory-label.js")
+var factoryTitle = __webpack_require__(/*! ./factory-title.js */ "./node_modules/micromark/dist/tokenize/factory-title.js")
+var factoryWhitespace = __webpack_require__(/*! ./factory-whitespace.js */ "./node_modules/micromark/dist/tokenize/factory-whitespace.js")
+
+var labelEnd = {
+  name: 'labelEnd',
+  tokenize: tokenizeLabelEnd,
+  resolveTo: resolveToLabelEnd,
+  resolveAll: resolveAllLabelEnd
+}
+var resourceConstruct = {
+  tokenize: tokenizeResource
+}
+var fullReferenceConstruct = {
+  tokenize: tokenizeFullReference
+}
+var collapsedReferenceConstruct = {
+  tokenize: tokenizeCollapsedReference
+}
+
+function resolveAllLabelEnd(events) {
+  var index = -1
+  var token
+
+  while (++index < events.length) {
+    token = events[index][1]
+
+    if (
+      !token._used &&
+      (token.type === 'labelImage' ||
+        token.type === 'labelLink' ||
+        token.type === 'labelEnd')
+    ) {
+      // Remove the marker.
+      events.splice(index + 1, token.type === 'labelImage' ? 4 : 2)
+      token.type = 'data'
+      index++
+    }
+  }
+
+  return events
+}
+
+function resolveToLabelEnd(events, context) {
+  var index = events.length
+  var offset = 0
+  var group
+  var label
+  var text
+  var token
+  var open
+  var close
+  var media // Find an opening.
+
+  while (index--) {
+    token = events[index][1]
+
+    if (open) {
+      // If we see another link, or inactive link label, we’ve been here before.
+      if (
+        token.type === 'link' ||
+        (token.type === 'labelLink' && token._inactive)
+      ) {
+        break
+      } // Mark other link openings as inactive, as we can’t have links in
+      // links.
+
+      if (events[index][0] === 'enter' && token.type === 'labelLink') {
+        token._inactive = true
+      }
+    } else if (close) {
+      if (
+        events[index][0] === 'enter' &&
+        (token.type === 'labelImage' || token.type === 'labelLink') &&
+        !token._balanced
+      ) {
+        open = index
+
+        if (token.type !== 'labelLink') {
+          offset = 2
+          break
+        }
+      }
+    } else if (token.type === 'labelEnd') {
+      close = index
+    }
+  }
+
+  group = {
+    type: events[open][1].type === 'labelLink' ? 'link' : 'image',
+    start: shallow(events[open][1].start),
+    end: shallow(events[events.length - 1][1].end)
+  }
+  label = {
+    type: 'label',
+    start: shallow(events[open][1].start),
+    end: shallow(events[close][1].end)
+  }
+  text = {
+    type: 'labelText',
+    start: shallow(events[open + offset + 2][1].end),
+    end: shallow(events[close - 2][1].start)
+  }
+  media = [
+    ['enter', group, context],
+    ['enter', label, context]
+  ] // Opening marker.
+
+  media = chunkedPush(media, events.slice(open + 1, open + offset + 3)) // Text open.
+
+  media = chunkedPush(media, [['enter', text, context]]) // Between.
+
+  media = chunkedPush(
+    media,
+    resolveAll(
+      context.parser.constructs.insideSpan.null,
+      events.slice(open + offset + 4, close - 3),
+      context
+    )
+  ) // Text close, marker close, label close.
+
+  media = chunkedPush(media, [
+    ['exit', text, context],
+    events[close - 2],
+    events[close - 1],
+    ['exit', label, context]
+  ]) // Reference, resource, or so.
+
+  media = chunkedPush(media, events.slice(close + 1)) // Media close.
+
+  media = chunkedPush(media, [['exit', group, context]])
+  chunkedSplice(events, open, events.length, media)
+  return events
+}
+
+function tokenizeLabelEnd(effects, ok, nok) {
+  var self = this
+  var index = self.events.length
+  var labelStart
+  var defined // Find an opening.
+
+  while (index--) {
+    if (
+      (self.events[index][1].type === 'labelImage' ||
+        self.events[index][1].type === 'labelLink') &&
+      !self.events[index][1]._balanced
+    ) {
+      labelStart = self.events[index][1]
+      break
+    }
+  }
+
+  return start
+
+  function start(code) {
+    if (!labelStart) {
+      return nok(code)
+    } // It’s a balanced bracket, but contains a link.
+
+    if (labelStart._inactive) return balanced(code)
+    defined =
+      self.parser.defined.indexOf(
+        normalizeIdentifier(
+          self.sliceSerialize({
+            start: labelStart.end,
+            end: self.now()
+          })
+        )
+      ) > -1
+    effects.enter('labelEnd')
+    effects.enter('labelMarker')
+    effects.consume(code)
+    effects.exit('labelMarker')
+    effects.exit('labelEnd')
+    return afterLabelEnd
+  }
+
+  function afterLabelEnd(code) {
+    // Resource: `[asd](fgh)`.
+    if (code === 40) {
+      return effects.attempt(
+        resourceConstruct,
+        ok,
+        defined ? ok : balanced
+      )(code)
+    } // Collapsed (`[asd][]`) or full (`[asd][fgh]`) reference?
+
+    if (code === 91) {
+      return effects.attempt(
+        fullReferenceConstruct,
+        ok,
+        defined
+          ? effects.attempt(collapsedReferenceConstruct, ok, balanced)
+          : balanced
+      )(code)
+    } // Shortcut reference: `[asd]`?
+
+    return defined ? ok(code) : balanced(code)
+  }
+
+  function balanced(code) {
+    labelStart._balanced = true
+    return nok(code)
+  }
+}
+
+function tokenizeResource(effects, ok, nok) {
+  return start
+
+  function start(code) {
+    effects.enter('resource')
+    effects.enter('resourceMarker')
+    effects.consume(code)
+    effects.exit('resourceMarker')
+    return factoryWhitespace(effects, open)
+  }
+
+  function open(code) {
+    if (code === 41) {
+      return end(code)
+    }
+
+    return factoryDestination(
+      effects,
+      destinationAfter,
+      nok,
+      'resourceDestination',
+      'resourceDestinationLiteral',
+      'resourceDestinationLiteralMarker',
+      'resourceDestinationRaw',
+      'resourceDestinationString',
+      3
+    )(code)
+  }
+
+  function destinationAfter(code) {
+    return markdownLineEndingOrSpace(code)
+      ? factoryWhitespace(effects, between)(code)
+      : end(code)
+  }
+
+  function between(code) {
+    if (code === 34 || code === 39 || code === 40) {
+      return factoryTitle(
+        effects,
+        factoryWhitespace(effects, end),
+        nok,
+        'resourceTitle',
+        'resourceTitleMarker',
+        'resourceTitleString'
+      )(code)
+    }
+
+    return end(code)
+  }
+
+  function end(code) {
+    if (code === 41) {
+      effects.enter('resourceMarker')
+      effects.consume(code)
+      effects.exit('resourceMarker')
+      effects.exit('resource')
+      return ok
+    }
+
+    return nok(code)
+  }
+}
+
+function tokenizeFullReference(effects, ok, nok) {
+  var self = this
+  return start
+
+  function start(code) {
+    return factoryLabel.call(
+      self,
+      effects,
+      afterLabel,
+      nok,
+      'reference',
+      'referenceMarker',
+      'referenceString'
+    )(code)
+  }
+
+  function afterLabel(code) {
+    return self.parser.defined.indexOf(
+      normalizeIdentifier(
+        self.sliceSerialize(self.events[self.events.length - 1][1]).slice(1, -1)
+      )
+    ) < 0
+      ? nok(code)
+      : ok(code)
+  }
+}
+
+function tokenizeCollapsedReference(effects, ok, nok) {
+  return start
+
+  function start(code) {
+    effects.enter('reference')
+    effects.enter('referenceMarker')
+    effects.consume(code)
+    effects.exit('referenceMarker')
+    return open
+  }
+
+  function open(code) {
+    if (code === 93) {
+      effects.enter('referenceMarker')
+      effects.consume(code)
+      effects.exit('referenceMarker')
+      effects.exit('reference')
+      return ok
+    }
+
+    return nok(code)
+  }
+}
+
+module.exports = labelEnd
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/label-start-image.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/label-start-image.js ***!
+  \*******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var labelEnd = __webpack_require__(/*! ./label-end.js */ "./node_modules/micromark/dist/tokenize/label-end.js")
+
+var labelStartImage = {
+  name: 'labelStartImage',
+  tokenize: tokenizeLabelStartImage,
+  resolveAll: labelEnd.resolveAll
+}
+
+function tokenizeLabelStartImage(effects, ok, nok) {
+  var self = this
+  return start
+
+  function start(code) {
+    effects.enter('labelImage')
+    effects.enter('labelImageMarker')
+    effects.consume(code)
+    effects.exit('labelImageMarker')
+    return open
+  }
+
+  function open(code) {
+    if (code === 91) {
+      effects.enter('labelMarker')
+      effects.consume(code)
+      effects.exit('labelMarker')
+      effects.exit('labelImage')
+      return after
+    }
+
+    return nok(code)
+  }
+
+  function after(code) {
+    /* c8 ignore next */
+    return code === 94 &&
+      /* c8 ignore next */
+      '_hiddenFootnoteSupport' in self.parser.constructs
+      ? /* c8 ignore next */
+        nok(code)
+      : ok(code)
+  }
+}
+
+module.exports = labelStartImage
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/label-start-link.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/label-start-link.js ***!
+  \******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var labelEnd = __webpack_require__(/*! ./label-end.js */ "./node_modules/micromark/dist/tokenize/label-end.js")
+
+var labelStartLink = {
+  name: 'labelStartLink',
+  tokenize: tokenizeLabelStartLink,
+  resolveAll: labelEnd.resolveAll
+}
+
+function tokenizeLabelStartLink(effects, ok, nok) {
+  var self = this
+  return start
+
+  function start(code) {
+    effects.enter('labelLink')
+    effects.enter('labelMarker')
+    effects.consume(code)
+    effects.exit('labelMarker')
+    effects.exit('labelLink')
+    return after
+  }
+
+  function after(code) {
+    /* c8 ignore next */
+    return code === 94 &&
+      /* c8 ignore next */
+      '_hiddenFootnoteSupport' in self.parser.constructs
+      ? /* c8 ignore next */
+        nok(code)
+      : ok(code)
+  }
+}
+
+module.exports = labelStartLink
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/line-ending.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/line-ending.js ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+
+var lineEnding = {
+  name: 'lineEnding',
+  tokenize: tokenizeLineEnding
+}
+
+function tokenizeLineEnding(effects, ok) {
+  return start
+
+  function start(code) {
+    effects.enter('lineEnding')
+    effects.consume(code)
+    effects.exit('lineEnding')
+    return factorySpace(effects, ok, 'linePrefix')
+  }
+}
+
+module.exports = lineEnding
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/list.js":
+/*!******************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/list.js ***!
+  \******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var asciiDigit = __webpack_require__(/*! ../character/ascii-digit.js */ "./node_modules/micromark/dist/character/ascii-digit.js")
+var markdownSpace = __webpack_require__(/*! ../character/markdown-space.js */ "./node_modules/micromark/dist/character/markdown-space.js")
+var prefixSize = __webpack_require__(/*! ../util/prefix-size.js */ "./node_modules/micromark/dist/util/prefix-size.js")
+var sizeChunks = __webpack_require__(/*! ../util/size-chunks.js */ "./node_modules/micromark/dist/util/size-chunks.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+var partialBlankLine = __webpack_require__(/*! ./partial-blank-line.js */ "./node_modules/micromark/dist/tokenize/partial-blank-line.js")
+var thematicBreak = __webpack_require__(/*! ./thematic-break.js */ "./node_modules/micromark/dist/tokenize/thematic-break.js")
+
+var list = {
+  name: 'list',
+  tokenize: tokenizeListStart,
+  continuation: {
+    tokenize: tokenizeListContinuation
+  },
+  exit: tokenizeListEnd
+}
+var listItemPrefixWhitespaceConstruct = {
+  tokenize: tokenizeListItemPrefixWhitespace,
+  partial: true
+}
+var indentConstruct = {
+  tokenize: tokenizeIndent,
+  partial: true
+}
+
+function tokenizeListStart(effects, ok, nok) {
+  var self = this
+  var initialSize = prefixSize(self.events, 'linePrefix')
+  var size = 0
+  return start
+
+  function start(code) {
+    var kind =
+      self.containerState.type ||
+      (code === 42 || code === 43 || code === 45
+        ? 'listUnordered'
+        : 'listOrdered')
+
+    if (
+      kind === 'listUnordered'
+        ? !self.containerState.marker || code === self.containerState.marker
+        : asciiDigit(code)
+    ) {
+      if (!self.containerState.type) {
+        self.containerState.type = kind
+        effects.enter(kind, {
+          _container: true
+        })
+      }
+
+      if (kind === 'listUnordered') {
+        effects.enter('listItemPrefix')
+        return code === 42 || code === 45
+          ? effects.check(thematicBreak, nok, atMarker)(code)
+          : atMarker(code)
+      }
+
+      if (!self.interrupt || code === 49) {
+        effects.enter('listItemPrefix')
+        effects.enter('listItemValue')
+        return inside(code)
+      }
+    }
+
+    return nok(code)
+  }
+
+  function inside(code) {
+    if (asciiDigit(code) && ++size < 10) {
+      effects.consume(code)
+      return inside
+    }
+
+    if (
+      (!self.interrupt || size < 2) &&
+      (self.containerState.marker
+        ? code === self.containerState.marker
+        : code === 41 || code === 46)
+    ) {
+      effects.exit('listItemValue')
+      return atMarker(code)
+    }
+
+    return nok(code)
+  }
+
+  function atMarker(code) {
+    effects.enter('listItemMarker')
+    effects.consume(code)
+    effects.exit('listItemMarker')
+    self.containerState.marker = self.containerState.marker || code
+    return effects.check(
+      partialBlankLine, // Can’t be empty when interrupting.
+      self.interrupt ? nok : onBlank,
+      effects.attempt(
+        listItemPrefixWhitespaceConstruct,
+        endOfPrefix,
+        otherPrefix
+      )
+    )
+  }
+
+  function onBlank(code) {
+    self.containerState.initialBlankLine = true
+    initialSize++
+    return endOfPrefix(code)
+  }
+
+  function otherPrefix(code) {
+    if (markdownSpace(code)) {
+      effects.enter('listItemPrefixWhitespace')
+      effects.consume(code)
+      effects.exit('listItemPrefixWhitespace')
+      return endOfPrefix
+    }
+
+    return nok(code)
+  }
+
+  function endOfPrefix(code) {
+    self.containerState.size =
+      initialSize + sizeChunks(self.sliceStream(effects.exit('listItemPrefix')))
+    return ok(code)
+  }
+}
+
+function tokenizeListContinuation(effects, ok, nok) {
+  var self = this
+  self.containerState._closeFlow = undefined
+  return effects.check(partialBlankLine, onBlank, notBlank)
+
+  function onBlank(code) {
+    self.containerState.furtherBlankLines =
+      self.containerState.furtherBlankLines ||
+      self.containerState.initialBlankLine // We have a blank line.
+    // Still, try to consume at most the items size.
+
+    return factorySpace(
+      effects,
+      ok,
+      'listItemIndent',
+      self.containerState.size + 1
+    )(code)
+  }
+
+  function notBlank(code) {
+    if (self.containerState.furtherBlankLines || !markdownSpace(code)) {
+      self.containerState.furtherBlankLines = self.containerState.initialBlankLine = undefined
+      return notInCurrentItem(code)
+    }
+
+    self.containerState.furtherBlankLines = self.containerState.initialBlankLine = undefined
+    return effects.attempt(indentConstruct, ok, notInCurrentItem)(code)
+  }
+
+  function notInCurrentItem(code) {
+    // While we do continue, we signal that the flow should be closed.
+    self.containerState._closeFlow = true // As we’re closing flow, we’re no longer interrupting.
+
+    self.interrupt = undefined
+    return factorySpace(
+      effects,
+      effects.attempt(list, ok, nok),
+      'linePrefix',
+      self.parser.constructs.disable.null.indexOf('codeIndented') > -1
+        ? undefined
+        : 4
+    )(code)
+  }
+}
+
+function tokenizeIndent(effects, ok, nok) {
+  var self = this
+  return factorySpace(
+    effects,
+    afterPrefix,
+    'listItemIndent',
+    self.containerState.size + 1
+  )
+
+  function afterPrefix(code) {
+    return prefixSize(self.events, 'listItemIndent') ===
+      self.containerState.size
+      ? ok(code)
+      : nok(code)
+  }
+}
+
+function tokenizeListEnd(effects) {
+  effects.exit(this.containerState.type)
+}
+
+function tokenizeListItemPrefixWhitespace(effects, ok, nok) {
+  var self = this
+  return factorySpace(
+    effects,
+    afterPrefix,
+    'listItemPrefixWhitespace',
+    self.parser.constructs.disable.null.indexOf('codeIndented') > -1
+      ? undefined
+      : 4 + 1
+  )
+
+  function afterPrefix(code) {
+    return markdownSpace(code) ||
+      !prefixSize(self.events, 'listItemPrefixWhitespace')
+      ? nok(code)
+      : ok(code)
+  }
+}
+
+module.exports = list
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/partial-blank-line.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/partial-blank-line.js ***!
+  \********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+
+var partialBlankLine = {
+  tokenize: tokenizePartialBlankLine,
+  partial: true
+}
+
+function tokenizePartialBlankLine(effects, ok, nok) {
+  return factorySpace(effects, afterWhitespace, 'linePrefix')
+
+  function afterWhitespace(code) {
+    return code === null || markdownLineEnding(code) ? ok(code) : nok(code)
+  }
+}
+
+module.exports = partialBlankLine
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/setext-underline.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/setext-underline.js ***!
+  \******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var shallow = __webpack_require__(/*! ../util/shallow.js */ "./node_modules/micromark/dist/util/shallow.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+
+var setextUnderline = {
+  name: 'setextUnderline',
+  tokenize: tokenizeSetextUnderline,
+  resolveTo: resolveToSetextUnderline
+}
+
+function resolveToSetextUnderline(events, context) {
+  var index = events.length
+  var content
+  var text
+  var definition
+  var heading // Find the opening of the content.
+  // It’ll always exist: we don’t tokenize if it isn’t there.
+
+  while (index--) {
+    if (events[index][0] === 'enter') {
+      if (events[index][1].type === 'content') {
+        content = index
+        break
+      }
+
+      if (events[index][1].type === 'paragraph') {
+        text = index
+      }
+    } // Exit
+    else {
+      if (events[index][1].type === 'content') {
+        // Remove the content end (if needed we’ll add it later)
+        events.splice(index, 1)
+      }
+
+      if (!definition && events[index][1].type === 'definition') {
+        definition = index
+      }
+    }
+  }
+
+  heading = {
+    type: 'setextHeading',
+    start: shallow(events[text][1].start),
+    end: shallow(events[events.length - 1][1].end)
+  } // Change the paragraph to setext heading text.
+
+  events[text][1].type = 'setextHeadingText' // If we have definitions in the content, we’ll keep on having content,
+  // but we need move it.
+
+  if (definition) {
+    events.splice(text, 0, ['enter', heading, context])
+    events.splice(definition + 1, 0, ['exit', events[content][1], context])
+    events[content][1].end = shallow(events[definition][1].end)
+  } else {
+    events[content][1] = heading
+  } // Add the heading exit at the end.
+
+  events.push(['exit', heading, context])
+  return events
+}
+
+function tokenizeSetextUnderline(effects, ok, nok) {
+  var self = this
+  var index = self.events.length
+  var marker
+  var paragraph // Find an opening.
+
+  while (index--) {
+    // Skip enter/exit of line ending, line prefix, and content.
+    // We can now either have a definition or a paragraph.
+    if (
+      self.events[index][1].type !== 'lineEnding' &&
+      self.events[index][1].type !== 'linePrefix' &&
+      self.events[index][1].type !== 'content'
+    ) {
+      paragraph = self.events[index][1].type === 'paragraph'
+      break
+    }
+  }
+
+  return start
+
+  function start(code) {
+    if (!self.lazy && (self.interrupt || paragraph)) {
+      effects.enter('setextHeadingLine')
+      effects.enter('setextHeadingLineSequence')
+      marker = code
+      return closingSequence(code)
+    }
+
+    return nok(code)
+  }
+
+  function closingSequence(code) {
+    if (code === marker) {
+      effects.consume(code)
+      return closingSequence
+    }
+
+    effects.exit('setextHeadingLineSequence')
+    return factorySpace(effects, closingSequenceEnd, 'lineSuffix')(code)
+  }
+
+  function closingSequenceEnd(code) {
+    if (code === null || markdownLineEnding(code)) {
+      effects.exit('setextHeadingLine')
+      return ok(code)
+    }
+
+    return nok(code)
+  }
+}
+
+module.exports = setextUnderline
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/tokenize/thematic-break.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/micromark/dist/tokenize/thematic-break.js ***!
+  \****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var markdownSpace = __webpack_require__(/*! ../character/markdown-space.js */ "./node_modules/micromark/dist/character/markdown-space.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+
+var thematicBreak = {
+  name: 'thematicBreak',
+  tokenize: tokenizeThematicBreak
+}
+
+function tokenizeThematicBreak(effects, ok, nok) {
+  var size = 0
+  var marker
+  return start
+
+  function start(code) {
+    effects.enter('thematicBreak')
+    marker = code
+    return atBreak(code)
+  }
+
+  function atBreak(code) {
+    if (code === marker) {
+      effects.enter('thematicBreakSequence')
+      return sequence(code)
+    }
+
+    if (markdownSpace(code)) {
+      return factorySpace(effects, atBreak, 'whitespace')(code)
+    }
+
+    if (size < 3 || (code !== null && !markdownLineEnding(code))) {
+      return nok(code)
+    }
+
+    effects.exit('thematicBreak')
+    return ok(code)
+  }
+
+  function sequence(code) {
+    if (code === marker) {
+      effects.consume(code)
+      size++
+      return sequence
+    }
+
+    effects.exit('thematicBreakSequence')
+    return atBreak(code)
+  }
+}
+
+module.exports = thematicBreak
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/util/chunked-push.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/micromark/dist/util/chunked-push.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var chunkedSplice = __webpack_require__(/*! ./chunked-splice.js */ "./node_modules/micromark/dist/util/chunked-splice.js")
+
+function chunkedPush(list, items) {
+  if (list.length) {
+    chunkedSplice(list, list.length, 0, items)
+    return list
+  }
+
+  return items
+}
+
+module.exports = chunkedPush
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/util/chunked-splice.js":
+/*!************************************************************!*\
+  !*** ./node_modules/micromark/dist/util/chunked-splice.js ***!
+  \************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var splice = __webpack_require__(/*! ../constant/splice.js */ "./node_modules/micromark/dist/constant/splice.js")
+
+// causes a stack overflow in V8 when trying to insert 100k items for instance.
+
+function chunkedSplice(list, start, remove, items) {
+  var end = list.length
+  var chunkStart = 0
+  var parameters // Make start between zero and `end` (included).
+
+  if (start < 0) {
+    start = -start > end ? 0 : end + start
+  } else {
+    start = start > end ? end : start
+  }
+
+  remove = remove > 0 ? remove : 0 // No need to chunk the items if there’s only a couple (10k) items.
+
+  if (items.length < 10000) {
+    parameters = Array.from(items)
+    parameters.unshift(start, remove)
+    splice.apply(list, parameters)
+  } else {
+    // Delete `remove` items starting from `start`
+    if (remove) splice.apply(list, [start, remove]) // Insert the items in chunks to not cause stack overflows.
+
+    while (chunkStart < items.length) {
+      parameters = items.slice(chunkStart, chunkStart + 10000)
+      parameters.unshift(start, 0)
+      splice.apply(list, parameters)
+      chunkStart += 10000
+      start += 10000
+    }
+  }
+}
+
+module.exports = chunkedSplice
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/util/classify-character.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/micromark/dist/util/classify-character.js ***!
+  \****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space.js */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
+var unicodePunctuation = __webpack_require__(/*! ../character/unicode-punctuation.js */ "./node_modules/micromark/dist/character/unicode-punctuation.js")
+var unicodeWhitespace = __webpack_require__(/*! ../character/unicode-whitespace.js */ "./node_modules/micromark/dist/character/unicode-whitespace.js")
+
+// Classify whether a character is unicode whitespace, unicode punctuation, or
+// anything else.
+// Used for attention (emphasis, strong), whose sequences can open or close
+// based on the class of surrounding characters.
+function classifyCharacter(code) {
+  if (
+    code === null ||
+    markdownLineEndingOrSpace(code) ||
+    unicodeWhitespace(code)
+  ) {
+    return 1
+  }
+
+  if (unicodePunctuation(code)) {
+    return 2
+  }
+}
+
+module.exports = classifyCharacter
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/util/combine-extensions.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/micromark/dist/util/combine-extensions.js ***!
+  \****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var hasOwnProperty = __webpack_require__(/*! ../constant/has-own-property.js */ "./node_modules/micromark/dist/constant/has-own-property.js")
+var chunkedSplice = __webpack_require__(/*! ./chunked-splice.js */ "./node_modules/micromark/dist/util/chunked-splice.js")
+var miniflat = __webpack_require__(/*! ./miniflat.js */ "./node_modules/micromark/dist/util/miniflat.js")
+
+function combineExtensions(extensions) {
+  var all = {}
+  var index = -1
+
+  while (++index < extensions.length) {
+    extension(all, extensions[index])
+  }
+
+  return all
+}
+
+function extension(all, extension) {
+  var hook
+  var left
+  var right
+  var code
+
+  for (hook in extension) {
+    left = hasOwnProperty.call(all, hook) ? all[hook] : (all[hook] = {})
+    right = extension[hook]
+
+    for (code in right) {
+      left[code] = constructs(
+        miniflat(right[code]),
+        hasOwnProperty.call(left, code) ? left[code] : []
+      )
+    }
+  }
+}
+
+function constructs(list, existing) {
+  var index = -1
+  var before = []
+
+  while (++index < list.length) {
+    ;(list[index].add === 'after' ? existing : before).push(list[index])
+  }
+
+  chunkedSplice(existing, 0, 0, before)
+  return existing
+}
+
+module.exports = combineExtensions
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/util/create-tokenizer.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/micromark/dist/util/create-tokenizer.js ***!
+  \**************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var assign = __webpack_require__(/*! ../constant/assign.js */ "./node_modules/micromark/dist/constant/assign.js")
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var chunkedPush = __webpack_require__(/*! ./chunked-push.js */ "./node_modules/micromark/dist/util/chunked-push.js")
+var chunkedSplice = __webpack_require__(/*! ./chunked-splice.js */ "./node_modules/micromark/dist/util/chunked-splice.js")
+var miniflat = __webpack_require__(/*! ./miniflat.js */ "./node_modules/micromark/dist/util/miniflat.js")
+var resolveAll = __webpack_require__(/*! ./resolve-all.js */ "./node_modules/micromark/dist/util/resolve-all.js")
+var serializeChunks = __webpack_require__(/*! ./serialize-chunks.js */ "./node_modules/micromark/dist/util/serialize-chunks.js")
+var shallow = __webpack_require__(/*! ./shallow.js */ "./node_modules/micromark/dist/util/shallow.js")
+var sliceChunks = __webpack_require__(/*! ./slice-chunks.js */ "./node_modules/micromark/dist/util/slice-chunks.js")
+
+// Create a tokenizer.
+// Tokenizers deal with one type of data (e.g., containers, flow, text).
+// The parser is the object dealing with it all.
+// `initialize` works like other constructs, except that only its `tokenize`
+// function is used, in which case it doesn’t receive an `ok` or `nok`.
+// `from` can be given to set the point before the first character, although
+// when further lines are indented, they must be set with `defineSkip`.
+function createTokenizer(parser, initialize, from) {
+  var point = from
+    ? shallow(from)
+    : {
+        line: 1,
+        column: 1,
+        offset: 0
+      }
+  var columnStart = {}
+  var resolveAllConstructs = []
+  var chunks = []
+  var stack = []
+
+  var effects = {
+    consume: consume,
+    enter: enter,
+    exit: exit,
+    attempt: constructFactory(onsuccessfulconstruct),
+    check: constructFactory(onsuccessfulcheck),
+    interrupt: constructFactory(onsuccessfulcheck, {
+      interrupt: true
+    }),
+    lazy: constructFactory(onsuccessfulcheck, {
+      lazy: true
+    })
+  } // State and tools for resolving and serializing.
+
+  var context = {
+    previous: null,
+    events: [],
+    parser: parser,
+    sliceStream: sliceStream,
+    sliceSerialize: sliceSerialize,
+    now: now,
+    defineSkip: skip,
+    write: write
+  } // The state function.
+
+  var state = initialize.tokenize.call(context, effects) // Track which character we expect to be consumed, to catch bugs.
+
+  if (initialize.resolveAll) {
+    resolveAllConstructs.push(initialize)
+  } // Store where we are in the input stream.
+
+  point._index = 0
+  point._bufferIndex = -1
+  return context
+
+  function write(slice) {
+    chunks = chunkedPush(chunks, slice)
+    main() // Exit if we’re not done, resolve might change stuff.
+
+    if (chunks[chunks.length - 1] !== null) {
+      return []
+    }
+
+    addResult(initialize, 0) // Otherwise, resolve, and exit.
+
+    context.events = resolveAll(resolveAllConstructs, context.events, context)
+    return context.events
+  } //
+  // Tools.
+  //
+
+  function sliceSerialize(token) {
+    return serializeChunks(sliceStream(token))
+  }
+
+  function sliceStream(token) {
+    return sliceChunks(chunks, token)
+  }
+
+  function now() {
+    return shallow(point)
+  }
+
+  function skip(value) {
+    columnStart[value.line] = value.column
+    accountForPotentialSkip()
+  } //
+  // State management.
+  //
+  // Main loop (note that `_index` and `_bufferIndex` in `point` are modified by
+  // `consume`).
+  // Here is where we walk through the chunks, which either include strings of
+  // several characters, or numerical character codes.
+  // The reason to do this in a loop instead of a call is so the stack can
+  // drain.
+
+  function main() {
+    var chunkIndex
+    var chunk
+
+    while (point._index < chunks.length) {
+      chunk = chunks[point._index] // If we’re in a buffer chunk, loop through it.
+
+      if (typeof chunk === 'string') {
+        chunkIndex = point._index
+
+        if (point._bufferIndex < 0) {
+          point._bufferIndex = 0
+        }
+
+        while (
+          point._index === chunkIndex &&
+          point._bufferIndex < chunk.length
+        ) {
+          go(chunk.charCodeAt(point._bufferIndex))
+        }
+      } else {
+        go(chunk)
+      }
+    }
+  } // Deal with one code.
+
+  function go(code) {
+    state = state(code)
+  } // Move a character forward.
+
+  function consume(code) {
+    if (markdownLineEnding(code)) {
+      point.line++
+      point.column = 1
+      point.offset += code === -3 ? 2 : 1
+      accountForPotentialSkip()
+    } else if (code !== -1) {
+      point.column++
+      point.offset++
+    } // Not in a string chunk.
+
+    if (point._bufferIndex < 0) {
+      point._index++
+    } else {
+      point._bufferIndex++ // At end of string chunk.
+
+      if (point._bufferIndex === chunks[point._index].length) {
+        point._bufferIndex = -1
+        point._index++
+      }
+    } // Expose the previous character.
+
+    context.previous = code // Mark as consumed.
+  } // Start a token.
+
+  function enter(type, fields) {
+    var token = fields || {}
+    token.type = type
+    token.start = now()
+    context.events.push(['enter', token, context])
+    stack.push(token)
+    return token
+  } // Stop a token.
+
+  function exit(type) {
+    var token = stack.pop()
+    token.end = now()
+    context.events.push(['exit', token, context])
+    return token
+  } // Use results.
+
+  function onsuccessfulconstruct(construct, info) {
+    addResult(construct, info.from)
+  } // Discard results.
+
+  function onsuccessfulcheck(construct, info) {
+    info.restore()
+  } // Factory to attempt/check/interrupt.
+
+  function constructFactory(onreturn, fields) {
+    return hook // Handle either an object mapping codes to constructs, a list of
+    // constructs, or a single construct.
+
+    function hook(constructs, returnState, bogusState) {
+      var listOfConstructs
+      var constructIndex
+      var currentConstruct
+      var info
+      return constructs.tokenize || 'length' in constructs
+        ? handleListOfConstructs(miniflat(constructs))
+        : handleMapOfConstructs
+
+      function handleMapOfConstructs(code) {
+        if (code in constructs || null in constructs) {
+          return handleListOfConstructs(
+            constructs.null
+              ? /* c8 ignore next */
+                miniflat(constructs[code]).concat(miniflat(constructs.null))
+              : constructs[code]
+          )(code)
+        }
+
+        return bogusState(code)
+      }
+
+      function handleListOfConstructs(list) {
+        listOfConstructs = list
+        constructIndex = 0
+        return handleConstruct(list[constructIndex])
+      }
+
+      function handleConstruct(construct) {
+        return start
+
+        function start(code) {
+          // To do: not nede to store if there is no bogus state, probably?
+          // Currently doesn’t work because `inspect` in document does a check
+          // w/o a bogus, which doesn’t make sense. But it does seem to help perf
+          // by not storing.
+          info = store()
+          currentConstruct = construct
+
+          if (!construct.partial) {
+            context.currentConstruct = construct
+          }
+
+          if (
+            construct.name &&
+            context.parser.constructs.disable.null.indexOf(construct.name) > -1
+          ) {
+            return nok()
+          }
+
+          return construct.tokenize.call(
+            fields ? assign({}, context, fields) : context,
+            effects,
+            ok,
+            nok
+          )(code)
+        }
+      }
+
+      function ok(code) {
+        onreturn(currentConstruct, info)
+        return returnState
+      }
+
+      function nok(code) {
+        info.restore()
+
+        if (++constructIndex < listOfConstructs.length) {
+          return handleConstruct(listOfConstructs[constructIndex])
+        }
+
+        return bogusState
+      }
+    }
+  }
+
+  function addResult(construct, from) {
+    if (construct.resolveAll && resolveAllConstructs.indexOf(construct) < 0) {
+      resolveAllConstructs.push(construct)
+    }
+
+    if (construct.resolve) {
+      chunkedSplice(
+        context.events,
+        from,
+        context.events.length - from,
+        construct.resolve(context.events.slice(from), context)
+      )
+    }
+
+    if (construct.resolveTo) {
+      context.events = construct.resolveTo(context.events, context)
+    }
+  }
+
+  function store() {
+    var startPoint = now()
+    var startPrevious = context.previous
+    var startCurrentConstruct = context.currentConstruct
+    var startEventsIndex = context.events.length
+    var startStack = Array.from(stack)
+    return {
+      restore: restore,
+      from: startEventsIndex
+    }
+
+    function restore() {
+      point = startPoint
+      context.previous = startPrevious
+      context.currentConstruct = startCurrentConstruct
+      context.events.length = startEventsIndex
+      stack = startStack
+      accountForPotentialSkip()
+    }
+  }
+
+  function accountForPotentialSkip() {
+    if (point.line in columnStart && point.column < 2) {
+      point.column = columnStart[point.line]
+      point.offset += columnStart[point.line] - 1
+    }
+  }
+}
+
+module.exports = createTokenizer
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/util/miniflat.js":
+/*!******************************************************!*\
+  !*** ./node_modules/micromark/dist/util/miniflat.js ***!
+  \******************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+function miniflat(value) {
+  return value === null || value === undefined
+    ? []
+    : 'length' in value
+    ? value
+    : [value]
+}
+
+module.exports = miniflat
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/util/move-point.js":
+/*!********************************************************!*\
+  !*** ./node_modules/micromark/dist/util/move-point.js ***!
+  \********************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+// chunks (replacement characters, tabs, or line endings).
+
+function movePoint(point, offset) {
+  point.column += offset
+  point.offset += offset
+  point._bufferIndex += offset
+  return point
+}
+
+module.exports = movePoint
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/util/normalize-identifier.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/micromark/dist/util/normalize-identifier.js ***!
+  \******************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+function normalizeIdentifier(value) {
+  return (
+    value // Collapse Markdown whitespace.
+      .replace(/[\t\n\r ]+/g, ' ') // Trim.
+      .replace(/^ | $/g, '') // Some characters are considered “uppercase”, but if their lowercase
+      // counterpart is uppercased will result in a different uppercase
+      // character.
+      // Hence, to get that form, we perform both lower- and uppercase.
+      // Upper case makes sure keys will not interact with default prototypal
+      // methods: no object method is uppercase.
+      .toLowerCase()
+      .toUpperCase()
+  )
+}
+
+module.exports = normalizeIdentifier
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/util/prefix-size.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/micromark/dist/util/prefix-size.js ***!
+  \*********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var sizeChunks = __webpack_require__(/*! ./size-chunks.js */ "./node_modules/micromark/dist/util/size-chunks.js")
+
+function prefixSize(events, type) {
+  var tail = events[events.length - 1]
+  if (!tail || tail[1].type !== type) return 0
+  return sizeChunks(tail[2].sliceStream(tail[1]))
+}
+
+module.exports = prefixSize
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/util/regex-check.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/micromark/dist/util/regex-check.js ***!
+  \*********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var fromCharCode = __webpack_require__(/*! ../constant/from-char-code.js */ "./node_modules/micromark/dist/constant/from-char-code.js")
+
+function regexCheck(regex) {
+  return check
+
+  function check(code) {
+    return regex.test(fromCharCode(code))
+  }
+}
+
+module.exports = regexCheck
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/util/resolve-all.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/micromark/dist/util/resolve-all.js ***!
+  \*********************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+function resolveAll(constructs, events, context) {
+  var called = []
+  var index = -1
+  var resolve
+
+  while (++index < constructs.length) {
+    resolve = constructs[index].resolveAll
+
+    if (resolve && called.indexOf(resolve) < 0) {
+      events = resolve(events, context)
+      called.push(resolve)
+    }
+  }
+
+  return events
+}
+
+module.exports = resolveAll
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/util/safe-from-int.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/micromark/dist/util/safe-from-int.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var fromCharCode = __webpack_require__(/*! ../constant/from-char-code.js */ "./node_modules/micromark/dist/constant/from-char-code.js")
+
+function safeFromInt(value, base) {
+  var code = parseInt(value, base)
+
+  if (
+    // C0 except for HT, LF, FF, CR, space
+    code < 9 ||
+    code === 11 ||
+    (code > 13 && code < 32) || // Control character (DEL) of the basic block and C1 controls.
+    (code > 126 && code < 160) || // Lone high surrogates and low surrogates.
+    (code > 55295 && code < 57344) || // Noncharacters.
+    (code > 64975 && code < 65008) ||
+    (code & 65535) === 65535 ||
+    (code & 65535) === 65534 || // Out of range
+    code > 1114111
+  ) {
+    return '\uFFFD'
+  }
+
+  return fromCharCode(code)
+}
+
+module.exports = safeFromInt
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/util/serialize-chunks.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/micromark/dist/util/serialize-chunks.js ***!
+  \**************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var fromCharCode = __webpack_require__(/*! ../constant/from-char-code.js */ "./node_modules/micromark/dist/constant/from-char-code.js")
+
+function serializeChunks(chunks) {
+  var index = -1
+  var result = []
+  var chunk
+  var value
+  var atTab
+
+  while (++index < chunks.length) {
+    chunk = chunks[index]
+
+    if (typeof chunk === 'string') {
+      value = chunk
+    } else if (chunk === -5) {
+      value = '\r'
+    } else if (chunk === -4) {
+      value = '\n'
+    } else if (chunk === -3) {
+      value = '\r' + '\n'
+    } else if (chunk === -2) {
+      value = '\t'
+    } else if (chunk === -1) {
+      if (atTab) continue
+      value = ' '
+    } else {
+      // Currently only replacement character.
+      value = fromCharCode(chunk)
+    }
+
+    atTab = chunk === -2
+    result.push(value)
+  }
+
+  return result.join('')
+}
+
+module.exports = serializeChunks
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/util/shallow.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/micromark/dist/util/shallow.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var assign = __webpack_require__(/*! ../constant/assign.js */ "./node_modules/micromark/dist/constant/assign.js")
+
+function shallow(object) {
+  return assign({}, object)
+}
+
+module.exports = shallow
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/util/size-chunks.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/micromark/dist/util/size-chunks.js ***!
+  \*********************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+// Counts tabs based on their expanded size, and CR+LF as one character.
+
+function sizeChunks(chunks) {
+  var index = -1
+  var size = 0
+
+  while (++index < chunks.length) {
+    size += typeof chunks[index] === 'string' ? chunks[index].length : 1
+  }
+
+  return size
+}
+
+module.exports = sizeChunks
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/util/slice-chunks.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/micromark/dist/util/slice-chunks.js ***!
+  \**********************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+function sliceChunks(chunks, token) {
+  var startIndex = token.start._index
+  var startBufferIndex = token.start._bufferIndex
+  var endIndex = token.end._index
+  var endBufferIndex = token.end._bufferIndex
+  var view
+
+  if (startIndex === endIndex) {
+    view = [chunks[startIndex].slice(startBufferIndex, endBufferIndex)]
+  } else {
+    view = chunks.slice(startIndex, endIndex)
+
+    if (startBufferIndex > -1) {
+      view[0] = view[0].slice(startBufferIndex)
+    }
+
+    if (endBufferIndex > 0) {
+      view.push(chunks[endIndex].slice(0, endBufferIndex))
+    }
+  }
+
+  return view
+}
+
+module.exports = sliceChunks
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/util/subtokenize.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/micromark/dist/util/subtokenize.js ***!
+  \*********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var assign = __webpack_require__(/*! ../constant/assign.js */ "./node_modules/micromark/dist/constant/assign.js")
+var chunkedSplice = __webpack_require__(/*! ./chunked-splice.js */ "./node_modules/micromark/dist/util/chunked-splice.js")
+var shallow = __webpack_require__(/*! ./shallow.js */ "./node_modules/micromark/dist/util/shallow.js")
+
+function subtokenize(events) {
+  var jumps = {}
+  var index = -1
+  var event
+  var lineIndex
+  var otherIndex
+  var otherEvent
+  var parameters
+  var subevents
+  var more
+
+  while (++index < events.length) {
+    while (index in jumps) {
+      index = jumps[index]
+    }
+
+    event = events[index] // Add a hook for the GFM tasklist extension, which needs to know if text
+    // is in the first content of a list item.
+
+    if (
+      index &&
+      event[1].type === 'chunkFlow' &&
+      events[index - 1][1].type === 'listItemPrefix'
+    ) {
+      subevents = event[1]._tokenizer.events
+      otherIndex = 0
+
+      if (
+        otherIndex < subevents.length &&
+        subevents[otherIndex][1].type === 'lineEndingBlank'
+      ) {
+        otherIndex += 2
+      }
+
+      if (
+        otherIndex < subevents.length &&
+        subevents[otherIndex][1].type === 'content'
+      ) {
+        while (++otherIndex < subevents.length) {
+          if (subevents[otherIndex][1].type === 'content') {
+            break
+          }
+
+          if (subevents[otherIndex][1].type === 'chunkText') {
+            subevents[otherIndex][1].isInFirstContentOfListItem = true
+            otherIndex++
+          }
+        }
+      }
+    } // Enter.
+
+    if (event[0] === 'enter') {
+      if (event[1].contentType) {
+        assign(jumps, subcontent(events, index))
+        index = jumps[index]
+        more = true
+      }
+    } // Exit.
+    else if (event[1]._container || event[1]._movePreviousLineEndings) {
+      otherIndex = index
+      lineIndex = undefined
+
+      while (otherIndex--) {
+        otherEvent = events[otherIndex]
+
+        if (
+          otherEvent[1].type === 'lineEnding' ||
+          otherEvent[1].type === 'lineEndingBlank'
+        ) {
+          if (otherEvent[0] === 'enter') {
+            if (lineIndex) {
+              events[lineIndex][1].type = 'lineEndingBlank'
+            }
+
+            otherEvent[1].type = 'lineEnding'
+            lineIndex = otherIndex
+          }
+        } else {
+          break
+        }
+      }
+
+      if (lineIndex) {
+        // Fix position.
+        event[1].end = shallow(events[lineIndex][1].start) // Switch container exit w/ line endings.
+
+        parameters = events.slice(lineIndex, index)
+        parameters.unshift(event)
+        chunkedSplice(events, lineIndex, index - lineIndex + 1, parameters)
+      }
+    }
+  }
+
+  return !more
+}
+
+function subcontent(events, eventIndex) {
+  var token = events[eventIndex][1]
+  var context = events[eventIndex][2]
+  var startPosition = eventIndex - 1
+  var startPositions = []
+  var tokenizer =
+    token._tokenizer || context.parser[token.contentType](token.start)
+  var childEvents = tokenizer.events
+  var jumps = []
+  var gaps = {}
+  var stream
+  var previous
+  var index
+  var entered
+  var end
+  var adjust // Loop forward through the linked tokens to pass them in order to the
+  // subtokenizer.
+
+  while (token) {
+    // Find the position of the event for this token.
+    while (events[++startPosition][1] !== token) {
+      // Empty.
+    }
+
+    startPositions.push(startPosition)
+
+    if (!token._tokenizer) {
+      stream = context.sliceStream(token)
+
+      if (!token.next) {
+        stream.push(null)
+      }
+
+      if (previous) {
+        tokenizer.defineSkip(token.start)
+      }
+
+      if (token.isInFirstContentOfListItem) {
+        tokenizer._gfmTasklistFirstContentOfListItem = true
+      }
+
+      tokenizer.write(stream)
+
+      if (token.isInFirstContentOfListItem) {
+        tokenizer._gfmTasklistFirstContentOfListItem = undefined
+      }
+    } // Unravel the next token.
+
+    previous = token
+    token = token.next
+  } // Now, loop back through all events (and linked tokens), to figure out which
+  // parts belong where.
+
+  token = previous
+  index = childEvents.length
+
+  while (index--) {
+    // Make sure we’ve at least seen something (final eol is part of the last
+    // token).
+    if (childEvents[index][0] === 'enter') {
+      entered = true
+    } else if (
+      // Find a void token that includes a break.
+      entered &&
+      childEvents[index][1].type === childEvents[index - 1][1].type &&
+      childEvents[index][1].start.line !== childEvents[index][1].end.line
+    ) {
+      add(childEvents.slice(index + 1, end))
+      // Help GC.
+      token._tokenizer = token.next = undefined
+      token = token.previous
+      end = index + 1
+    }
+  }
+
+  // Help GC.
+  tokenizer.events = token._tokenizer = token.next = undefined // Do head:
+
+  add(childEvents.slice(0, end))
+  index = -1
+  adjust = 0
+
+  while (++index < jumps.length) {
+    gaps[adjust + jumps[index][0]] = adjust + jumps[index][1]
+    adjust += jumps[index][1] - jumps[index][0] - 1
+  }
+
+  return gaps
+
+  function add(slice) {
+    var start = startPositions.pop()
+    jumps.unshift([start, start + slice.length - 1])
+    chunkedSplice(events, start, 2, slice)
+  }
+}
+
+module.exports = subtokenize
+
+
+/***/ }),
+
+/***/ "./node_modules/object-assign/index.js":
+/*!*********************************************!*\
+  !*** ./node_modules/object-assign/index.js ***!
+  \*********************************************/
+/***/ ((module) => {
+
+"use strict";
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+
+
+/* eslint-disable no-unused-vars */
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+
+function toObject(val) {
+	if (val === null || val === undefined) {
+		throw new TypeError('Object.assign cannot be called with null or undefined');
+	}
+
+	return Object(val);
+}
+
+function shouldUseNative() {
+	try {
+		if (!Object.assign) {
+			return false;
+		}
+
+		// Detect buggy property enumeration order in older V8 versions.
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
+		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
+		test1[5] = 'de';
+		if (Object.getOwnPropertyNames(test1)[0] === '5') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test2 = {};
+		for (var i = 0; i < 10; i++) {
+			test2['_' + String.fromCharCode(i)] = i;
+		}
+		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
+			return test2[n];
+		});
+		if (order2.join('') !== '0123456789') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test3 = {};
+		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
+			test3[letter] = letter;
+		});
+		if (Object.keys(Object.assign({}, test3)).join('') !==
+				'abcdefghijklmnopqrst') {
+			return false;
+		}
+
+		return true;
+	} catch (err) {
+		// We don't expect any of the above to throw, but better to be safe.
+		return false;
+	}
+}
+
+module.exports = shouldUseNative() ? Object.assign : function (target, source) {
+	var from;
+	var to = toObject(target);
+	var symbols;
+
+	for (var s = 1; s < arguments.length; s++) {
+		from = Object(arguments[s]);
+
+		for (var key in from) {
+			if (hasOwnProperty.call(from, key)) {
+				to[key] = from[key];
+			}
+		}
+
+		if (getOwnPropertySymbols) {
+			symbols = getOwnPropertySymbols(from);
+			for (var i = 0; i < symbols.length; i++) {
+				if (propIsEnumerable.call(from, symbols[i])) {
+					to[symbols[i]] = from[symbols[i]];
+				}
+			}
+		}
+	}
+
+	return to;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/parse-entities/decode-entity.browser.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/parse-entities/decode-entity.browser.js ***!
+  \**************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/* eslint-env browser */
+
+var el
+
+var semicolon = 59 //  ';'
+
+module.exports = decodeEntity
+
+function decodeEntity(characters) {
+  var entity = '&' + characters + ';'
+  var char
+
+  el = el || document.createElement('i')
+  el.innerHTML = entity
+  char = el.textContent
+
+  // Some entities do not require the closing semicolon (`&not` - for instance),
+  // which leads to situations where parsing the assumed entity of &notit; will
+  // result in the string `¬it;`.  When we encounter a trailing semicolon after
+  // parsing and the entity to decode was not a semicolon (`&semi;`), we can
+  // assume that the matching was incomplete
+  if (char.charCodeAt(char.length - 1) === semicolon && characters !== 'semi') {
+    return false
+  }
+
+  // If the decoded string is equal to the input, the entity was not valid
+  return char === entity ? false : char
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/prop-types/checkPropTypes.js":
+/*!***************************************************!*\
+  !*** ./node_modules/prop-types/checkPropTypes.js ***!
+  \***************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var printWarning = function() {};
+
+if (true) {
+  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ "./node_modules/prop-types/lib/ReactPropTypesSecret.js");
+  var loggedTypeFailures = {};
+  var has = Function.call.bind(Object.prototype.hasOwnProperty);
+
+  printWarning = function(text) {
+    var message = 'Warning: ' + text;
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  };
+}
+
+/**
+ * Assert that the values match with the type specs.
+ * Error messages are memorized and will only be shown once.
+ *
+ * @param {object} typeSpecs Map of name to a ReactPropType
+ * @param {object} values Runtime values that need to be type-checked
+ * @param {string} location e.g. "prop", "context", "child context"
+ * @param {string} componentName Name of the component for error messages.
+ * @param {?Function} getStack Returns the component stack.
+ * @private
+ */
+function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
+  if (true) {
+    for (var typeSpecName in typeSpecs) {
+      if (has(typeSpecs, typeSpecName)) {
+        var error;
+        // Prop type validation may throw. In case they do, we don't want to
+        // fail the render phase where it didn't fail before. So we log it.
+        // After these have been cleaned up, we'll let them throw.
+        try {
+          // This is intentionally an invariant that gets caught. It's the same
+          // behavior as without this statement except with a better message.
+          if (typeof typeSpecs[typeSpecName] !== 'function') {
+            var err = Error(
+              (componentName || 'React class') + ': ' + location + ' type `' + typeSpecName + '` is invalid; ' +
+              'it must be a function, usually from the `prop-types` package, but received `' + typeof typeSpecs[typeSpecName] + '`.'
+            );
+            err.name = 'Invariant Violation';
+            throw err;
+          }
+          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
+        } catch (ex) {
+          error = ex;
+        }
+        if (error && !(error instanceof Error)) {
+          printWarning(
+            (componentName || 'React class') + ': type specification of ' +
+            location + ' `' + typeSpecName + '` is invalid; the type checker ' +
+            'function must return `null` or an `Error` but returned a ' + typeof error + '. ' +
+            'You may have forgotten to pass an argument to the type checker ' +
+            'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' +
+            'shape all require an argument).'
+          );
+        }
+        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+          // Only monitor this failure once because there tends to be a lot of the
+          // same error.
+          loggedTypeFailures[error.message] = true;
+
+          var stack = getStack ? getStack() : '';
+
+          printWarning(
+            'Failed ' + location + ' type: ' + error.message + (stack != null ? stack : '')
+          );
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Resets warning cache when testing.
+ *
+ * @private
+ */
+checkPropTypes.resetWarningCache = function() {
+  if (true) {
+    loggedTypeFailures = {};
+  }
+}
+
+module.exports = checkPropTypes;
+
+
+/***/ }),
+
+/***/ "./node_modules/prop-types/factoryWithTypeCheckers.js":
+/*!************************************************************!*\
+  !*** ./node_modules/prop-types/factoryWithTypeCheckers.js ***!
+  \************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var ReactIs = __webpack_require__(/*! react-is */ "./node_modules/react-is/index.js");
+var assign = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
+
+var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ "./node_modules/prop-types/lib/ReactPropTypesSecret.js");
+var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ "./node_modules/prop-types/checkPropTypes.js");
+
+var has = Function.call.bind(Object.prototype.hasOwnProperty);
+var printWarning = function() {};
+
+if (true) {
+  printWarning = function(text) {
+    var message = 'Warning: ' + text;
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  };
+}
+
+function emptyFunctionThatReturnsNull() {
+  return null;
+}
+
+module.exports = function(isValidElement, throwOnDirectAccess) {
+  /* global Symbol */
+  var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
+  var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
+
+  /**
+   * Returns the iterator method function contained on the iterable object.
+   *
+   * Be sure to invoke the function with the iterable as context:
+   *
+   *     var iteratorFn = getIteratorFn(myIterable);
+   *     if (iteratorFn) {
+   *       var iterator = iteratorFn.call(myIterable);
+   *       ...
+   *     }
+   *
+   * @param {?object} maybeIterable
+   * @return {?function}
+   */
+  function getIteratorFn(maybeIterable) {
+    var iteratorFn = maybeIterable && (ITERATOR_SYMBOL && maybeIterable[ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL]);
+    if (typeof iteratorFn === 'function') {
+      return iteratorFn;
+    }
+  }
+
+  /**
+   * Collection of methods that allow declaration and validation of props that are
+   * supplied to React components. Example usage:
+   *
+   *   var Props = require('ReactPropTypes');
+   *   var MyArticle = React.createClass({
+   *     propTypes: {
+   *       // An optional string prop named "description".
+   *       description: Props.string,
+   *
+   *       // A required enum prop named "category".
+   *       category: Props.oneOf(['News','Photos']).isRequired,
+   *
+   *       // A prop named "dialog" that requires an instance of Dialog.
+   *       dialog: Props.instanceOf(Dialog).isRequired
+   *     },
+   *     render: function() { ... }
+   *   });
+   *
+   * A more formal specification of how these methods are used:
+   *
+   *   type := array|bool|func|object|number|string|oneOf([...])|instanceOf(...)
+   *   decl := ReactPropTypes.{type}(.isRequired)?
+   *
+   * Each and every declaration produces a function with the same signature. This
+   * allows the creation of custom validation functions. For example:
+   *
+   *  var MyLink = React.createClass({
+   *    propTypes: {
+   *      // An optional string or URI prop named "href".
+   *      href: function(props, propName, componentName) {
+   *        var propValue = props[propName];
+   *        if (propValue != null && typeof propValue !== 'string' &&
+   *            !(propValue instanceof URI)) {
+   *          return new Error(
+   *            'Expected a string or an URI for ' + propName + ' in ' +
+   *            componentName
+   *          );
+   *        }
+   *      }
+   *    },
+   *    render: function() {...}
+   *  });
+   *
+   * @internal
+   */
+
+  var ANONYMOUS = '<<anonymous>>';
+
+  // Important!
+  // Keep this list in sync with production version in `./factoryWithThrowingShims.js`.
+  var ReactPropTypes = {
+    array: createPrimitiveTypeChecker('array'),
+    bool: createPrimitiveTypeChecker('boolean'),
+    func: createPrimitiveTypeChecker('function'),
+    number: createPrimitiveTypeChecker('number'),
+    object: createPrimitiveTypeChecker('object'),
+    string: createPrimitiveTypeChecker('string'),
+    symbol: createPrimitiveTypeChecker('symbol'),
+
+    any: createAnyTypeChecker(),
+    arrayOf: createArrayOfTypeChecker,
+    element: createElementTypeChecker(),
+    elementType: createElementTypeTypeChecker(),
+    instanceOf: createInstanceTypeChecker,
+    node: createNodeChecker(),
+    objectOf: createObjectOfTypeChecker,
+    oneOf: createEnumTypeChecker,
+    oneOfType: createUnionTypeChecker,
+    shape: createShapeTypeChecker,
+    exact: createStrictShapeTypeChecker,
+  };
+
+  /**
+   * inlined Object.is polyfill to avoid requiring consumers ship their own
+   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+   */
+  /*eslint-disable no-self-compare*/
+  function is(x, y) {
+    // SameValue algorithm
+    if (x === y) {
+      // Steps 1-5, 7-10
+      // Steps 6.b-6.e: +0 != -0
+      return x !== 0 || 1 / x === 1 / y;
+    } else {
+      // Step 6.a: NaN == NaN
+      return x !== x && y !== y;
+    }
+  }
+  /*eslint-enable no-self-compare*/
+
+  /**
+   * We use an Error-like object for backward compatibility as people may call
+   * PropTypes directly and inspect their output. However, we don't use real
+   * Errors anymore. We don't inspect their stack anyway, and creating them
+   * is prohibitively expensive if they are created too often, such as what
+   * happens in oneOfType() for any type before the one that matched.
+   */
+  function PropTypeError(message) {
+    this.message = message;
+    this.stack = '';
+  }
+  // Make `instanceof Error` still work for returned errors.
+  PropTypeError.prototype = Error.prototype;
+
+  function createChainableTypeChecker(validate) {
+    if (true) {
+      var manualPropTypeCallCache = {};
+      var manualPropTypeWarningCount = 0;
+    }
+    function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
+      componentName = componentName || ANONYMOUS;
+      propFullName = propFullName || propName;
+
+      if (secret !== ReactPropTypesSecret) {
+        if (throwOnDirectAccess) {
+          // New behavior only for users of `prop-types` package
+          var err = new Error(
+            'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
+            'Use `PropTypes.checkPropTypes()` to call them. ' +
+            'Read more at http://fb.me/use-check-prop-types'
+          );
+          err.name = 'Invariant Violation';
+          throw err;
+        } else if ( true && typeof console !== 'undefined') {
+          // Old behavior for people using React.PropTypes
+          var cacheKey = componentName + ':' + propName;
+          if (
+            !manualPropTypeCallCache[cacheKey] &&
+            // Avoid spamming the console because they are often not actionable except for lib authors
+            manualPropTypeWarningCount < 3
+          ) {
+            printWarning(
+              'You are manually calling a React.PropTypes validation ' +
+              'function for the `' + propFullName + '` prop on `' + componentName  + '`. This is deprecated ' +
+              'and will throw in the standalone `prop-types` package. ' +
+              'You may be seeing this warning due to a third-party PropTypes ' +
+              'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.'
+            );
+            manualPropTypeCallCache[cacheKey] = true;
+            manualPropTypeWarningCount++;
+          }
+        }
+      }
+      if (props[propName] == null) {
+        if (isRequired) {
+          if (props[propName] === null) {
+            return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required ' + ('in `' + componentName + '`, but its value is `null`.'));
+          }
+          return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required in ' + ('`' + componentName + '`, but its value is `undefined`.'));
+        }
+        return null;
+      } else {
+        return validate(props, propName, componentName, location, propFullName);
+      }
+    }
+
+    var chainedCheckType = checkType.bind(null, false);
+    chainedCheckType.isRequired = checkType.bind(null, true);
+
+    return chainedCheckType;
+  }
+
+  function createPrimitiveTypeChecker(expectedType) {
+    function validate(props, propName, componentName, location, propFullName, secret) {
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== expectedType) {
+        // `propValue` being instance of, say, date/regexp, pass the 'object'
+        // check, but we can offer a more precise error message here rather than
+        // 'of type `object`'.
+        var preciseType = getPreciseType(propValue);
+
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + preciseType + '` supplied to `' + componentName + '`, expected ') + ('`' + expectedType + '`.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createAnyTypeChecker() {
+    return createChainableTypeChecker(emptyFunctionThatReturnsNull);
+  }
+
+  function createArrayOfTypeChecker(typeChecker) {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (typeof typeChecker !== 'function') {
+        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside arrayOf.');
+      }
+      var propValue = props[propName];
+      if (!Array.isArray(propValue)) {
+        var propType = getPropType(propValue);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an array.'));
+      }
+      for (var i = 0; i < propValue.length; i++) {
+        var error = typeChecker(propValue, i, componentName, location, propFullName + '[' + i + ']', ReactPropTypesSecret);
+        if (error instanceof Error) {
+          return error;
+        }
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createElementTypeChecker() {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      if (!isValidElement(propValue)) {
+        var propType = getPropType(propValue);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createElementTypeTypeChecker() {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      if (!ReactIs.isValidElementType(propValue)) {
+        var propType = getPropType(propValue);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement type.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createInstanceTypeChecker(expectedClass) {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (!(props[propName] instanceof expectedClass)) {
+        var expectedClassName = expectedClass.name || ANONYMOUS;
+        var actualClassName = getClassName(props[propName]);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + actualClassName + '` supplied to `' + componentName + '`, expected ') + ('instance of `' + expectedClassName + '`.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createEnumTypeChecker(expectedValues) {
+    if (!Array.isArray(expectedValues)) {
+      if (true) {
+        if (arguments.length > 1) {
+          printWarning(
+            'Invalid arguments supplied to oneOf, expected an array, got ' + arguments.length + ' arguments. ' +
+            'A common mistake is to write oneOf(x, y, z) instead of oneOf([x, y, z]).'
+          );
+        } else {
+          printWarning('Invalid argument supplied to oneOf, expected an array.');
+        }
+      }
+      return emptyFunctionThatReturnsNull;
+    }
+
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      for (var i = 0; i < expectedValues.length; i++) {
+        if (is(propValue, expectedValues[i])) {
+          return null;
+        }
+      }
+
+      var valuesString = JSON.stringify(expectedValues, function replacer(key, value) {
+        var type = getPreciseType(value);
+        if (type === 'symbol') {
+          return String(value);
+        }
+        return value;
+      });
+      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + String(propValue) + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createObjectOfTypeChecker(typeChecker) {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (typeof typeChecker !== 'function') {
+        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside objectOf.');
+      }
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== 'object') {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
+      }
+      for (var key in propValue) {
+        if (has(propValue, key)) {
+          var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+          if (error instanceof Error) {
+            return error;
+          }
+        }
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createUnionTypeChecker(arrayOfTypeCheckers) {
+    if (!Array.isArray(arrayOfTypeCheckers)) {
+       true ? printWarning('Invalid argument supplied to oneOfType, expected an instance of array.') : 0;
+      return emptyFunctionThatReturnsNull;
+    }
+
+    for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+      var checker = arrayOfTypeCheckers[i];
+      if (typeof checker !== 'function') {
+        printWarning(
+          'Invalid argument supplied to oneOfType. Expected an array of check functions, but ' +
+          'received ' + getPostfixForTypeWarning(checker) + ' at index ' + i + '.'
+        );
+        return emptyFunctionThatReturnsNull;
+      }
+    }
+
+    function validate(props, propName, componentName, location, propFullName) {
+      for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+        var checker = arrayOfTypeCheckers[i];
+        if (checker(props, propName, componentName, location, propFullName, ReactPropTypesSecret) == null) {
+          return null;
+        }
+      }
+
+      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`.'));
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createNodeChecker() {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (!isNode(props[propName])) {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`, expected a ReactNode.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createShapeTypeChecker(shapeTypes) {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== 'object') {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
+      }
+      for (var key in shapeTypes) {
+        var checker = shapeTypes[key];
+        if (!checker) {
+          continue;
+        }
+        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+        if (error) {
+          return error;
+        }
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createStrictShapeTypeChecker(shapeTypes) {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== 'object') {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
+      }
+      // We need to check all keys in case some are required but missing from
+      // props.
+      var allKeys = assign({}, props[propName], shapeTypes);
+      for (var key in allKeys) {
+        var checker = shapeTypes[key];
+        if (!checker) {
+          return new PropTypeError(
+            'Invalid ' + location + ' `' + propFullName + '` key `' + key + '` supplied to `' + componentName + '`.' +
+            '\nBad object: ' + JSON.stringify(props[propName], null, '  ') +
+            '\nValid keys: ' +  JSON.stringify(Object.keys(shapeTypes), null, '  ')
+          );
+        }
+        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+        if (error) {
+          return error;
+        }
+      }
+      return null;
+    }
+
+    return createChainableTypeChecker(validate);
+  }
+
+  function isNode(propValue) {
+    switch (typeof propValue) {
+      case 'number':
+      case 'string':
+      case 'undefined':
+        return true;
+      case 'boolean':
+        return !propValue;
+      case 'object':
+        if (Array.isArray(propValue)) {
+          return propValue.every(isNode);
+        }
+        if (propValue === null || isValidElement(propValue)) {
+          return true;
+        }
+
+        var iteratorFn = getIteratorFn(propValue);
+        if (iteratorFn) {
+          var iterator = iteratorFn.call(propValue);
+          var step;
+          if (iteratorFn !== propValue.entries) {
+            while (!(step = iterator.next()).done) {
+              if (!isNode(step.value)) {
+                return false;
+              }
+            }
+          } else {
+            // Iterator will provide entry [k,v] tuples rather than values.
+            while (!(step = iterator.next()).done) {
+              var entry = step.value;
+              if (entry) {
+                if (!isNode(entry[1])) {
+                  return false;
+                }
+              }
+            }
+          }
+        } else {
+          return false;
+        }
+
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  function isSymbol(propType, propValue) {
+    // Native Symbol.
+    if (propType === 'symbol') {
+      return true;
+    }
+
+    // falsy value can't be a Symbol
+    if (!propValue) {
+      return false;
+    }
+
+    // 19.4.3.5 Symbol.prototype[@@toStringTag] === 'Symbol'
+    if (propValue['@@toStringTag'] === 'Symbol') {
+      return true;
+    }
+
+    // Fallback for non-spec compliant Symbols which are polyfilled.
+    if (typeof Symbol === 'function' && propValue instanceof Symbol) {
+      return true;
+    }
+
+    return false;
+  }
+
+  // Equivalent of `typeof` but with special handling for array and regexp.
+  function getPropType(propValue) {
+    var propType = typeof propValue;
+    if (Array.isArray(propValue)) {
+      return 'array';
+    }
+    if (propValue instanceof RegExp) {
+      // Old webkits (at least until Android 4.0) return 'function' rather than
+      // 'object' for typeof a RegExp. We'll normalize this here so that /bla/
+      // passes PropTypes.object.
+      return 'object';
+    }
+    if (isSymbol(propType, propValue)) {
+      return 'symbol';
+    }
+    return propType;
+  }
+
+  // This handles more types than `getPropType`. Only used for error messages.
+  // See `createPrimitiveTypeChecker`.
+  function getPreciseType(propValue) {
+    if (typeof propValue === 'undefined' || propValue === null) {
+      return '' + propValue;
+    }
+    var propType = getPropType(propValue);
+    if (propType === 'object') {
+      if (propValue instanceof Date) {
+        return 'date';
+      } else if (propValue instanceof RegExp) {
+        return 'regexp';
+      }
+    }
+    return propType;
+  }
+
+  // Returns a string that is postfixed to a warning about an invalid type.
+  // For example, "undefined" or "of type array"
+  function getPostfixForTypeWarning(value) {
+    var type = getPreciseType(value);
+    switch (type) {
+      case 'array':
+      case 'object':
+        return 'an ' + type;
+      case 'boolean':
+      case 'date':
+      case 'regexp':
+        return 'a ' + type;
+      default:
+        return type;
+    }
+  }
+
+  // Returns class name of the object, if any.
+  function getClassName(propValue) {
+    if (!propValue.constructor || !propValue.constructor.name) {
+      return ANONYMOUS;
+    }
+    return propValue.constructor.name;
+  }
+
+  ReactPropTypes.checkPropTypes = checkPropTypes;
+  ReactPropTypes.resetWarningCache = checkPropTypes.resetWarningCache;
+  ReactPropTypes.PropTypes = ReactPropTypes;
+
+  return ReactPropTypes;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/prop-types/index.js":
+/*!******************************************!*\
+  !*** ./node_modules/prop-types/index.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+if (true) {
+  var ReactIs = __webpack_require__(/*! react-is */ "./node_modules/react-is/index.js");
+
+  // By explicitly using `prop-types` you are opting into new development behavior.
+  // http://fb.me/prop-types-in-prod
+  var throwOnDirectAccess = true;
+  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ "./node_modules/prop-types/factoryWithTypeCheckers.js")(ReactIs.isElement, throwOnDirectAccess);
+} else {}
+
+
+/***/ }),
+
+/***/ "./node_modules/prop-types/lib/ReactPropTypesSecret.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
+  \*************************************************************/
+/***/ ((module) => {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+
+module.exports = ReactPropTypesSecret;
+
+
+/***/ }),
+
+/***/ "./node_modules/property-information/find.js":
+/*!***************************************************!*\
+  !*** ./node_modules/property-information/find.js ***!
+  \***************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var normalize = __webpack_require__(/*! ./normalize */ "./node_modules/property-information/normalize.js")
+var DefinedInfo = __webpack_require__(/*! ./lib/util/defined-info */ "./node_modules/property-information/lib/util/defined-info.js")
+var Info = __webpack_require__(/*! ./lib/util/info */ "./node_modules/property-information/lib/util/info.js")
+
+var data = 'data'
+
+module.exports = find
+
+var valid = /^data[-\w.:]+$/i
+var dash = /-[a-z]/g
+var cap = /[A-Z]/g
+
+function find(schema, value) {
+  var normal = normalize(value)
+  var prop = value
+  var Type = Info
+
+  if (normal in schema.normal) {
+    return schema.property[schema.normal[normal]]
+  }
+
+  if (normal.length > 4 && normal.slice(0, 4) === data && valid.test(value)) {
+    // Attribute or property.
+    if (value.charAt(4) === '-') {
+      prop = datasetToProperty(value)
+    } else {
+      value = datasetToAttribute(value)
+    }
+
+    Type = DefinedInfo
+  }
+
+  return new Type(prop, value)
+}
+
+function datasetToProperty(attribute) {
+  var value = attribute.slice(5).replace(dash, camelcase)
+  return data + value.charAt(0).toUpperCase() + value.slice(1)
+}
+
+function datasetToAttribute(property) {
+  var value = property.slice(4)
+
+  if (dash.test(value)) {
+    return property
+  }
+
+  value = value.replace(cap, kebab)
+
+  if (value.charAt(0) !== '-') {
+    value = '-' + value
+  }
+
+  return data + value
+}
+
+function kebab($0) {
+  return '-' + $0.toLowerCase()
+}
+
+function camelcase($0) {
+  return $0.charAt(1).toUpperCase()
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/property-information/hast-to-react.json":
+/*!**************************************************************!*\
+  !*** ./node_modules/property-information/hast-to-react.json ***!
+  \**************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = JSON.parse('{"classId":"classID","dataType":"datatype","itemId":"itemID","strokeDashArray":"strokeDasharray","strokeDashOffset":"strokeDashoffset","strokeLineCap":"strokeLinecap","strokeLineJoin":"strokeLinejoin","strokeMiterLimit":"strokeMiterlimit","typeOf":"typeof","xLinkActuate":"xlinkActuate","xLinkArcRole":"xlinkArcrole","xLinkHref":"xlinkHref","xLinkRole":"xlinkRole","xLinkShow":"xlinkShow","xLinkTitle":"xlinkTitle","xLinkType":"xlinkType","xmlnsXLink":"xmlnsXlink"}');
+
+/***/ }),
+
+/***/ "./node_modules/property-information/html.js":
+/*!***************************************************!*\
+  !*** ./node_modules/property-information/html.js ***!
+  \***************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var merge = __webpack_require__(/*! ./lib/util/merge */ "./node_modules/property-information/lib/util/merge.js")
+var xlink = __webpack_require__(/*! ./lib/xlink */ "./node_modules/property-information/lib/xlink.js")
+var xml = __webpack_require__(/*! ./lib/xml */ "./node_modules/property-information/lib/xml.js")
+var xmlns = __webpack_require__(/*! ./lib/xmlns */ "./node_modules/property-information/lib/xmlns.js")
+var aria = __webpack_require__(/*! ./lib/aria */ "./node_modules/property-information/lib/aria.js")
+var html = __webpack_require__(/*! ./lib/html */ "./node_modules/property-information/lib/html.js")
+
+module.exports = merge([xml, xlink, xmlns, aria, html])
+
+
+/***/ }),
+
+/***/ "./node_modules/property-information/lib/aria.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/property-information/lib/aria.js ***!
+  \*******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var types = __webpack_require__(/*! ./util/types */ "./node_modules/property-information/lib/util/types.js")
+var create = __webpack_require__(/*! ./util/create */ "./node_modules/property-information/lib/util/create.js")
+
+var booleanish = types.booleanish
+var number = types.number
+var spaceSeparated = types.spaceSeparated
+
+module.exports = create({
+  transform: ariaTransform,
+  properties: {
+    ariaActiveDescendant: null,
+    ariaAtomic: booleanish,
+    ariaAutoComplete: null,
+    ariaBusy: booleanish,
+    ariaChecked: booleanish,
+    ariaColCount: number,
+    ariaColIndex: number,
+    ariaColSpan: number,
+    ariaControls: spaceSeparated,
+    ariaCurrent: null,
+    ariaDescribedBy: spaceSeparated,
+    ariaDetails: null,
+    ariaDisabled: booleanish,
+    ariaDropEffect: spaceSeparated,
+    ariaErrorMessage: null,
+    ariaExpanded: booleanish,
+    ariaFlowTo: spaceSeparated,
+    ariaGrabbed: booleanish,
+    ariaHasPopup: null,
+    ariaHidden: booleanish,
+    ariaInvalid: null,
+    ariaKeyShortcuts: null,
+    ariaLabel: null,
+    ariaLabelledBy: spaceSeparated,
+    ariaLevel: number,
+    ariaLive: null,
+    ariaModal: booleanish,
+    ariaMultiLine: booleanish,
+    ariaMultiSelectable: booleanish,
+    ariaOrientation: null,
+    ariaOwns: spaceSeparated,
+    ariaPlaceholder: null,
+    ariaPosInSet: number,
+    ariaPressed: booleanish,
+    ariaReadOnly: booleanish,
+    ariaRelevant: null,
+    ariaRequired: booleanish,
+    ariaRoleDescription: spaceSeparated,
+    ariaRowCount: number,
+    ariaRowIndex: number,
+    ariaRowSpan: number,
+    ariaSelected: booleanish,
+    ariaSetSize: number,
+    ariaSort: null,
+    ariaValueMax: number,
+    ariaValueMin: number,
+    ariaValueNow: number,
+    ariaValueText: null,
+    role: null
+  }
+})
+
+function ariaTransform(_, prop) {
+  return prop === 'role' ? prop : 'aria-' + prop.slice(4).toLowerCase()
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/property-information/lib/html.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/property-information/lib/html.js ***!
+  \*******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var types = __webpack_require__(/*! ./util/types */ "./node_modules/property-information/lib/util/types.js")
+var create = __webpack_require__(/*! ./util/create */ "./node_modules/property-information/lib/util/create.js")
+var caseInsensitiveTransform = __webpack_require__(/*! ./util/case-insensitive-transform */ "./node_modules/property-information/lib/util/case-insensitive-transform.js")
+
+var boolean = types.boolean
+var overloadedBoolean = types.overloadedBoolean
+var booleanish = types.booleanish
+var number = types.number
+var spaceSeparated = types.spaceSeparated
+var commaSeparated = types.commaSeparated
+
+module.exports = create({
+  space: 'html',
+  attributes: {
+    acceptcharset: 'accept-charset',
+    classname: 'class',
+    htmlfor: 'for',
+    httpequiv: 'http-equiv'
+  },
+  transform: caseInsensitiveTransform,
+  mustUseProperty: ['checked', 'multiple', 'muted', 'selected'],
+  properties: {
+    // Standard Properties.
+    abbr: null,
+    accept: commaSeparated,
+    acceptCharset: spaceSeparated,
+    accessKey: spaceSeparated,
+    action: null,
+    allow: null,
+    allowFullScreen: boolean,
+    allowPaymentRequest: boolean,
+    allowUserMedia: boolean,
+    alt: null,
+    as: null,
+    async: boolean,
+    autoCapitalize: null,
+    autoComplete: spaceSeparated,
+    autoFocus: boolean,
+    autoPlay: boolean,
+    capture: boolean,
+    charSet: null,
+    checked: boolean,
+    cite: null,
+    className: spaceSeparated,
+    cols: number,
+    colSpan: null,
+    content: null,
+    contentEditable: booleanish,
+    controls: boolean,
+    controlsList: spaceSeparated,
+    coords: number | commaSeparated,
+    crossOrigin: null,
+    data: null,
+    dateTime: null,
+    decoding: null,
+    default: boolean,
+    defer: boolean,
+    dir: null,
+    dirName: null,
+    disabled: boolean,
+    download: overloadedBoolean,
+    draggable: booleanish,
+    encType: null,
+    enterKeyHint: null,
+    form: null,
+    formAction: null,
+    formEncType: null,
+    formMethod: null,
+    formNoValidate: boolean,
+    formTarget: null,
+    headers: spaceSeparated,
+    height: number,
+    hidden: boolean,
+    high: number,
+    href: null,
+    hrefLang: null,
+    htmlFor: spaceSeparated,
+    httpEquiv: spaceSeparated,
+    id: null,
+    imageSizes: null,
+    imageSrcSet: commaSeparated,
+    inputMode: null,
+    integrity: null,
+    is: null,
+    isMap: boolean,
+    itemId: null,
+    itemProp: spaceSeparated,
+    itemRef: spaceSeparated,
+    itemScope: boolean,
+    itemType: spaceSeparated,
+    kind: null,
+    label: null,
+    lang: null,
+    language: null,
+    list: null,
+    loading: null,
+    loop: boolean,
+    low: number,
+    manifest: null,
+    max: null,
+    maxLength: number,
+    media: null,
+    method: null,
+    min: null,
+    minLength: number,
+    multiple: boolean,
+    muted: boolean,
+    name: null,
+    nonce: null,
+    noModule: boolean,
+    noValidate: boolean,
+    onAbort: null,
+    onAfterPrint: null,
+    onAuxClick: null,
+    onBeforePrint: null,
+    onBeforeUnload: null,
+    onBlur: null,
+    onCancel: null,
+    onCanPlay: null,
+    onCanPlayThrough: null,
+    onChange: null,
+    onClick: null,
+    onClose: null,
+    onContextMenu: null,
+    onCopy: null,
+    onCueChange: null,
+    onCut: null,
+    onDblClick: null,
+    onDrag: null,
+    onDragEnd: null,
+    onDragEnter: null,
+    onDragExit: null,
+    onDragLeave: null,
+    onDragOver: null,
+    onDragStart: null,
+    onDrop: null,
+    onDurationChange: null,
+    onEmptied: null,
+    onEnded: null,
+    onError: null,
+    onFocus: null,
+    onFormData: null,
+    onHashChange: null,
+    onInput: null,
+    onInvalid: null,
+    onKeyDown: null,
+    onKeyPress: null,
+    onKeyUp: null,
+    onLanguageChange: null,
+    onLoad: null,
+    onLoadedData: null,
+    onLoadedMetadata: null,
+    onLoadEnd: null,
+    onLoadStart: null,
+    onMessage: null,
+    onMessageError: null,
+    onMouseDown: null,
+    onMouseEnter: null,
+    onMouseLeave: null,
+    onMouseMove: null,
+    onMouseOut: null,
+    onMouseOver: null,
+    onMouseUp: null,
+    onOffline: null,
+    onOnline: null,
+    onPageHide: null,
+    onPageShow: null,
+    onPaste: null,
+    onPause: null,
+    onPlay: null,
+    onPlaying: null,
+    onPopState: null,
+    onProgress: null,
+    onRateChange: null,
+    onRejectionHandled: null,
+    onReset: null,
+    onResize: null,
+    onScroll: null,
+    onSecurityPolicyViolation: null,
+    onSeeked: null,
+    onSeeking: null,
+    onSelect: null,
+    onSlotChange: null,
+    onStalled: null,
+    onStorage: null,
+    onSubmit: null,
+    onSuspend: null,
+    onTimeUpdate: null,
+    onToggle: null,
+    onUnhandledRejection: null,
+    onUnload: null,
+    onVolumeChange: null,
+    onWaiting: null,
+    onWheel: null,
+    open: boolean,
+    optimum: number,
+    pattern: null,
+    ping: spaceSeparated,
+    placeholder: null,
+    playsInline: boolean,
+    poster: null,
+    preload: null,
+    readOnly: boolean,
+    referrerPolicy: null,
+    rel: spaceSeparated,
+    required: boolean,
+    reversed: boolean,
+    rows: number,
+    rowSpan: number,
+    sandbox: spaceSeparated,
+    scope: null,
+    scoped: boolean,
+    seamless: boolean,
+    selected: boolean,
+    shape: null,
+    size: number,
+    sizes: null,
+    slot: null,
+    span: number,
+    spellCheck: booleanish,
+    src: null,
+    srcDoc: null,
+    srcLang: null,
+    srcSet: commaSeparated,
+    start: number,
+    step: null,
+    style: null,
+    tabIndex: number,
+    target: null,
+    title: null,
+    translate: null,
+    type: null,
+    typeMustMatch: boolean,
+    useMap: null,
+    value: booleanish,
+    width: number,
+    wrap: null,
+
+    // Legacy.
+    // See: https://html.spec.whatwg.org/#other-elements,-attributes-and-apis
+    align: null, // Several. Use CSS `text-align` instead,
+    aLink: null, // `<body>`. Use CSS `a:active {color}` instead
+    archive: spaceSeparated, // `<object>`. List of URIs to archives
+    axis: null, // `<td>` and `<th>`. Use `scope` on `<th>`
+    background: null, // `<body>`. Use CSS `background-image` instead
+    bgColor: null, // `<body>` and table elements. Use CSS `background-color` instead
+    border: number, // `<table>`. Use CSS `border-width` instead,
+    borderColor: null, // `<table>`. Use CSS `border-color` instead,
+    bottomMargin: number, // `<body>`
+    cellPadding: null, // `<table>`
+    cellSpacing: null, // `<table>`
+    char: null, // Several table elements. When `align=char`, sets the character to align on
+    charOff: null, // Several table elements. When `char`, offsets the alignment
+    classId: null, // `<object>`
+    clear: null, // `<br>`. Use CSS `clear` instead
+    code: null, // `<object>`
+    codeBase: null, // `<object>`
+    codeType: null, // `<object>`
+    color: null, // `<font>` and `<hr>`. Use CSS instead
+    compact: boolean, // Lists. Use CSS to reduce space between items instead
+    declare: boolean, // `<object>`
+    event: null, // `<script>`
+    face: null, // `<font>`. Use CSS instead
+    frame: null, // `<table>`
+    frameBorder: null, // `<iframe>`. Use CSS `border` instead
+    hSpace: number, // `<img>` and `<object>`
+    leftMargin: number, // `<body>`
+    link: null, // `<body>`. Use CSS `a:link {color: *}` instead
+    longDesc: null, // `<frame>`, `<iframe>`, and `<img>`. Use an `<a>`
+    lowSrc: null, // `<img>`. Use a `<picture>`
+    marginHeight: number, // `<body>`
+    marginWidth: number, // `<body>`
+    noResize: boolean, // `<frame>`
+    noHref: boolean, // `<area>`. Use no href instead of an explicit `nohref`
+    noShade: boolean, // `<hr>`. Use background-color and height instead of borders
+    noWrap: boolean, // `<td>` and `<th>`
+    object: null, // `<applet>`
+    profile: null, // `<head>`
+    prompt: null, // `<isindex>`
+    rev: null, // `<link>`
+    rightMargin: number, // `<body>`
+    rules: null, // `<table>`
+    scheme: null, // `<meta>`
+    scrolling: booleanish, // `<frame>`. Use overflow in the child context
+    standby: null, // `<object>`
+    summary: null, // `<table>`
+    text: null, // `<body>`. Use CSS `color` instead
+    topMargin: number, // `<body>`
+    valueType: null, // `<param>`
+    version: null, // `<html>`. Use a doctype.
+    vAlign: null, // Several. Use CSS `vertical-align` instead
+    vLink: null, // `<body>`. Use CSS `a:visited {color}` instead
+    vSpace: number, // `<img>` and `<object>`
+
+    // Non-standard Properties.
+    allowTransparency: null,
+    autoCorrect: null,
+    autoSave: null,
+    disablePictureInPicture: boolean,
+    disableRemotePlayback: boolean,
+    prefix: null,
+    property: null,
+    results: number,
+    security: null,
+    unselectable: null
+  }
+})
+
+
+/***/ }),
+
+/***/ "./node_modules/property-information/lib/svg.js":
+/*!******************************************************!*\
+  !*** ./node_modules/property-information/lib/svg.js ***!
+  \******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var types = __webpack_require__(/*! ./util/types */ "./node_modules/property-information/lib/util/types.js")
+var create = __webpack_require__(/*! ./util/create */ "./node_modules/property-information/lib/util/create.js")
+var caseSensitiveTransform = __webpack_require__(/*! ./util/case-sensitive-transform */ "./node_modules/property-information/lib/util/case-sensitive-transform.js")
+
+var boolean = types.boolean
+var number = types.number
+var spaceSeparated = types.spaceSeparated
+var commaSeparated = types.commaSeparated
+var commaOrSpaceSeparated = types.commaOrSpaceSeparated
+
+module.exports = create({
+  space: 'svg',
+  attributes: {
+    accentHeight: 'accent-height',
+    alignmentBaseline: 'alignment-baseline',
+    arabicForm: 'arabic-form',
+    baselineShift: 'baseline-shift',
+    capHeight: 'cap-height',
+    className: 'class',
+    clipPath: 'clip-path',
+    clipRule: 'clip-rule',
+    colorInterpolation: 'color-interpolation',
+    colorInterpolationFilters: 'color-interpolation-filters',
+    colorProfile: 'color-profile',
+    colorRendering: 'color-rendering',
+    crossOrigin: 'crossorigin',
+    dataType: 'datatype',
+    dominantBaseline: 'dominant-baseline',
+    enableBackground: 'enable-background',
+    fillOpacity: 'fill-opacity',
+    fillRule: 'fill-rule',
+    floodColor: 'flood-color',
+    floodOpacity: 'flood-opacity',
+    fontFamily: 'font-family',
+    fontSize: 'font-size',
+    fontSizeAdjust: 'font-size-adjust',
+    fontStretch: 'font-stretch',
+    fontStyle: 'font-style',
+    fontVariant: 'font-variant',
+    fontWeight: 'font-weight',
+    glyphName: 'glyph-name',
+    glyphOrientationHorizontal: 'glyph-orientation-horizontal',
+    glyphOrientationVertical: 'glyph-orientation-vertical',
+    hrefLang: 'hreflang',
+    horizAdvX: 'horiz-adv-x',
+    horizOriginX: 'horiz-origin-x',
+    horizOriginY: 'horiz-origin-y',
+    imageRendering: 'image-rendering',
+    letterSpacing: 'letter-spacing',
+    lightingColor: 'lighting-color',
+    markerEnd: 'marker-end',
+    markerMid: 'marker-mid',
+    markerStart: 'marker-start',
+    navDown: 'nav-down',
+    navDownLeft: 'nav-down-left',
+    navDownRight: 'nav-down-right',
+    navLeft: 'nav-left',
+    navNext: 'nav-next',
+    navPrev: 'nav-prev',
+    navRight: 'nav-right',
+    navUp: 'nav-up',
+    navUpLeft: 'nav-up-left',
+    navUpRight: 'nav-up-right',
+    onAbort: 'onabort',
+    onActivate: 'onactivate',
+    onAfterPrint: 'onafterprint',
+    onBeforePrint: 'onbeforeprint',
+    onBegin: 'onbegin',
+    onCancel: 'oncancel',
+    onCanPlay: 'oncanplay',
+    onCanPlayThrough: 'oncanplaythrough',
+    onChange: 'onchange',
+    onClick: 'onclick',
+    onClose: 'onclose',
+    onCopy: 'oncopy',
+    onCueChange: 'oncuechange',
+    onCut: 'oncut',
+    onDblClick: 'ondblclick',
+    onDrag: 'ondrag',
+    onDragEnd: 'ondragend',
+    onDragEnter: 'ondragenter',
+    onDragExit: 'ondragexit',
+    onDragLeave: 'ondragleave',
+    onDragOver: 'ondragover',
+    onDragStart: 'ondragstart',
+    onDrop: 'ondrop',
+    onDurationChange: 'ondurationchange',
+    onEmptied: 'onemptied',
+    onEnd: 'onend',
+    onEnded: 'onended',
+    onError: 'onerror',
+    onFocus: 'onfocus',
+    onFocusIn: 'onfocusin',
+    onFocusOut: 'onfocusout',
+    onHashChange: 'onhashchange',
+    onInput: 'oninput',
+    onInvalid: 'oninvalid',
+    onKeyDown: 'onkeydown',
+    onKeyPress: 'onkeypress',
+    onKeyUp: 'onkeyup',
+    onLoad: 'onload',
+    onLoadedData: 'onloadeddata',
+    onLoadedMetadata: 'onloadedmetadata',
+    onLoadStart: 'onloadstart',
+    onMessage: 'onmessage',
+    onMouseDown: 'onmousedown',
+    onMouseEnter: 'onmouseenter',
+    onMouseLeave: 'onmouseleave',
+    onMouseMove: 'onmousemove',
+    onMouseOut: 'onmouseout',
+    onMouseOver: 'onmouseover',
+    onMouseUp: 'onmouseup',
+    onMouseWheel: 'onmousewheel',
+    onOffline: 'onoffline',
+    onOnline: 'ononline',
+    onPageHide: 'onpagehide',
+    onPageShow: 'onpageshow',
+    onPaste: 'onpaste',
+    onPause: 'onpause',
+    onPlay: 'onplay',
+    onPlaying: 'onplaying',
+    onPopState: 'onpopstate',
+    onProgress: 'onprogress',
+    onRateChange: 'onratechange',
+    onRepeat: 'onrepeat',
+    onReset: 'onreset',
+    onResize: 'onresize',
+    onScroll: 'onscroll',
+    onSeeked: 'onseeked',
+    onSeeking: 'onseeking',
+    onSelect: 'onselect',
+    onShow: 'onshow',
+    onStalled: 'onstalled',
+    onStorage: 'onstorage',
+    onSubmit: 'onsubmit',
+    onSuspend: 'onsuspend',
+    onTimeUpdate: 'ontimeupdate',
+    onToggle: 'ontoggle',
+    onUnload: 'onunload',
+    onVolumeChange: 'onvolumechange',
+    onWaiting: 'onwaiting',
+    onZoom: 'onzoom',
+    overlinePosition: 'overline-position',
+    overlineThickness: 'overline-thickness',
+    paintOrder: 'paint-order',
+    panose1: 'panose-1',
+    pointerEvents: 'pointer-events',
+    referrerPolicy: 'referrerpolicy',
+    renderingIntent: 'rendering-intent',
+    shapeRendering: 'shape-rendering',
+    stopColor: 'stop-color',
+    stopOpacity: 'stop-opacity',
+    strikethroughPosition: 'strikethrough-position',
+    strikethroughThickness: 'strikethrough-thickness',
+    strokeDashArray: 'stroke-dasharray',
+    strokeDashOffset: 'stroke-dashoffset',
+    strokeLineCap: 'stroke-linecap',
+    strokeLineJoin: 'stroke-linejoin',
+    strokeMiterLimit: 'stroke-miterlimit',
+    strokeOpacity: 'stroke-opacity',
+    strokeWidth: 'stroke-width',
+    tabIndex: 'tabindex',
+    textAnchor: 'text-anchor',
+    textDecoration: 'text-decoration',
+    textRendering: 'text-rendering',
+    typeOf: 'typeof',
+    underlinePosition: 'underline-position',
+    underlineThickness: 'underline-thickness',
+    unicodeBidi: 'unicode-bidi',
+    unicodeRange: 'unicode-range',
+    unitsPerEm: 'units-per-em',
+    vAlphabetic: 'v-alphabetic',
+    vHanging: 'v-hanging',
+    vIdeographic: 'v-ideographic',
+    vMathematical: 'v-mathematical',
+    vectorEffect: 'vector-effect',
+    vertAdvY: 'vert-adv-y',
+    vertOriginX: 'vert-origin-x',
+    vertOriginY: 'vert-origin-y',
+    wordSpacing: 'word-spacing',
+    writingMode: 'writing-mode',
+    xHeight: 'x-height',
+    // These were camelcased in Tiny. Now lowercased in SVG 2
+    playbackOrder: 'playbackorder',
+    timelineBegin: 'timelinebegin'
+  },
+  transform: caseSensitiveTransform,
+  properties: {
+    about: commaOrSpaceSeparated,
+    accentHeight: number,
+    accumulate: null,
+    additive: null,
+    alignmentBaseline: null,
+    alphabetic: number,
+    amplitude: number,
+    arabicForm: null,
+    ascent: number,
+    attributeName: null,
+    attributeType: null,
+    azimuth: number,
+    bandwidth: null,
+    baselineShift: null,
+    baseFrequency: null,
+    baseProfile: null,
+    bbox: null,
+    begin: null,
+    bias: number,
+    by: null,
+    calcMode: null,
+    capHeight: number,
+    className: spaceSeparated,
+    clip: null,
+    clipPath: null,
+    clipPathUnits: null,
+    clipRule: null,
+    color: null,
+    colorInterpolation: null,
+    colorInterpolationFilters: null,
+    colorProfile: null,
+    colorRendering: null,
+    content: null,
+    contentScriptType: null,
+    contentStyleType: null,
+    crossOrigin: null,
+    cursor: null,
+    cx: null,
+    cy: null,
+    d: null,
+    dataType: null,
+    defaultAction: null,
+    descent: number,
+    diffuseConstant: number,
+    direction: null,
+    display: null,
+    dur: null,
+    divisor: number,
+    dominantBaseline: null,
+    download: boolean,
+    dx: null,
+    dy: null,
+    edgeMode: null,
+    editable: null,
+    elevation: number,
+    enableBackground: null,
+    end: null,
+    event: null,
+    exponent: number,
+    externalResourcesRequired: null,
+    fill: null,
+    fillOpacity: number,
+    fillRule: null,
+    filter: null,
+    filterRes: null,
+    filterUnits: null,
+    floodColor: null,
+    floodOpacity: null,
+    focusable: null,
+    focusHighlight: null,
+    fontFamily: null,
+    fontSize: null,
+    fontSizeAdjust: null,
+    fontStretch: null,
+    fontStyle: null,
+    fontVariant: null,
+    fontWeight: null,
+    format: null,
+    fr: null,
+    from: null,
+    fx: null,
+    fy: null,
+    g1: commaSeparated,
+    g2: commaSeparated,
+    glyphName: commaSeparated,
+    glyphOrientationHorizontal: null,
+    glyphOrientationVertical: null,
+    glyphRef: null,
+    gradientTransform: null,
+    gradientUnits: null,
+    handler: null,
+    hanging: number,
+    hatchContentUnits: null,
+    hatchUnits: null,
+    height: null,
+    href: null,
+    hrefLang: null,
+    horizAdvX: number,
+    horizOriginX: number,
+    horizOriginY: number,
+    id: null,
+    ideographic: number,
+    imageRendering: null,
+    initialVisibility: null,
+    in: null,
+    in2: null,
+    intercept: number,
+    k: number,
+    k1: number,
+    k2: number,
+    k3: number,
+    k4: number,
+    kernelMatrix: commaOrSpaceSeparated,
+    kernelUnitLength: null,
+    keyPoints: null, // SEMI_COLON_SEPARATED
+    keySplines: null, // SEMI_COLON_SEPARATED
+    keyTimes: null, // SEMI_COLON_SEPARATED
+    kerning: null,
+    lang: null,
+    lengthAdjust: null,
+    letterSpacing: null,
+    lightingColor: null,
+    limitingConeAngle: number,
+    local: null,
+    markerEnd: null,
+    markerMid: null,
+    markerStart: null,
+    markerHeight: null,
+    markerUnits: null,
+    markerWidth: null,
+    mask: null,
+    maskContentUnits: null,
+    maskUnits: null,
+    mathematical: null,
+    max: null,
+    media: null,
+    mediaCharacterEncoding: null,
+    mediaContentEncodings: null,
+    mediaSize: number,
+    mediaTime: null,
+    method: null,
+    min: null,
+    mode: null,
+    name: null,
+    navDown: null,
+    navDownLeft: null,
+    navDownRight: null,
+    navLeft: null,
+    navNext: null,
+    navPrev: null,
+    navRight: null,
+    navUp: null,
+    navUpLeft: null,
+    navUpRight: null,
+    numOctaves: null,
+    observer: null,
+    offset: null,
+    onAbort: null,
+    onActivate: null,
+    onAfterPrint: null,
+    onBeforePrint: null,
+    onBegin: null,
+    onCancel: null,
+    onCanPlay: null,
+    onCanPlayThrough: null,
+    onChange: null,
+    onClick: null,
+    onClose: null,
+    onCopy: null,
+    onCueChange: null,
+    onCut: null,
+    onDblClick: null,
+    onDrag: null,
+    onDragEnd: null,
+    onDragEnter: null,
+    onDragExit: null,
+    onDragLeave: null,
+    onDragOver: null,
+    onDragStart: null,
+    onDrop: null,
+    onDurationChange: null,
+    onEmptied: null,
+    onEnd: null,
+    onEnded: null,
+    onError: null,
+    onFocus: null,
+    onFocusIn: null,
+    onFocusOut: null,
+    onHashChange: null,
+    onInput: null,
+    onInvalid: null,
+    onKeyDown: null,
+    onKeyPress: null,
+    onKeyUp: null,
+    onLoad: null,
+    onLoadedData: null,
+    onLoadedMetadata: null,
+    onLoadStart: null,
+    onMessage: null,
+    onMouseDown: null,
+    onMouseEnter: null,
+    onMouseLeave: null,
+    onMouseMove: null,
+    onMouseOut: null,
+    onMouseOver: null,
+    onMouseUp: null,
+    onMouseWheel: null,
+    onOffline: null,
+    onOnline: null,
+    onPageHide: null,
+    onPageShow: null,
+    onPaste: null,
+    onPause: null,
+    onPlay: null,
+    onPlaying: null,
+    onPopState: null,
+    onProgress: null,
+    onRateChange: null,
+    onRepeat: null,
+    onReset: null,
+    onResize: null,
+    onScroll: null,
+    onSeeked: null,
+    onSeeking: null,
+    onSelect: null,
+    onShow: null,
+    onStalled: null,
+    onStorage: null,
+    onSubmit: null,
+    onSuspend: null,
+    onTimeUpdate: null,
+    onToggle: null,
+    onUnload: null,
+    onVolumeChange: null,
+    onWaiting: null,
+    onZoom: null,
+    opacity: null,
+    operator: null,
+    order: null,
+    orient: null,
+    orientation: null,
+    origin: null,
+    overflow: null,
+    overlay: null,
+    overlinePosition: number,
+    overlineThickness: number,
+    paintOrder: null,
+    panose1: null,
+    path: null,
+    pathLength: number,
+    patternContentUnits: null,
+    patternTransform: null,
+    patternUnits: null,
+    phase: null,
+    ping: spaceSeparated,
+    pitch: null,
+    playbackOrder: null,
+    pointerEvents: null,
+    points: null,
+    pointsAtX: number,
+    pointsAtY: number,
+    pointsAtZ: number,
+    preserveAlpha: null,
+    preserveAspectRatio: null,
+    primitiveUnits: null,
+    propagate: null,
+    property: commaOrSpaceSeparated,
+    r: null,
+    radius: null,
+    referrerPolicy: null,
+    refX: null,
+    refY: null,
+    rel: commaOrSpaceSeparated,
+    rev: commaOrSpaceSeparated,
+    renderingIntent: null,
+    repeatCount: null,
+    repeatDur: null,
+    requiredExtensions: commaOrSpaceSeparated,
+    requiredFeatures: commaOrSpaceSeparated,
+    requiredFonts: commaOrSpaceSeparated,
+    requiredFormats: commaOrSpaceSeparated,
+    resource: null,
+    restart: null,
+    result: null,
+    rotate: null,
+    rx: null,
+    ry: null,
+    scale: null,
+    seed: null,
+    shapeRendering: null,
+    side: null,
+    slope: null,
+    snapshotTime: null,
+    specularConstant: number,
+    specularExponent: number,
+    spreadMethod: null,
+    spacing: null,
+    startOffset: null,
+    stdDeviation: null,
+    stemh: null,
+    stemv: null,
+    stitchTiles: null,
+    stopColor: null,
+    stopOpacity: null,
+    strikethroughPosition: number,
+    strikethroughThickness: number,
+    string: null,
+    stroke: null,
+    strokeDashArray: commaOrSpaceSeparated,
+    strokeDashOffset: null,
+    strokeLineCap: null,
+    strokeLineJoin: null,
+    strokeMiterLimit: number,
+    strokeOpacity: number,
+    strokeWidth: null,
+    style: null,
+    surfaceScale: number,
+    syncBehavior: null,
+    syncBehaviorDefault: null,
+    syncMaster: null,
+    syncTolerance: null,
+    syncToleranceDefault: null,
+    systemLanguage: commaOrSpaceSeparated,
+    tabIndex: number,
+    tableValues: null,
+    target: null,
+    targetX: number,
+    targetY: number,
+    textAnchor: null,
+    textDecoration: null,
+    textRendering: null,
+    textLength: null,
+    timelineBegin: null,
+    title: null,
+    transformBehavior: null,
+    type: null,
+    typeOf: commaOrSpaceSeparated,
+    to: null,
+    transform: null,
+    u1: null,
+    u2: null,
+    underlinePosition: number,
+    underlineThickness: number,
+    unicode: null,
+    unicodeBidi: null,
+    unicodeRange: null,
+    unitsPerEm: number,
+    values: null,
+    vAlphabetic: number,
+    vMathematical: number,
+    vectorEffect: null,
+    vHanging: number,
+    vIdeographic: number,
+    version: null,
+    vertAdvY: number,
+    vertOriginX: number,
+    vertOriginY: number,
+    viewBox: null,
+    viewTarget: null,
+    visibility: null,
+    width: null,
+    widths: null,
+    wordSpacing: null,
+    writingMode: null,
+    x: null,
+    x1: null,
+    x2: null,
+    xChannelSelector: null,
+    xHeight: number,
+    y: null,
+    y1: null,
+    y2: null,
+    yChannelSelector: null,
+    z: null,
+    zoomAndPan: null
+  }
+})
+
+
+/***/ }),
+
+/***/ "./node_modules/property-information/lib/util/case-insensitive-transform.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/property-information/lib/util/case-insensitive-transform.js ***!
+  \**********************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var caseSensitiveTransform = __webpack_require__(/*! ./case-sensitive-transform */ "./node_modules/property-information/lib/util/case-sensitive-transform.js")
+
+module.exports = caseInsensitiveTransform
+
+function caseInsensitiveTransform(attributes, property) {
+  return caseSensitiveTransform(attributes, property.toLowerCase())
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/property-information/lib/util/case-sensitive-transform.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/property-information/lib/util/case-sensitive-transform.js ***!
+  \********************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = caseSensitiveTransform
+
+function caseSensitiveTransform(attributes, attribute) {
+  return attribute in attributes ? attributes[attribute] : attribute
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/property-information/lib/util/create.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/property-information/lib/util/create.js ***!
+  \**************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var normalize = __webpack_require__(/*! ../../normalize */ "./node_modules/property-information/normalize.js")
+var Schema = __webpack_require__(/*! ./schema */ "./node_modules/property-information/lib/util/schema.js")
+var DefinedInfo = __webpack_require__(/*! ./defined-info */ "./node_modules/property-information/lib/util/defined-info.js")
+
+module.exports = create
+
+function create(definition) {
+  var space = definition.space
+  var mustUseProperty = definition.mustUseProperty || []
+  var attributes = definition.attributes || {}
+  var props = definition.properties
+  var transform = definition.transform
+  var property = {}
+  var normal = {}
+  var prop
+  var info
+
+  for (prop in props) {
+    info = new DefinedInfo(
+      prop,
+      transform(attributes, prop),
+      props[prop],
+      space
+    )
+
+    if (mustUseProperty.indexOf(prop) !== -1) {
+      info.mustUseProperty = true
+    }
+
+    property[prop] = info
+
+    normal[normalize(prop)] = prop
+    normal[normalize(info.attribute)] = prop
+  }
+
+  return new Schema(property, normal, space)
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/property-information/lib/util/defined-info.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/property-information/lib/util/defined-info.js ***!
+  \********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var Info = __webpack_require__(/*! ./info */ "./node_modules/property-information/lib/util/info.js")
+var types = __webpack_require__(/*! ./types */ "./node_modules/property-information/lib/util/types.js")
+
+module.exports = DefinedInfo
+
+DefinedInfo.prototype = new Info()
+DefinedInfo.prototype.defined = true
+
+var checks = [
+  'boolean',
+  'booleanish',
+  'overloadedBoolean',
+  'number',
+  'commaSeparated',
+  'spaceSeparated',
+  'commaOrSpaceSeparated'
+]
+var checksLength = checks.length
+
+function DefinedInfo(property, attribute, mask, space) {
+  var index = -1
+  var check
+
+  mark(this, 'space', space)
+
+  Info.call(this, property, attribute)
+
+  while (++index < checksLength) {
+    check = checks[index]
+    mark(this, check, (mask & types[check]) === types[check])
+  }
+}
+
+function mark(values, key, value) {
+  if (value) {
+    values[key] = value
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/property-information/lib/util/info.js":
+/*!************************************************************!*\
+  !*** ./node_modules/property-information/lib/util/info.js ***!
+  \************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = Info
+
+var proto = Info.prototype
+
+proto.space = null
+proto.attribute = null
+proto.property = null
+proto.boolean = false
+proto.booleanish = false
+proto.overloadedBoolean = false
+proto.number = false
+proto.commaSeparated = false
+proto.spaceSeparated = false
+proto.commaOrSpaceSeparated = false
+proto.mustUseProperty = false
+proto.defined = false
+
+function Info(property, attribute) {
+  this.property = property
+  this.attribute = attribute
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/property-information/lib/util/merge.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/property-information/lib/util/merge.js ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var xtend = __webpack_require__(/*! xtend */ "./node_modules/xtend/immutable.js")
+var Schema = __webpack_require__(/*! ./schema */ "./node_modules/property-information/lib/util/schema.js")
+
+module.exports = merge
+
+function merge(definitions) {
+  var length = definitions.length
+  var property = []
+  var normal = []
+  var index = -1
+  var info
+  var space
+
+  while (++index < length) {
+    info = definitions[index]
+    property.push(info.property)
+    normal.push(info.normal)
+    space = info.space
+  }
+
+  return new Schema(
+    xtend.apply(null, property),
+    xtend.apply(null, normal),
+    space
+  )
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/property-information/lib/util/schema.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/property-information/lib/util/schema.js ***!
+  \**************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = Schema
+
+var proto = Schema.prototype
+
+proto.space = null
+proto.normal = {}
+proto.property = {}
+
+function Schema(property, normal, space) {
+  this.property = property
+  this.normal = normal
+
+  if (space) {
+    this.space = space
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/property-information/lib/util/types.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/property-information/lib/util/types.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+var powers = 0
+
+exports.boolean = increment()
+exports.booleanish = increment()
+exports.overloadedBoolean = increment()
+exports.number = increment()
+exports.spaceSeparated = increment()
+exports.commaSeparated = increment()
+exports.commaOrSpaceSeparated = increment()
+
+function increment() {
+  return Math.pow(2, ++powers)
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/property-information/lib/xlink.js":
+/*!********************************************************!*\
+  !*** ./node_modules/property-information/lib/xlink.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var create = __webpack_require__(/*! ./util/create */ "./node_modules/property-information/lib/util/create.js")
+
+module.exports = create({
+  space: 'xlink',
+  transform: xlinkTransform,
+  properties: {
+    xLinkActuate: null,
+    xLinkArcRole: null,
+    xLinkHref: null,
+    xLinkRole: null,
+    xLinkShow: null,
+    xLinkTitle: null,
+    xLinkType: null
+  }
+})
+
+function xlinkTransform(_, prop) {
+  return 'xlink:' + prop.slice(5).toLowerCase()
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/property-information/lib/xml.js":
+/*!******************************************************!*\
+  !*** ./node_modules/property-information/lib/xml.js ***!
+  \******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var create = __webpack_require__(/*! ./util/create */ "./node_modules/property-information/lib/util/create.js")
+
+module.exports = create({
+  space: 'xml',
+  transform: xmlTransform,
+  properties: {
+    xmlLang: null,
+    xmlBase: null,
+    xmlSpace: null
+  }
+})
+
+function xmlTransform(_, prop) {
+  return 'xml:' + prop.slice(3).toLowerCase()
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/property-information/lib/xmlns.js":
+/*!********************************************************!*\
+  !*** ./node_modules/property-information/lib/xmlns.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var create = __webpack_require__(/*! ./util/create */ "./node_modules/property-information/lib/util/create.js")
+var caseInsensitiveTransform = __webpack_require__(/*! ./util/case-insensitive-transform */ "./node_modules/property-information/lib/util/case-insensitive-transform.js")
+
+module.exports = create({
+  space: 'xmlns',
+  attributes: {
+    xmlnsxlink: 'xmlns:xlink'
+  },
+  transform: caseInsensitiveTransform,
+  properties: {
+    xmlns: null,
+    xmlnsXLink: null
+  }
+})
+
+
+/***/ }),
+
+/***/ "./node_modules/property-information/normalize.js":
+/*!********************************************************!*\
+  !*** ./node_modules/property-information/normalize.js ***!
+  \********************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = normalize
+
+function normalize(value) {
+  return value.toLowerCase()
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/property-information/svg.js":
+/*!**************************************************!*\
+  !*** ./node_modules/property-information/svg.js ***!
+  \**************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var merge = __webpack_require__(/*! ./lib/util/merge */ "./node_modules/property-information/lib/util/merge.js")
+var xlink = __webpack_require__(/*! ./lib/xlink */ "./node_modules/property-information/lib/xlink.js")
+var xml = __webpack_require__(/*! ./lib/xml */ "./node_modules/property-information/lib/xml.js")
+var xmlns = __webpack_require__(/*! ./lib/xmlns */ "./node_modules/property-information/lib/xmlns.js")
+var aria = __webpack_require__(/*! ./lib/aria */ "./node_modules/property-information/lib/aria.js")
+var svg = __webpack_require__(/*! ./lib/svg */ "./node_modules/property-information/lib/svg.js")
+
+module.exports = merge([xml, xlink, xmlns, aria, svg])
+
 
 /***/ }),
 
@@ -52458,6 +71785,214 @@ if (false) {} else {
 
 /***/ }),
 
+/***/ "./node_modules/react-is/cjs/react-is.development.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/react-is/cjs/react-is.development.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+/** @license React v16.13.1
+ * react-is.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+
+
+if (true) {
+  (function() {
+'use strict';
+
+// The Symbol used to tag the ReactElement-like types. If there is no native Symbol
+// nor polyfill, then a plain number is used for performance.
+var hasSymbol = typeof Symbol === 'function' && Symbol.for;
+var REACT_ELEMENT_TYPE = hasSymbol ? Symbol.for('react.element') : 0xeac7;
+var REACT_PORTAL_TYPE = hasSymbol ? Symbol.for('react.portal') : 0xeaca;
+var REACT_FRAGMENT_TYPE = hasSymbol ? Symbol.for('react.fragment') : 0xeacb;
+var REACT_STRICT_MODE_TYPE = hasSymbol ? Symbol.for('react.strict_mode') : 0xeacc;
+var REACT_PROFILER_TYPE = hasSymbol ? Symbol.for('react.profiler') : 0xead2;
+var REACT_PROVIDER_TYPE = hasSymbol ? Symbol.for('react.provider') : 0xeacd;
+var REACT_CONTEXT_TYPE = hasSymbol ? Symbol.for('react.context') : 0xeace; // TODO: We don't use AsyncMode or ConcurrentMode anymore. They were temporary
+// (unstable) APIs that have been removed. Can we remove the symbols?
+
+var REACT_ASYNC_MODE_TYPE = hasSymbol ? Symbol.for('react.async_mode') : 0xeacf;
+var REACT_CONCURRENT_MODE_TYPE = hasSymbol ? Symbol.for('react.concurrent_mode') : 0xeacf;
+var REACT_FORWARD_REF_TYPE = hasSymbol ? Symbol.for('react.forward_ref') : 0xead0;
+var REACT_SUSPENSE_TYPE = hasSymbol ? Symbol.for('react.suspense') : 0xead1;
+var REACT_SUSPENSE_LIST_TYPE = hasSymbol ? Symbol.for('react.suspense_list') : 0xead8;
+var REACT_MEMO_TYPE = hasSymbol ? Symbol.for('react.memo') : 0xead3;
+var REACT_LAZY_TYPE = hasSymbol ? Symbol.for('react.lazy') : 0xead4;
+var REACT_BLOCK_TYPE = hasSymbol ? Symbol.for('react.block') : 0xead9;
+var REACT_FUNDAMENTAL_TYPE = hasSymbol ? Symbol.for('react.fundamental') : 0xead5;
+var REACT_RESPONDER_TYPE = hasSymbol ? Symbol.for('react.responder') : 0xead6;
+var REACT_SCOPE_TYPE = hasSymbol ? Symbol.for('react.scope') : 0xead7;
+
+function isValidElementType(type) {
+  return typeof type === 'string' || typeof type === 'function' || // Note: its typeof might be other than 'symbol' or 'number' if it's a polyfill.
+  type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || typeof type === 'object' && type !== null && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_RESPONDER_TYPE || type.$$typeof === REACT_SCOPE_TYPE || type.$$typeof === REACT_BLOCK_TYPE);
+}
+
+function typeOf(object) {
+  if (typeof object === 'object' && object !== null) {
+    var $$typeof = object.$$typeof;
+
+    switch ($$typeof) {
+      case REACT_ELEMENT_TYPE:
+        var type = object.type;
+
+        switch (type) {
+          case REACT_ASYNC_MODE_TYPE:
+          case REACT_CONCURRENT_MODE_TYPE:
+          case REACT_FRAGMENT_TYPE:
+          case REACT_PROFILER_TYPE:
+          case REACT_STRICT_MODE_TYPE:
+          case REACT_SUSPENSE_TYPE:
+            return type;
+
+          default:
+            var $$typeofType = type && type.$$typeof;
+
+            switch ($$typeofType) {
+              case REACT_CONTEXT_TYPE:
+              case REACT_FORWARD_REF_TYPE:
+              case REACT_LAZY_TYPE:
+              case REACT_MEMO_TYPE:
+              case REACT_PROVIDER_TYPE:
+                return $$typeofType;
+
+              default:
+                return $$typeof;
+            }
+
+        }
+
+      case REACT_PORTAL_TYPE:
+        return $$typeof;
+    }
+  }
+
+  return undefined;
+} // AsyncMode is deprecated along with isAsyncMode
+
+var AsyncMode = REACT_ASYNC_MODE_TYPE;
+var ConcurrentMode = REACT_CONCURRENT_MODE_TYPE;
+var ContextConsumer = REACT_CONTEXT_TYPE;
+var ContextProvider = REACT_PROVIDER_TYPE;
+var Element = REACT_ELEMENT_TYPE;
+var ForwardRef = REACT_FORWARD_REF_TYPE;
+var Fragment = REACT_FRAGMENT_TYPE;
+var Lazy = REACT_LAZY_TYPE;
+var Memo = REACT_MEMO_TYPE;
+var Portal = REACT_PORTAL_TYPE;
+var Profiler = REACT_PROFILER_TYPE;
+var StrictMode = REACT_STRICT_MODE_TYPE;
+var Suspense = REACT_SUSPENSE_TYPE;
+var hasWarnedAboutDeprecatedIsAsyncMode = false; // AsyncMode should be deprecated
+
+function isAsyncMode(object) {
+  {
+    if (!hasWarnedAboutDeprecatedIsAsyncMode) {
+      hasWarnedAboutDeprecatedIsAsyncMode = true; // Using console['warn'] to evade Babel and ESLint
+
+      console['warn']('The ReactIs.isAsyncMode() alias has been deprecated, ' + 'and will be removed in React 17+. Update your code to use ' + 'ReactIs.isConcurrentMode() instead. It has the exact same API.');
+    }
+  }
+
+  return isConcurrentMode(object) || typeOf(object) === REACT_ASYNC_MODE_TYPE;
+}
+function isConcurrentMode(object) {
+  return typeOf(object) === REACT_CONCURRENT_MODE_TYPE;
+}
+function isContextConsumer(object) {
+  return typeOf(object) === REACT_CONTEXT_TYPE;
+}
+function isContextProvider(object) {
+  return typeOf(object) === REACT_PROVIDER_TYPE;
+}
+function isElement(object) {
+  return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+}
+function isForwardRef(object) {
+  return typeOf(object) === REACT_FORWARD_REF_TYPE;
+}
+function isFragment(object) {
+  return typeOf(object) === REACT_FRAGMENT_TYPE;
+}
+function isLazy(object) {
+  return typeOf(object) === REACT_LAZY_TYPE;
+}
+function isMemo(object) {
+  return typeOf(object) === REACT_MEMO_TYPE;
+}
+function isPortal(object) {
+  return typeOf(object) === REACT_PORTAL_TYPE;
+}
+function isProfiler(object) {
+  return typeOf(object) === REACT_PROFILER_TYPE;
+}
+function isStrictMode(object) {
+  return typeOf(object) === REACT_STRICT_MODE_TYPE;
+}
+function isSuspense(object) {
+  return typeOf(object) === REACT_SUSPENSE_TYPE;
+}
+
+exports.AsyncMode = AsyncMode;
+exports.ConcurrentMode = ConcurrentMode;
+exports.ContextConsumer = ContextConsumer;
+exports.ContextProvider = ContextProvider;
+exports.Element = Element;
+exports.ForwardRef = ForwardRef;
+exports.Fragment = Fragment;
+exports.Lazy = Lazy;
+exports.Memo = Memo;
+exports.Portal = Portal;
+exports.Profiler = Profiler;
+exports.StrictMode = StrictMode;
+exports.Suspense = Suspense;
+exports.isAsyncMode = isAsyncMode;
+exports.isConcurrentMode = isConcurrentMode;
+exports.isContextConsumer = isContextConsumer;
+exports.isContextProvider = isContextProvider;
+exports.isElement = isElement;
+exports.isForwardRef = isForwardRef;
+exports.isFragment = isFragment;
+exports.isLazy = isLazy;
+exports.isMemo = isMemo;
+exports.isPortal = isPortal;
+exports.isProfiler = isProfiler;
+exports.isStrictMode = isStrictMode;
+exports.isSuspense = isSuspense;
+exports.isValidElementType = isValidElementType;
+exports.typeOf = typeOf;
+  })();
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/react-is/index.js":
+/*!****************************************!*\
+  !*** ./node_modules/react-is/index.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+if (false) {} else {
+  module.exports = __webpack_require__(/*! ./cjs/react-is.development.js */ "./node_modules/react-is/cjs/react-is.development.js");
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/react-markdown/node_modules/react-is/cjs/react-is.development.js":
 /*!***************************************************************************************!*\
   !*** ./node_modules/react-markdown/node_modules/react-is/cjs/react-is.development.js ***!
@@ -55953,6 +75488,1223 @@ function gfm(options) {
     if (data[field]) data[field].push(value)
     else data[field] = [value]
   }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/remark-parse/index.js":
+/*!********************************************!*\
+  !*** ./node_modules/remark-parse/index.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = parse
+
+var fromMarkdown = __webpack_require__(/*! mdast-util-from-markdown */ "./node_modules/mdast-util-from-markdown/index.js")
+
+function parse(options) {
+  var self = this
+
+  this.Parser = parse
+
+  function parse(doc) {
+    return fromMarkdown(
+      doc,
+      Object.assign({}, self.data('settings'), options, {
+        // Note: these options are not in the readme.
+        // The goal is for them to be set by plugins on `data` instead of being
+        // passed by users.
+        extensions: self.data('micromarkExtensions') || [],
+        mdastExtensions: self.data('fromMarkdownExtensions') || []
+      })
+    )
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/remark-rehype/index.js":
+/*!*********************************************!*\
+  !*** ./node_modules/remark-rehype/index.js ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var mdast2hast = __webpack_require__(/*! mdast-util-to-hast */ "./node_modules/mdast-util-to-hast/index.js")
+
+module.exports = remark2rehype
+
+// Attacher.
+// If a destination is given, runs the destination with the new hast tree
+// (bridge mode).
+// Without destination, returns the tree: further plugins run on that tree
+// (mutate mode).
+function remark2rehype(destination, options) {
+  if (destination && !destination.process) {
+    options = destination
+    destination = null
+  }
+
+  return destination ? bridge(destination, options) : mutate(options)
+}
+
+// Bridge mode.
+// Runs the destination with the new hast tree.
+function bridge(destination, options) {
+  return transformer
+
+  function transformer(node, file, next) {
+    destination.run(mdast2hast(node, options), file, done)
+
+    function done(error) {
+      next(error)
+    }
+  }
+}
+
+// Mutate-mode.
+// Further transformers run on the hast tree.
+function mutate(options) {
+  return transformer
+
+  function transformer(node) {
+    return mdast2hast(node, options)
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/repeat-string/index.js":
+/*!*********************************************!*\
+  !*** ./node_modules/repeat-string/index.js ***!
+  \*********************************************/
+/***/ ((module) => {
+
+"use strict";
+/*!
+ * repeat-string <https://github.com/jonschlinkert/repeat-string>
+ *
+ * Copyright (c) 2014-2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+
+
+/**
+ * Results cache
+ */
+
+var res = '';
+var cache;
+
+/**
+ * Expose `repeat`
+ */
+
+module.exports = repeat;
+
+/**
+ * Repeat the given `string` the specified `number`
+ * of times.
+ *
+ * **Example:**
+ *
+ * ```js
+ * var repeat = require('repeat-string');
+ * repeat('A', 5);
+ * //=> AAAAA
+ * ```
+ *
+ * @param {String} `string` The string to repeat
+ * @param {Number} `number` The number of times to repeat the string
+ * @return {String} Repeated string
+ * @api public
+ */
+
+function repeat(str, num) {
+  if (typeof str !== 'string') {
+    throw new TypeError('expected a string');
+  }
+
+  // cover common, quick use cases
+  if (num === 1) return str;
+  if (num === 2) return str + str;
+
+  var max = str.length * num;
+  if (cache !== str || typeof cache === 'undefined') {
+    cache = str;
+    res = '';
+  } else if (res.length >= max) {
+    return res.substr(0, max);
+  }
+
+  while (max > res.length && num > 1) {
+    if (num & 1) {
+      res += str;
+    }
+
+    num >>= 1;
+    str += str;
+  }
+
+  res += str;
+  res = res.substr(0, max);
+  return res;
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/scheduler/cjs/scheduler-tracing.development.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/scheduler/cjs/scheduler-tracing.development.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+/** @license React v0.20.2
+ * scheduler-tracing.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+if (true) {
+  (function() {
+'use strict';
+
+var DEFAULT_THREAD_ID = 0; // Counters used to generate unique IDs.
+
+var interactionIDCounter = 0;
+var threadIDCounter = 0; // Set of currently traced interactions.
+// Interactions "stack"–
+// Meaning that newly traced interactions are appended to the previously active set.
+// When an interaction goes out of scope, the previous set (if any) is restored.
+
+exports.__interactionsRef = null; // Listener(s) to notify when interactions begin and end.
+
+exports.__subscriberRef = null;
+
+{
+  exports.__interactionsRef = {
+    current: new Set()
+  };
+  exports.__subscriberRef = {
+    current: null
+  };
+}
+function unstable_clear(callback) {
+
+  var prevInteractions = exports.__interactionsRef.current;
+  exports.__interactionsRef.current = new Set();
+
+  try {
+    return callback();
+  } finally {
+    exports.__interactionsRef.current = prevInteractions;
+  }
+}
+function unstable_getCurrent() {
+  {
+    return exports.__interactionsRef.current;
+  }
+}
+function unstable_getThreadID() {
+  return ++threadIDCounter;
+}
+function unstable_trace(name, timestamp, callback) {
+  var threadID = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : DEFAULT_THREAD_ID;
+
+  var interaction = {
+    __count: 1,
+    id: interactionIDCounter++,
+    name: name,
+    timestamp: timestamp
+  };
+  var prevInteractions = exports.__interactionsRef.current; // Traced interactions should stack/accumulate.
+  // To do that, clone the current interactions.
+  // The previous set will be restored upon completion.
+
+  var interactions = new Set(prevInteractions);
+  interactions.add(interaction);
+  exports.__interactionsRef.current = interactions;
+  var subscriber = exports.__subscriberRef.current;
+  var returnValue;
+
+  try {
+    if (subscriber !== null) {
+      subscriber.onInteractionTraced(interaction);
+    }
+  } finally {
+    try {
+      if (subscriber !== null) {
+        subscriber.onWorkStarted(interactions, threadID);
+      }
+    } finally {
+      try {
+        returnValue = callback();
+      } finally {
+        exports.__interactionsRef.current = prevInteractions;
+
+        try {
+          if (subscriber !== null) {
+            subscriber.onWorkStopped(interactions, threadID);
+          }
+        } finally {
+          interaction.__count--; // If no async work was scheduled for this interaction,
+          // Notify subscribers that it's completed.
+
+          if (subscriber !== null && interaction.__count === 0) {
+            subscriber.onInteractionScheduledWorkCompleted(interaction);
+          }
+        }
+      }
+    }
+  }
+
+  return returnValue;
+}
+function unstable_wrap(callback) {
+  var threadID = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : DEFAULT_THREAD_ID;
+
+  var wrappedInteractions = exports.__interactionsRef.current;
+  var subscriber = exports.__subscriberRef.current;
+
+  if (subscriber !== null) {
+    subscriber.onWorkScheduled(wrappedInteractions, threadID);
+  } // Update the pending async work count for the current interactions.
+  // Update after calling subscribers in case of error.
+
+
+  wrappedInteractions.forEach(function (interaction) {
+    interaction.__count++;
+  });
+  var hasRun = false;
+
+  function wrapped() {
+    var prevInteractions = exports.__interactionsRef.current;
+    exports.__interactionsRef.current = wrappedInteractions;
+    subscriber = exports.__subscriberRef.current;
+
+    try {
+      var returnValue;
+
+      try {
+        if (subscriber !== null) {
+          subscriber.onWorkStarted(wrappedInteractions, threadID);
+        }
+      } finally {
+        try {
+          returnValue = callback.apply(undefined, arguments);
+        } finally {
+          exports.__interactionsRef.current = prevInteractions;
+
+          if (subscriber !== null) {
+            subscriber.onWorkStopped(wrappedInteractions, threadID);
+          }
+        }
+      }
+
+      return returnValue;
+    } finally {
+      if (!hasRun) {
+        // We only expect a wrapped function to be executed once,
+        // But in the event that it's executed more than once–
+        // Only decrement the outstanding interaction counts once.
+        hasRun = true; // Update pending async counts for all wrapped interactions.
+        // If this was the last scheduled async work for any of them,
+        // Mark them as completed.
+
+        wrappedInteractions.forEach(function (interaction) {
+          interaction.__count--;
+
+          if (subscriber !== null && interaction.__count === 0) {
+            subscriber.onInteractionScheduledWorkCompleted(interaction);
+          }
+        });
+      }
+    }
+  }
+
+  wrapped.cancel = function cancel() {
+    subscriber = exports.__subscriberRef.current;
+
+    try {
+      if (subscriber !== null) {
+        subscriber.onWorkCanceled(wrappedInteractions, threadID);
+      }
+    } finally {
+      // Update pending async counts for all wrapped interactions.
+      // If this was the last scheduled async work for any of them,
+      // Mark them as completed.
+      wrappedInteractions.forEach(function (interaction) {
+        interaction.__count--;
+
+        if (subscriber && interaction.__count === 0) {
+          subscriber.onInteractionScheduledWorkCompleted(interaction);
+        }
+      });
+    }
+  };
+
+  return wrapped;
+}
+
+var subscribers = null;
+
+{
+  subscribers = new Set();
+}
+
+function unstable_subscribe(subscriber) {
+  {
+    subscribers.add(subscriber);
+
+    if (subscribers.size === 1) {
+      exports.__subscriberRef.current = {
+        onInteractionScheduledWorkCompleted: onInteractionScheduledWorkCompleted,
+        onInteractionTraced: onInteractionTraced,
+        onWorkCanceled: onWorkCanceled,
+        onWorkScheduled: onWorkScheduled,
+        onWorkStarted: onWorkStarted,
+        onWorkStopped: onWorkStopped
+      };
+    }
+  }
+}
+function unstable_unsubscribe(subscriber) {
+  {
+    subscribers.delete(subscriber);
+
+    if (subscribers.size === 0) {
+      exports.__subscriberRef.current = null;
+    }
+  }
+}
+
+function onInteractionTraced(interaction) {
+  var didCatchError = false;
+  var caughtError = null;
+  subscribers.forEach(function (subscriber) {
+    try {
+      subscriber.onInteractionTraced(interaction);
+    } catch (error) {
+      if (!didCatchError) {
+        didCatchError = true;
+        caughtError = error;
+      }
+    }
+  });
+
+  if (didCatchError) {
+    throw caughtError;
+  }
+}
+
+function onInteractionScheduledWorkCompleted(interaction) {
+  var didCatchError = false;
+  var caughtError = null;
+  subscribers.forEach(function (subscriber) {
+    try {
+      subscriber.onInteractionScheduledWorkCompleted(interaction);
+    } catch (error) {
+      if (!didCatchError) {
+        didCatchError = true;
+        caughtError = error;
+      }
+    }
+  });
+
+  if (didCatchError) {
+    throw caughtError;
+  }
+}
+
+function onWorkScheduled(interactions, threadID) {
+  var didCatchError = false;
+  var caughtError = null;
+  subscribers.forEach(function (subscriber) {
+    try {
+      subscriber.onWorkScheduled(interactions, threadID);
+    } catch (error) {
+      if (!didCatchError) {
+        didCatchError = true;
+        caughtError = error;
+      }
+    }
+  });
+
+  if (didCatchError) {
+    throw caughtError;
+  }
+}
+
+function onWorkStarted(interactions, threadID) {
+  var didCatchError = false;
+  var caughtError = null;
+  subscribers.forEach(function (subscriber) {
+    try {
+      subscriber.onWorkStarted(interactions, threadID);
+    } catch (error) {
+      if (!didCatchError) {
+        didCatchError = true;
+        caughtError = error;
+      }
+    }
+  });
+
+  if (didCatchError) {
+    throw caughtError;
+  }
+}
+
+function onWorkStopped(interactions, threadID) {
+  var didCatchError = false;
+  var caughtError = null;
+  subscribers.forEach(function (subscriber) {
+    try {
+      subscriber.onWorkStopped(interactions, threadID);
+    } catch (error) {
+      if (!didCatchError) {
+        didCatchError = true;
+        caughtError = error;
+      }
+    }
+  });
+
+  if (didCatchError) {
+    throw caughtError;
+  }
+}
+
+function onWorkCanceled(interactions, threadID) {
+  var didCatchError = false;
+  var caughtError = null;
+  subscribers.forEach(function (subscriber) {
+    try {
+      subscriber.onWorkCanceled(interactions, threadID);
+    } catch (error) {
+      if (!didCatchError) {
+        didCatchError = true;
+        caughtError = error;
+      }
+    }
+  });
+
+  if (didCatchError) {
+    throw caughtError;
+  }
+}
+
+exports.unstable_clear = unstable_clear;
+exports.unstable_getCurrent = unstable_getCurrent;
+exports.unstable_getThreadID = unstable_getThreadID;
+exports.unstable_subscribe = unstable_subscribe;
+exports.unstable_trace = unstable_trace;
+exports.unstable_unsubscribe = unstable_unsubscribe;
+exports.unstable_wrap = unstable_wrap;
+  })();
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/scheduler/cjs/scheduler.development.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/scheduler/cjs/scheduler.development.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+/** @license React v0.20.2
+ * scheduler.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+if (true) {
+  (function() {
+'use strict';
+
+var enableSchedulerDebugging = false;
+var enableProfiling = false;
+
+var requestHostCallback;
+var requestHostTimeout;
+var cancelHostTimeout;
+var requestPaint;
+var hasPerformanceNow = typeof performance === 'object' && typeof performance.now === 'function';
+
+if (hasPerformanceNow) {
+  var localPerformance = performance;
+
+  exports.unstable_now = function () {
+    return localPerformance.now();
+  };
+} else {
+  var localDate = Date;
+  var initialTime = localDate.now();
+
+  exports.unstable_now = function () {
+    return localDate.now() - initialTime;
+  };
+}
+
+if ( // If Scheduler runs in a non-DOM environment, it falls back to a naive
+// implementation using setTimeout.
+typeof window === 'undefined' || // Check if MessageChannel is supported, too.
+typeof MessageChannel !== 'function') {
+  // If this accidentally gets imported in a non-browser environment, e.g. JavaScriptCore,
+  // fallback to a naive implementation.
+  var _callback = null;
+  var _timeoutID = null;
+
+  var _flushCallback = function () {
+    if (_callback !== null) {
+      try {
+        var currentTime = exports.unstable_now();
+        var hasRemainingTime = true;
+
+        _callback(hasRemainingTime, currentTime);
+
+        _callback = null;
+      } catch (e) {
+        setTimeout(_flushCallback, 0);
+        throw e;
+      }
+    }
+  };
+
+  requestHostCallback = function (cb) {
+    if (_callback !== null) {
+      // Protect against re-entrancy.
+      setTimeout(requestHostCallback, 0, cb);
+    } else {
+      _callback = cb;
+      setTimeout(_flushCallback, 0);
+    }
+  };
+
+  requestHostTimeout = function (cb, ms) {
+    _timeoutID = setTimeout(cb, ms);
+  };
+
+  cancelHostTimeout = function () {
+    clearTimeout(_timeoutID);
+  };
+
+  exports.unstable_shouldYield = function () {
+    return false;
+  };
+
+  requestPaint = exports.unstable_forceFrameRate = function () {};
+} else {
+  // Capture local references to native APIs, in case a polyfill overrides them.
+  var _setTimeout = window.setTimeout;
+  var _clearTimeout = window.clearTimeout;
+
+  if (typeof console !== 'undefined') {
+    // TODO: Scheduler no longer requires these methods to be polyfilled. But
+    // maybe we want to continue warning if they don't exist, to preserve the
+    // option to rely on it in the future?
+    var requestAnimationFrame = window.requestAnimationFrame;
+    var cancelAnimationFrame = window.cancelAnimationFrame;
+
+    if (typeof requestAnimationFrame !== 'function') {
+      // Using console['error'] to evade Babel and ESLint
+      console['error']("This browser doesn't support requestAnimationFrame. " + 'Make sure that you load a ' + 'polyfill in older browsers. https://reactjs.org/link/react-polyfills');
+    }
+
+    if (typeof cancelAnimationFrame !== 'function') {
+      // Using console['error'] to evade Babel and ESLint
+      console['error']("This browser doesn't support cancelAnimationFrame. " + 'Make sure that you load a ' + 'polyfill in older browsers. https://reactjs.org/link/react-polyfills');
+    }
+  }
+
+  var isMessageLoopRunning = false;
+  var scheduledHostCallback = null;
+  var taskTimeoutID = -1; // Scheduler periodically yields in case there is other work on the main
+  // thread, like user events. By default, it yields multiple times per frame.
+  // It does not attempt to align with frame boundaries, since most tasks don't
+  // need to be frame aligned; for those that do, use requestAnimationFrame.
+
+  var yieldInterval = 5;
+  var deadline = 0; // TODO: Make this configurable
+
+  {
+    // `isInputPending` is not available. Since we have no way of knowing if
+    // there's pending input, always yield at the end of the frame.
+    exports.unstable_shouldYield = function () {
+      return exports.unstable_now() >= deadline;
+    }; // Since we yield every frame regardless, `requestPaint` has no effect.
+
+
+    requestPaint = function () {};
+  }
+
+  exports.unstable_forceFrameRate = function (fps) {
+    if (fps < 0 || fps > 125) {
+      // Using console['error'] to evade Babel and ESLint
+      console['error']('forceFrameRate takes a positive int between 0 and 125, ' + 'forcing frame rates higher than 125 fps is not supported');
+      return;
+    }
+
+    if (fps > 0) {
+      yieldInterval = Math.floor(1000 / fps);
+    } else {
+      // reset the framerate
+      yieldInterval = 5;
+    }
+  };
+
+  var performWorkUntilDeadline = function () {
+    if (scheduledHostCallback !== null) {
+      var currentTime = exports.unstable_now(); // Yield after `yieldInterval` ms, regardless of where we are in the vsync
+      // cycle. This means there's always time remaining at the beginning of
+      // the message event.
+
+      deadline = currentTime + yieldInterval;
+      var hasTimeRemaining = true;
+
+      try {
+        var hasMoreWork = scheduledHostCallback(hasTimeRemaining, currentTime);
+
+        if (!hasMoreWork) {
+          isMessageLoopRunning = false;
+          scheduledHostCallback = null;
+        } else {
+          // If there's more work, schedule the next message event at the end
+          // of the preceding one.
+          port.postMessage(null);
+        }
+      } catch (error) {
+        // If a scheduler task throws, exit the current browser task so the
+        // error can be observed.
+        port.postMessage(null);
+        throw error;
+      }
+    } else {
+      isMessageLoopRunning = false;
+    } // Yielding to the browser will give it a chance to paint, so we can
+  };
+
+  var channel = new MessageChannel();
+  var port = channel.port2;
+  channel.port1.onmessage = performWorkUntilDeadline;
+
+  requestHostCallback = function (callback) {
+    scheduledHostCallback = callback;
+
+    if (!isMessageLoopRunning) {
+      isMessageLoopRunning = true;
+      port.postMessage(null);
+    }
+  };
+
+  requestHostTimeout = function (callback, ms) {
+    taskTimeoutID = _setTimeout(function () {
+      callback(exports.unstable_now());
+    }, ms);
+  };
+
+  cancelHostTimeout = function () {
+    _clearTimeout(taskTimeoutID);
+
+    taskTimeoutID = -1;
+  };
+}
+
+function push(heap, node) {
+  var index = heap.length;
+  heap.push(node);
+  siftUp(heap, node, index);
+}
+function peek(heap) {
+  var first = heap[0];
+  return first === undefined ? null : first;
+}
+function pop(heap) {
+  var first = heap[0];
+
+  if (first !== undefined) {
+    var last = heap.pop();
+
+    if (last !== first) {
+      heap[0] = last;
+      siftDown(heap, last, 0);
+    }
+
+    return first;
+  } else {
+    return null;
+  }
+}
+
+function siftUp(heap, node, i) {
+  var index = i;
+
+  while (true) {
+    var parentIndex = index - 1 >>> 1;
+    var parent = heap[parentIndex];
+
+    if (parent !== undefined && compare(parent, node) > 0) {
+      // The parent is larger. Swap positions.
+      heap[parentIndex] = node;
+      heap[index] = parent;
+      index = parentIndex;
+    } else {
+      // The parent is smaller. Exit.
+      return;
+    }
+  }
+}
+
+function siftDown(heap, node, i) {
+  var index = i;
+  var length = heap.length;
+
+  while (index < length) {
+    var leftIndex = (index + 1) * 2 - 1;
+    var left = heap[leftIndex];
+    var rightIndex = leftIndex + 1;
+    var right = heap[rightIndex]; // If the left or right node is smaller, swap with the smaller of those.
+
+    if (left !== undefined && compare(left, node) < 0) {
+      if (right !== undefined && compare(right, left) < 0) {
+        heap[index] = right;
+        heap[rightIndex] = node;
+        index = rightIndex;
+      } else {
+        heap[index] = left;
+        heap[leftIndex] = node;
+        index = leftIndex;
+      }
+    } else if (right !== undefined && compare(right, node) < 0) {
+      heap[index] = right;
+      heap[rightIndex] = node;
+      index = rightIndex;
+    } else {
+      // Neither child is smaller. Exit.
+      return;
+    }
+  }
+}
+
+function compare(a, b) {
+  // Compare sort index first, then task id.
+  var diff = a.sortIndex - b.sortIndex;
+  return diff !== 0 ? diff : a.id - b.id;
+}
+
+// TODO: Use symbols?
+var ImmediatePriority = 1;
+var UserBlockingPriority = 2;
+var NormalPriority = 3;
+var LowPriority = 4;
+var IdlePriority = 5;
+
+function markTaskErrored(task, ms) {
+}
+
+/* eslint-disable no-var */
+// Math.pow(2, 30) - 1
+// 0b111111111111111111111111111111
+
+var maxSigned31BitInt = 1073741823; // Times out immediately
+
+var IMMEDIATE_PRIORITY_TIMEOUT = -1; // Eventually times out
+
+var USER_BLOCKING_PRIORITY_TIMEOUT = 250;
+var NORMAL_PRIORITY_TIMEOUT = 5000;
+var LOW_PRIORITY_TIMEOUT = 10000; // Never times out
+
+var IDLE_PRIORITY_TIMEOUT = maxSigned31BitInt; // Tasks are stored on a min heap
+
+var taskQueue = [];
+var timerQueue = []; // Incrementing id counter. Used to maintain insertion order.
+
+var taskIdCounter = 1; // Pausing the scheduler is useful for debugging.
+var currentTask = null;
+var currentPriorityLevel = NormalPriority; // This is set while performing work, to prevent re-entrancy.
+
+var isPerformingWork = false;
+var isHostCallbackScheduled = false;
+var isHostTimeoutScheduled = false;
+
+function advanceTimers(currentTime) {
+  // Check for tasks that are no longer delayed and add them to the queue.
+  var timer = peek(timerQueue);
+
+  while (timer !== null) {
+    if (timer.callback === null) {
+      // Timer was cancelled.
+      pop(timerQueue);
+    } else if (timer.startTime <= currentTime) {
+      // Timer fired. Transfer to the task queue.
+      pop(timerQueue);
+      timer.sortIndex = timer.expirationTime;
+      push(taskQueue, timer);
+    } else {
+      // Remaining timers are pending.
+      return;
+    }
+
+    timer = peek(timerQueue);
+  }
+}
+
+function handleTimeout(currentTime) {
+  isHostTimeoutScheduled = false;
+  advanceTimers(currentTime);
+
+  if (!isHostCallbackScheduled) {
+    if (peek(taskQueue) !== null) {
+      isHostCallbackScheduled = true;
+      requestHostCallback(flushWork);
+    } else {
+      var firstTimer = peek(timerQueue);
+
+      if (firstTimer !== null) {
+        requestHostTimeout(handleTimeout, firstTimer.startTime - currentTime);
+      }
+    }
+  }
+}
+
+function flushWork(hasTimeRemaining, initialTime) {
+
+
+  isHostCallbackScheduled = false;
+
+  if (isHostTimeoutScheduled) {
+    // We scheduled a timeout but it's no longer needed. Cancel it.
+    isHostTimeoutScheduled = false;
+    cancelHostTimeout();
+  }
+
+  isPerformingWork = true;
+  var previousPriorityLevel = currentPriorityLevel;
+
+  try {
+    if (enableProfiling) {
+      try {
+        return workLoop(hasTimeRemaining, initialTime);
+      } catch (error) {
+        if (currentTask !== null) {
+          var currentTime = exports.unstable_now();
+          markTaskErrored(currentTask, currentTime);
+          currentTask.isQueued = false;
+        }
+
+        throw error;
+      }
+    } else {
+      // No catch in prod code path.
+      return workLoop(hasTimeRemaining, initialTime);
+    }
+  } finally {
+    currentTask = null;
+    currentPriorityLevel = previousPriorityLevel;
+    isPerformingWork = false;
+  }
+}
+
+function workLoop(hasTimeRemaining, initialTime) {
+  var currentTime = initialTime;
+  advanceTimers(currentTime);
+  currentTask = peek(taskQueue);
+
+  while (currentTask !== null && !(enableSchedulerDebugging )) {
+    if (currentTask.expirationTime > currentTime && (!hasTimeRemaining || exports.unstable_shouldYield())) {
+      // This currentTask hasn't expired, and we've reached the deadline.
+      break;
+    }
+
+    var callback = currentTask.callback;
+
+    if (typeof callback === 'function') {
+      currentTask.callback = null;
+      currentPriorityLevel = currentTask.priorityLevel;
+      var didUserCallbackTimeout = currentTask.expirationTime <= currentTime;
+
+      var continuationCallback = callback(didUserCallbackTimeout);
+      currentTime = exports.unstable_now();
+
+      if (typeof continuationCallback === 'function') {
+        currentTask.callback = continuationCallback;
+      } else {
+
+        if (currentTask === peek(taskQueue)) {
+          pop(taskQueue);
+        }
+      }
+
+      advanceTimers(currentTime);
+    } else {
+      pop(taskQueue);
+    }
+
+    currentTask = peek(taskQueue);
+  } // Return whether there's additional work
+
+
+  if (currentTask !== null) {
+    return true;
+  } else {
+    var firstTimer = peek(timerQueue);
+
+    if (firstTimer !== null) {
+      requestHostTimeout(handleTimeout, firstTimer.startTime - currentTime);
+    }
+
+    return false;
+  }
+}
+
+function unstable_runWithPriority(priorityLevel, eventHandler) {
+  switch (priorityLevel) {
+    case ImmediatePriority:
+    case UserBlockingPriority:
+    case NormalPriority:
+    case LowPriority:
+    case IdlePriority:
+      break;
+
+    default:
+      priorityLevel = NormalPriority;
+  }
+
+  var previousPriorityLevel = currentPriorityLevel;
+  currentPriorityLevel = priorityLevel;
+
+  try {
+    return eventHandler();
+  } finally {
+    currentPriorityLevel = previousPriorityLevel;
+  }
+}
+
+function unstable_next(eventHandler) {
+  var priorityLevel;
+
+  switch (currentPriorityLevel) {
+    case ImmediatePriority:
+    case UserBlockingPriority:
+    case NormalPriority:
+      // Shift down to normal priority
+      priorityLevel = NormalPriority;
+      break;
+
+    default:
+      // Anything lower than normal priority should remain at the current level.
+      priorityLevel = currentPriorityLevel;
+      break;
+  }
+
+  var previousPriorityLevel = currentPriorityLevel;
+  currentPriorityLevel = priorityLevel;
+
+  try {
+    return eventHandler();
+  } finally {
+    currentPriorityLevel = previousPriorityLevel;
+  }
+}
+
+function unstable_wrapCallback(callback) {
+  var parentPriorityLevel = currentPriorityLevel;
+  return function () {
+    // This is a fork of runWithPriority, inlined for performance.
+    var previousPriorityLevel = currentPriorityLevel;
+    currentPriorityLevel = parentPriorityLevel;
+
+    try {
+      return callback.apply(this, arguments);
+    } finally {
+      currentPriorityLevel = previousPriorityLevel;
+    }
+  };
+}
+
+function unstable_scheduleCallback(priorityLevel, callback, options) {
+  var currentTime = exports.unstable_now();
+  var startTime;
+
+  if (typeof options === 'object' && options !== null) {
+    var delay = options.delay;
+
+    if (typeof delay === 'number' && delay > 0) {
+      startTime = currentTime + delay;
+    } else {
+      startTime = currentTime;
+    }
+  } else {
+    startTime = currentTime;
+  }
+
+  var timeout;
+
+  switch (priorityLevel) {
+    case ImmediatePriority:
+      timeout = IMMEDIATE_PRIORITY_TIMEOUT;
+      break;
+
+    case UserBlockingPriority:
+      timeout = USER_BLOCKING_PRIORITY_TIMEOUT;
+      break;
+
+    case IdlePriority:
+      timeout = IDLE_PRIORITY_TIMEOUT;
+      break;
+
+    case LowPriority:
+      timeout = LOW_PRIORITY_TIMEOUT;
+      break;
+
+    case NormalPriority:
+    default:
+      timeout = NORMAL_PRIORITY_TIMEOUT;
+      break;
+  }
+
+  var expirationTime = startTime + timeout;
+  var newTask = {
+    id: taskIdCounter++,
+    callback: callback,
+    priorityLevel: priorityLevel,
+    startTime: startTime,
+    expirationTime: expirationTime,
+    sortIndex: -1
+  };
+
+  if (startTime > currentTime) {
+    // This is a delayed task.
+    newTask.sortIndex = startTime;
+    push(timerQueue, newTask);
+
+    if (peek(taskQueue) === null && newTask === peek(timerQueue)) {
+      // All tasks are delayed, and this is the task with the earliest delay.
+      if (isHostTimeoutScheduled) {
+        // Cancel an existing timeout.
+        cancelHostTimeout();
+      } else {
+        isHostTimeoutScheduled = true;
+      } // Schedule a timeout.
+
+
+      requestHostTimeout(handleTimeout, startTime - currentTime);
+    }
+  } else {
+    newTask.sortIndex = expirationTime;
+    push(taskQueue, newTask);
+    // wait until the next time we yield.
+
+
+    if (!isHostCallbackScheduled && !isPerformingWork) {
+      isHostCallbackScheduled = true;
+      requestHostCallback(flushWork);
+    }
+  }
+
+  return newTask;
+}
+
+function unstable_pauseExecution() {
+}
+
+function unstable_continueExecution() {
+
+  if (!isHostCallbackScheduled && !isPerformingWork) {
+    isHostCallbackScheduled = true;
+    requestHostCallback(flushWork);
+  }
+}
+
+function unstable_getFirstCallbackNode() {
+  return peek(taskQueue);
+}
+
+function unstable_cancelCallback(task) {
+  // remove from the queue because you can't remove arbitrary nodes from an
+  // array based heap, only the first one.)
+
+
+  task.callback = null;
+}
+
+function unstable_getCurrentPriorityLevel() {
+  return currentPriorityLevel;
+}
+
+var unstable_requestPaint = requestPaint;
+var unstable_Profiling =  null;
+
+exports.unstable_IdlePriority = IdlePriority;
+exports.unstable_ImmediatePriority = ImmediatePriority;
+exports.unstable_LowPriority = LowPriority;
+exports.unstable_NormalPriority = NormalPriority;
+exports.unstable_Profiling = unstable_Profiling;
+exports.unstable_UserBlockingPriority = UserBlockingPriority;
+exports.unstable_cancelCallback = unstable_cancelCallback;
+exports.unstable_continueExecution = unstable_continueExecution;
+exports.unstable_getCurrentPriorityLevel = unstable_getCurrentPriorityLevel;
+exports.unstable_getFirstCallbackNode = unstable_getFirstCallbackNode;
+exports.unstable_next = unstable_next;
+exports.unstable_pauseExecution = unstable_pauseExecution;
+exports.unstable_requestPaint = unstable_requestPaint;
+exports.unstable_runWithPriority = unstable_runWithPriority;
+exports.unstable_scheduleCallback = unstable_scheduleCallback;
+exports.unstable_wrapCallback = unstable_wrapCallback;
+  })();
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/scheduler/index.js":
+/*!*****************************************!*\
+  !*** ./node_modules/scheduler/index.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+if (false) {} else {
+  module.exports = __webpack_require__(/*! ./cjs/scheduler.development.js */ "./node_modules/scheduler/cjs/scheduler.development.js");
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/scheduler/tracing.js":
+/*!*******************************************!*\
+  !*** ./node_modules/scheduler/tracing.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+if (false) {} else {
+  module.exports = __webpack_require__(/*! ./cjs/scheduler-tracing.development.js */ "./node_modules/scheduler/cjs/scheduler-tracing.development.js");
 }
 
 
@@ -74848,6 +95600,2239 @@ class peer_Peer extends events_default.a {
 
 /******/ })["default"];
 });
+
+/***/ }),
+
+/***/ "./node_modules/space-separated-tokens/index.js":
+/*!******************************************************!*\
+  !*** ./node_modules/space-separated-tokens/index.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+exports.parse = parse
+exports.stringify = stringify
+
+var empty = ''
+var space = ' '
+var whiteSpace = /[ \t\n\r\f]+/g
+
+function parse(value) {
+  var input = String(value || empty).trim()
+  return input === empty ? [] : input.split(whiteSpace)
+}
+
+function stringify(values) {
+  return values.join(space).trim()
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
+  \****************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var isOldIE = function isOldIE() {
+  var memo;
+  return function memorize() {
+    if (typeof memo === 'undefined') {
+      // Test for IE <= 9 as proposed by Browserhacks
+      // @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+      // Tests for existence of standard globals is to allow style-loader
+      // to operate correctly into non-standard environments
+      // @see https://github.com/webpack-contrib/style-loader/issues/177
+      memo = Boolean(window && document && document.all && !window.atob);
+    }
+
+    return memo;
+  };
+}();
+
+var getTarget = function getTarget() {
+  var memo = {};
+  return function memorize(target) {
+    if (typeof memo[target] === 'undefined') {
+      var styleTarget = document.querySelector(target); // Special case to return head of iframe instead of iframe itself
+
+      if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
+        try {
+          // This will throw an exception if access to iframe is blocked
+          // due to cross-origin restrictions
+          styleTarget = styleTarget.contentDocument.head;
+        } catch (e) {
+          // istanbul ignore next
+          styleTarget = null;
+        }
+      }
+
+      memo[target] = styleTarget;
+    }
+
+    return memo[target];
+  };
+}();
+
+var stylesInDom = [];
+
+function getIndexByIdentifier(identifier) {
+  var result = -1;
+
+  for (var i = 0; i < stylesInDom.length; i++) {
+    if (stylesInDom[i].identifier === identifier) {
+      result = i;
+      break;
+    }
+  }
+
+  return result;
+}
+
+function modulesToDom(list, options) {
+  var idCountMap = {};
+  var identifiers = [];
+
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i];
+    var id = options.base ? item[0] + options.base : item[0];
+    var count = idCountMap[id] || 0;
+    var identifier = "".concat(id, " ").concat(count);
+    idCountMap[id] = count + 1;
+    var index = getIndexByIdentifier(identifier);
+    var obj = {
+      css: item[1],
+      media: item[2],
+      sourceMap: item[3]
+    };
+
+    if (index !== -1) {
+      stylesInDom[index].references++;
+      stylesInDom[index].updater(obj);
+    } else {
+      stylesInDom.push({
+        identifier: identifier,
+        updater: addStyle(obj, options),
+        references: 1
+      });
+    }
+
+    identifiers.push(identifier);
+  }
+
+  return identifiers;
+}
+
+function insertStyleElement(options) {
+  var style = document.createElement('style');
+  var attributes = options.attributes || {};
+
+  if (typeof attributes.nonce === 'undefined') {
+    var nonce =  true ? __webpack_require__.nc : 0;
+
+    if (nonce) {
+      attributes.nonce = nonce;
+    }
+  }
+
+  Object.keys(attributes).forEach(function (key) {
+    style.setAttribute(key, attributes[key]);
+  });
+
+  if (typeof options.insert === 'function') {
+    options.insert(style);
+  } else {
+    var target = getTarget(options.insert || 'head');
+
+    if (!target) {
+      throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");
+    }
+
+    target.appendChild(style);
+  }
+
+  return style;
+}
+
+function removeStyleElement(style) {
+  // istanbul ignore if
+  if (style.parentNode === null) {
+    return false;
+  }
+
+  style.parentNode.removeChild(style);
+}
+/* istanbul ignore next  */
+
+
+var replaceText = function replaceText() {
+  var textStore = [];
+  return function replace(index, replacement) {
+    textStore[index] = replacement;
+    return textStore.filter(Boolean).join('\n');
+  };
+}();
+
+function applyToSingletonTag(style, index, remove, obj) {
+  var css = remove ? '' : obj.media ? "@media ".concat(obj.media, " {").concat(obj.css, "}") : obj.css; // For old IE
+
+  /* istanbul ignore if  */
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = replaceText(index, css);
+  } else {
+    var cssNode = document.createTextNode(css);
+    var childNodes = style.childNodes;
+
+    if (childNodes[index]) {
+      style.removeChild(childNodes[index]);
+    }
+
+    if (childNodes.length) {
+      style.insertBefore(cssNode, childNodes[index]);
+    } else {
+      style.appendChild(cssNode);
+    }
+  }
+}
+
+function applyToTag(style, options, obj) {
+  var css = obj.css;
+  var media = obj.media;
+  var sourceMap = obj.sourceMap;
+
+  if (media) {
+    style.setAttribute('media', media);
+  } else {
+    style.removeAttribute('media');
+  }
+
+  if (sourceMap && typeof btoa !== 'undefined') {
+    css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
+  } // For old IE
+
+  /* istanbul ignore if  */
+
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    while (style.firstChild) {
+      style.removeChild(style.firstChild);
+    }
+
+    style.appendChild(document.createTextNode(css));
+  }
+}
+
+var singleton = null;
+var singletonCounter = 0;
+
+function addStyle(obj, options) {
+  var style;
+  var update;
+  var remove;
+
+  if (options.singleton) {
+    var styleIndex = singletonCounter++;
+    style = singleton || (singleton = insertStyleElement(options));
+    update = applyToSingletonTag.bind(null, style, styleIndex, false);
+    remove = applyToSingletonTag.bind(null, style, styleIndex, true);
+  } else {
+    style = insertStyleElement(options);
+    update = applyToTag.bind(null, style, options);
+
+    remove = function remove() {
+      removeStyleElement(style);
+    };
+  }
+
+  update(obj);
+  return function updateStyle(newObj) {
+    if (newObj) {
+      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap) {
+        return;
+      }
+
+      update(obj = newObj);
+    } else {
+      remove();
+    }
+  };
+}
+
+module.exports = function (list, options) {
+  options = options || {}; // Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+  // tags it will allow on a page
+
+  if (!options.singleton && typeof options.singleton !== 'boolean') {
+    options.singleton = isOldIE();
+  }
+
+  list = list || [];
+  var lastIdentifiers = modulesToDom(list, options);
+  return function update(newList) {
+    newList = newList || [];
+
+    if (Object.prototype.toString.call(newList) !== '[object Array]') {
+      return;
+    }
+
+    for (var i = 0; i < lastIdentifiers.length; i++) {
+      var identifier = lastIdentifiers[i];
+      var index = getIndexByIdentifier(identifier);
+      stylesInDom[index].references--;
+    }
+
+    var newLastIdentifiers = modulesToDom(newList, options);
+
+    for (var _i = 0; _i < lastIdentifiers.length; _i++) {
+      var _identifier = lastIdentifiers[_i];
+
+      var _index = getIndexByIdentifier(_identifier);
+
+      if (stylesInDom[_index].references === 0) {
+        stylesInDom[_index].updater();
+
+        stylesInDom.splice(_index, 1);
+      }
+    }
+
+    lastIdentifiers = newLastIdentifiers;
+  };
+};
+
+/***/ }),
+
+/***/ "./node_modules/style-to-object/index.js":
+/*!***********************************************!*\
+  !*** ./node_modules/style-to-object/index.js ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var parse = __webpack_require__(/*! inline-style-parser */ "./node_modules/inline-style-parser/index.js");
+
+/**
+ * Parses inline style to object.
+ *
+ * @example
+ * // returns { 'line-height': '42' }
+ * StyleToObject('line-height: 42;');
+ *
+ * @param  {String}      style      - The inline style.
+ * @param  {Function}    [iterator] - The iterator function.
+ * @return {null|Object}
+ */
+function StyleToObject(style, iterator) {
+  var output = null;
+  if (!style || typeof style !== 'string') {
+    return output;
+  }
+
+  var declaration;
+  var declarations = parse(style);
+  var hasIterator = typeof iterator === 'function';
+  var property;
+  var value;
+
+  for (var i = 0, len = declarations.length; i < len; i++) {
+    declaration = declarations[i];
+    property = declaration.property;
+    value = declaration.value;
+
+    if (hasIterator) {
+      iterator(property, value, declaration);
+    } else if (value) {
+      output || (output = {});
+      output[property] = value;
+    }
+  }
+
+  return output;
+}
+
+module.exports = StyleToObject;
+
+
+/***/ }),
+
+/***/ "./node_modules/trough/index.js":
+/*!**************************************!*\
+  !*** ./node_modules/trough/index.js ***!
+  \**************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var wrap = __webpack_require__(/*! ./wrap.js */ "./node_modules/trough/wrap.js")
+
+module.exports = trough
+
+trough.wrap = wrap
+
+var slice = [].slice
+
+// Create new middleware.
+function trough() {
+  var fns = []
+  var middleware = {}
+
+  middleware.run = run
+  middleware.use = use
+
+  return middleware
+
+  // Run `fns`.  Last argument must be a completion handler.
+  function run() {
+    var index = -1
+    var input = slice.call(arguments, 0, -1)
+    var done = arguments[arguments.length - 1]
+
+    if (typeof done !== 'function') {
+      throw new Error('Expected function as last argument, not ' + done)
+    }
+
+    next.apply(null, [null].concat(input))
+
+    // Run the next `fn`, if any.
+    function next(err) {
+      var fn = fns[++index]
+      var params = slice.call(arguments, 0)
+      var values = params.slice(1)
+      var length = input.length
+      var pos = -1
+
+      if (err) {
+        done(err)
+        return
+      }
+
+      // Copy non-nully input into values.
+      while (++pos < length) {
+        if (values[pos] === null || values[pos] === undefined) {
+          values[pos] = input[pos]
+        }
+      }
+
+      input = values
+
+      // Next or done.
+      if (fn) {
+        wrap(fn, next).apply(null, input)
+      } else {
+        done.apply(null, [null].concat(input))
+      }
+    }
+  }
+
+  // Add `fn` to the list.
+  function use(fn) {
+    if (typeof fn !== 'function') {
+      throw new Error('Expected `fn` to be a function, not ' + fn)
+    }
+
+    fns.push(fn)
+
+    return middleware
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/trough/wrap.js":
+/*!*************************************!*\
+  !*** ./node_modules/trough/wrap.js ***!
+  \*************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+var slice = [].slice
+
+module.exports = wrap
+
+// Wrap `fn`.
+// Can be sync or async; return a promise, receive a completion handler, return
+// new values and errors.
+function wrap(fn, callback) {
+  var invoked
+
+  return wrapped
+
+  function wrapped() {
+    var params = slice.call(arguments, 0)
+    var callback = fn.length > params.length
+    var result
+
+    if (callback) {
+      params.push(done)
+    }
+
+    try {
+      result = fn.apply(null, params)
+    } catch (error) {
+      // Well, this is quite the pickle.
+      // `fn` received a callback and invoked it (thus continuing the pipeline),
+      // but later also threw an error.
+      // We’re not about to restart the pipeline again, so the only thing left
+      // to do is to throw the thing instead.
+      if (callback && invoked) {
+        throw error
+      }
+
+      return done(error)
+    }
+
+    if (!callback) {
+      if (result && typeof result.then === 'function') {
+        result.then(then, done)
+      } else if (result instanceof Error) {
+        done(result)
+      } else {
+        then(result)
+      }
+    }
+  }
+
+  // Invoke `next`, only once.
+  function done() {
+    if (!invoked) {
+      invoked = true
+
+      callback.apply(null, arguments)
+    }
+  }
+
+  // Invoke `done` with one value.
+  // Tracks if an error is passed, too.
+  function then(value) {
+    done(null, value)
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/unified/index.js":
+/*!***************************************!*\
+  !*** ./node_modules/unified/index.js ***!
+  \***************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var bail = __webpack_require__(/*! bail */ "./node_modules/bail/index.js")
+var buffer = __webpack_require__(/*! is-buffer */ "./node_modules/unified/node_modules/is-buffer/index.js")
+var extend = __webpack_require__(/*! extend */ "./node_modules/extend/index.js")
+var plain = __webpack_require__(/*! is-plain-obj */ "./node_modules/is-plain-obj/index.js")
+var trough = __webpack_require__(/*! trough */ "./node_modules/trough/index.js")
+var vfile = __webpack_require__(/*! vfile */ "./node_modules/vfile/index.js")
+
+// Expose a frozen processor.
+module.exports = unified().freeze()
+
+var slice = [].slice
+var own = {}.hasOwnProperty
+
+// Process pipeline.
+var pipeline = trough()
+  .use(pipelineParse)
+  .use(pipelineRun)
+  .use(pipelineStringify)
+
+function pipelineParse(p, ctx) {
+  ctx.tree = p.parse(ctx.file)
+}
+
+function pipelineRun(p, ctx, next) {
+  p.run(ctx.tree, ctx.file, done)
+
+  function done(error, tree, file) {
+    if (error) {
+      next(error)
+    } else {
+      ctx.tree = tree
+      ctx.file = file
+      next()
+    }
+  }
+}
+
+function pipelineStringify(p, ctx) {
+  var result = p.stringify(ctx.tree, ctx.file)
+
+  if (result === undefined || result === null) {
+    // Empty.
+  } else if (typeof result === 'string' || buffer(result)) {
+    ctx.file.contents = result
+  } else {
+    ctx.file.result = result
+  }
+}
+
+// Function to create the first processor.
+function unified() {
+  var attachers = []
+  var transformers = trough()
+  var namespace = {}
+  var freezeIndex = -1
+  var frozen
+
+  // Data management.
+  processor.data = data
+
+  // Lock.
+  processor.freeze = freeze
+
+  // Plugins.
+  processor.attachers = attachers
+  processor.use = use
+
+  // API.
+  processor.parse = parse
+  processor.stringify = stringify
+  processor.run = run
+  processor.runSync = runSync
+  processor.process = process
+  processor.processSync = processSync
+
+  // Expose.
+  return processor
+
+  // Create a new processor based on the processor in the current scope.
+  function processor() {
+    var destination = unified()
+    var index = -1
+
+    while (++index < attachers.length) {
+      destination.use.apply(null, attachers[index])
+    }
+
+    destination.data(extend(true, {}, namespace))
+
+    return destination
+  }
+
+  // Freeze: used to signal a processor that has finished configuration.
+  //
+  // For example, take unified itself: it’s frozen.
+  // Plugins should not be added to it.
+  // Rather, it should be extended, by invoking it, before modifying it.
+  //
+  // In essence, always invoke this when exporting a processor.
+  function freeze() {
+    var values
+    var transformer
+
+    if (frozen) {
+      return processor
+    }
+
+    while (++freezeIndex < attachers.length) {
+      values = attachers[freezeIndex]
+
+      if (values[1] === false) {
+        continue
+      }
+
+      if (values[1] === true) {
+        values[1] = undefined
+      }
+
+      transformer = values[0].apply(processor, values.slice(1))
+
+      if (typeof transformer === 'function') {
+        transformers.use(transformer)
+      }
+    }
+
+    frozen = true
+    freezeIndex = Infinity
+
+    return processor
+  }
+
+  // Data management.
+  // Getter / setter for processor-specific informtion.
+  function data(key, value) {
+    if (typeof key === 'string') {
+      // Set `key`.
+      if (arguments.length === 2) {
+        assertUnfrozen('data', frozen)
+        namespace[key] = value
+        return processor
+      }
+
+      // Get `key`.
+      return (own.call(namespace, key) && namespace[key]) || null
+    }
+
+    // Set space.
+    if (key) {
+      assertUnfrozen('data', frozen)
+      namespace = key
+      return processor
+    }
+
+    // Get space.
+    return namespace
+  }
+
+  // Plugin management.
+  //
+  // Pass it:
+  // *   an attacher and options,
+  // *   a preset,
+  // *   a list of presets, attachers, and arguments (list of attachers and
+  //     options).
+  function use(value) {
+    var settings
+
+    assertUnfrozen('use', frozen)
+
+    if (value === null || value === undefined) {
+      // Empty.
+    } else if (typeof value === 'function') {
+      addPlugin.apply(null, arguments)
+    } else if (typeof value === 'object') {
+      if ('length' in value) {
+        addList(value)
+      } else {
+        addPreset(value)
+      }
+    } else {
+      throw new Error('Expected usable value, not `' + value + '`')
+    }
+
+    if (settings) {
+      namespace.settings = extend(namespace.settings || {}, settings)
+    }
+
+    return processor
+
+    function addPreset(result) {
+      addList(result.plugins)
+
+      if (result.settings) {
+        settings = extend(settings || {}, result.settings)
+      }
+    }
+
+    function add(value) {
+      if (typeof value === 'function') {
+        addPlugin(value)
+      } else if (typeof value === 'object') {
+        if ('length' in value) {
+          addPlugin.apply(null, value)
+        } else {
+          addPreset(value)
+        }
+      } else {
+        throw new Error('Expected usable value, not `' + value + '`')
+      }
+    }
+
+    function addList(plugins) {
+      var index = -1
+
+      if (plugins === null || plugins === undefined) {
+        // Empty.
+      } else if (typeof plugins === 'object' && 'length' in plugins) {
+        while (++index < plugins.length) {
+          add(plugins[index])
+        }
+      } else {
+        throw new Error('Expected a list of plugins, not `' + plugins + '`')
+      }
+    }
+
+    function addPlugin(plugin, value) {
+      var entry = find(plugin)
+
+      if (entry) {
+        if (plain(entry[1]) && plain(value)) {
+          value = extend(true, entry[1], value)
+        }
+
+        entry[1] = value
+      } else {
+        attachers.push(slice.call(arguments))
+      }
+    }
+  }
+
+  function find(plugin) {
+    var index = -1
+
+    while (++index < attachers.length) {
+      if (attachers[index][0] === plugin) {
+        return attachers[index]
+      }
+    }
+  }
+
+  // Parse a file (in string or vfile representation) into a unist node using
+  // the `Parser` on the processor.
+  function parse(doc) {
+    var file = vfile(doc)
+    var Parser
+
+    freeze()
+    Parser = processor.Parser
+    assertParser('parse', Parser)
+
+    if (newable(Parser, 'parse')) {
+      return new Parser(String(file), file).parse()
+    }
+
+    return Parser(String(file), file) // eslint-disable-line new-cap
+  }
+
+  // Run transforms on a unist node representation of a file (in string or
+  // vfile representation), async.
+  function run(node, file, cb) {
+    assertNode(node)
+    freeze()
+
+    if (!cb && typeof file === 'function') {
+      cb = file
+      file = null
+    }
+
+    if (!cb) {
+      return new Promise(executor)
+    }
+
+    executor(null, cb)
+
+    function executor(resolve, reject) {
+      transformers.run(node, vfile(file), done)
+
+      function done(error, tree, file) {
+        tree = tree || node
+        if (error) {
+          reject(error)
+        } else if (resolve) {
+          resolve(tree)
+        } else {
+          cb(null, tree, file)
+        }
+      }
+    }
+  }
+
+  // Run transforms on a unist node representation of a file (in string or
+  // vfile representation), sync.
+  function runSync(node, file) {
+    var result
+    var complete
+
+    run(node, file, done)
+
+    assertDone('runSync', 'run', complete)
+
+    return result
+
+    function done(error, tree) {
+      complete = true
+      result = tree
+      bail(error)
+    }
+  }
+
+  // Stringify a unist node representation of a file (in string or vfile
+  // representation) into a string using the `Compiler` on the processor.
+  function stringify(node, doc) {
+    var file = vfile(doc)
+    var Compiler
+
+    freeze()
+    Compiler = processor.Compiler
+    assertCompiler('stringify', Compiler)
+    assertNode(node)
+
+    if (newable(Compiler, 'compile')) {
+      return new Compiler(node, file).compile()
+    }
+
+    return Compiler(node, file) // eslint-disable-line new-cap
+  }
+
+  // Parse a file (in string or vfile representation) into a unist node using
+  // the `Parser` on the processor, then run transforms on that node, and
+  // compile the resulting node using the `Compiler` on the processor, and
+  // store that result on the vfile.
+  function process(doc, cb) {
+    freeze()
+    assertParser('process', processor.Parser)
+    assertCompiler('process', processor.Compiler)
+
+    if (!cb) {
+      return new Promise(executor)
+    }
+
+    executor(null, cb)
+
+    function executor(resolve, reject) {
+      var file = vfile(doc)
+
+      pipeline.run(processor, {file: file}, done)
+
+      function done(error) {
+        if (error) {
+          reject(error)
+        } else if (resolve) {
+          resolve(file)
+        } else {
+          cb(null, file)
+        }
+      }
+    }
+  }
+
+  // Process the given document (in string or vfile representation), sync.
+  function processSync(doc) {
+    var file
+    var complete
+
+    freeze()
+    assertParser('processSync', processor.Parser)
+    assertCompiler('processSync', processor.Compiler)
+    file = vfile(doc)
+
+    process(file, done)
+
+    assertDone('processSync', 'process', complete)
+
+    return file
+
+    function done(error) {
+      complete = true
+      bail(error)
+    }
+  }
+}
+
+// Check if `value` is a constructor.
+function newable(value, name) {
+  return (
+    typeof value === 'function' &&
+    value.prototype &&
+    // A function with keys in its prototype is probably a constructor.
+    // Classes’ prototype methods are not enumerable, so we check if some value
+    // exists in the prototype.
+    (keys(value.prototype) || name in value.prototype)
+  )
+}
+
+// Check if `value` is an object with keys.
+function keys(value) {
+  var key
+  for (key in value) {
+    return true
+  }
+
+  return false
+}
+
+// Assert a parser is available.
+function assertParser(name, Parser) {
+  if (typeof Parser !== 'function') {
+    throw new Error('Cannot `' + name + '` without `Parser`')
+  }
+}
+
+// Assert a compiler is available.
+function assertCompiler(name, Compiler) {
+  if (typeof Compiler !== 'function') {
+    throw new Error('Cannot `' + name + '` without `Compiler`')
+  }
+}
+
+// Assert the processor is not frozen.
+function assertUnfrozen(name, frozen) {
+  if (frozen) {
+    throw new Error(
+      'Cannot invoke `' +
+        name +
+        '` on a frozen processor.\nCreate a new processor first, by invoking it: use `processor()` instead of `processor`.'
+    )
+  }
+}
+
+// Assert `node` is a unist node.
+function assertNode(node) {
+  if (!node || typeof node.type !== 'string') {
+    throw new Error('Expected node, got `' + node + '`')
+  }
+}
+
+// Assert that `complete` is `true`.
+function assertDone(name, asyncName, complete) {
+  if (!complete) {
+    throw new Error(
+      '`' + name + '` finished async. Use `' + asyncName + '` instead'
+    )
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/unified/node_modules/is-buffer/index.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/unified/node_modules/is-buffer/index.js ***!
+  \**************************************************************/
+/***/ ((module) => {
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+module.exports = function isBuffer (obj) {
+  return obj != null && obj.constructor != null &&
+    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/unist-builder/index.js":
+/*!*********************************************!*\
+  !*** ./node_modules/unist-builder/index.js ***!
+  \*********************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = u
+
+function u(type, props, value) {
+  var node
+
+  if (
+    (value === null || value === undefined) &&
+    (typeof props !== 'object' || Array.isArray(props))
+  ) {
+    value = props
+    props = {}
+  }
+
+  node = Object.assign({type: String(type)}, props)
+
+  if (Array.isArray(value)) {
+    node.children = value
+  } else if (value !== null && value !== undefined) {
+    node.value = String(value)
+  }
+
+  return node
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/unist-util-generated/index.js":
+/*!****************************************************!*\
+  !*** ./node_modules/unist-util-generated/index.js ***!
+  \****************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = generated
+
+function generated(node) {
+  return (
+    !node ||
+    !node.position ||
+    !node.position.start ||
+    !node.position.start.line ||
+    !node.position.start.column ||
+    !node.position.end ||
+    !node.position.end.line ||
+    !node.position.end.column
+  )
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/unist-util-is/convert.js":
+/*!***********************************************!*\
+  !*** ./node_modules/unist-util-is/convert.js ***!
+  \***********************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = convert
+
+function convert(test) {
+  if (test == null) {
+    return ok
+  }
+
+  if (typeof test === 'string') {
+    return typeFactory(test)
+  }
+
+  if (typeof test === 'object') {
+    return 'length' in test ? anyFactory(test) : allFactory(test)
+  }
+
+  if (typeof test === 'function') {
+    return test
+  }
+
+  throw new Error('Expected function, string, or object as test')
+}
+
+// Utility assert each property in `test` is represented in `node`, and each
+// values are strictly equal.
+function allFactory(test) {
+  return all
+
+  function all(node) {
+    var key
+
+    for (key in test) {
+      if (node[key] !== test[key]) return false
+    }
+
+    return true
+  }
+}
+
+function anyFactory(tests) {
+  var checks = []
+  var index = -1
+
+  while (++index < tests.length) {
+    checks[index] = convert(tests[index])
+  }
+
+  return any
+
+  function any() {
+    var index = -1
+
+    while (++index < checks.length) {
+      if (checks[index].apply(this, arguments)) {
+        return true
+      }
+    }
+
+    return false
+  }
+}
+
+// Utility to convert a string into a function which checks a given node’s type
+// for said string.
+function typeFactory(test) {
+  return type
+
+  function type(node) {
+    return Boolean(node && node.type === test)
+  }
+}
+
+// Utility to return true.
+function ok() {
+  return true
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/unist-util-position/index.js":
+/*!***************************************************!*\
+  !*** ./node_modules/unist-util-position/index.js ***!
+  \***************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+var start = factory('start')
+var end = factory('end')
+
+module.exports = position
+
+position.start = start
+position.end = end
+
+function position(node) {
+  return {start: start(node), end: end(node)}
+}
+
+function factory(type) {
+  point.displayName = type
+
+  return point
+
+  function point(node) {
+    var point = (node && node.position && node.position[type]) || {}
+
+    return {
+      line: point.line || null,
+      column: point.column || null,
+      offset: isNaN(point.offset) ? null : point.offset
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/unist-util-stringify-position/index.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/unist-util-stringify-position/index.js ***!
+  \*************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+var own = {}.hasOwnProperty
+
+module.exports = stringify
+
+function stringify(value) {
+  // Nothing.
+  if (!value || typeof value !== 'object') {
+    return ''
+  }
+
+  // Node.
+  if (own.call(value, 'position') || own.call(value, 'type')) {
+    return position(value.position)
+  }
+
+  // Position.
+  if (own.call(value, 'start') || own.call(value, 'end')) {
+    return position(value)
+  }
+
+  // Point.
+  if (own.call(value, 'line') || own.call(value, 'column')) {
+    return point(value)
+  }
+
+  // ?
+  return ''
+}
+
+function point(point) {
+  if (!point || typeof point !== 'object') {
+    point = {}
+  }
+
+  return index(point.line) + ':' + index(point.column)
+}
+
+function position(pos) {
+  if (!pos || typeof pos !== 'object') {
+    pos = {}
+  }
+
+  return point(pos.start) + '-' + point(pos.end)
+}
+
+function index(value) {
+  return value && typeof value === 'number' ? value : 1
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/unist-util-visit-parents/color.browser.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/unist-util-visit-parents/color.browser.js ***!
+  \****************************************************************/
+/***/ ((module) => {
+
+module.exports = identity
+function identity(d) {
+  return d
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/unist-util-visit-parents/index.js":
+/*!********************************************************!*\
+  !*** ./node_modules/unist-util-visit-parents/index.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = visitParents
+
+var convert = __webpack_require__(/*! unist-util-is/convert */ "./node_modules/unist-util-is/convert.js")
+var color = __webpack_require__(/*! ./color */ "./node_modules/unist-util-visit-parents/color.browser.js")
+
+var CONTINUE = true
+var SKIP = 'skip'
+var EXIT = false
+
+visitParents.CONTINUE = CONTINUE
+visitParents.SKIP = SKIP
+visitParents.EXIT = EXIT
+
+function visitParents(tree, test, visitor, reverse) {
+  var step
+  var is
+
+  if (typeof test === 'function' && typeof visitor !== 'function') {
+    reverse = visitor
+    visitor = test
+    test = null
+  }
+
+  is = convert(test)
+  step = reverse ? -1 : 1
+
+  factory(tree, null, [])()
+
+  function factory(node, index, parents) {
+    var value = typeof node === 'object' && node !== null ? node : {}
+    var name
+
+    if (typeof value.type === 'string') {
+      name =
+        typeof value.tagName === 'string'
+          ? value.tagName
+          : typeof value.name === 'string'
+          ? value.name
+          : undefined
+
+      visit.displayName =
+        'node (' + color(value.type + (name ? '<' + name + '>' : '')) + ')'
+    }
+
+    return visit
+
+    function visit() {
+      var grandparents = parents.concat(node)
+      var result = []
+      var subresult
+      var offset
+
+      if (!test || is(node, index, parents[parents.length - 1] || null)) {
+        result = toResult(visitor(node, parents))
+
+        if (result[0] === EXIT) {
+          return result
+        }
+      }
+
+      if (node.children && result[0] !== SKIP) {
+        offset = (reverse ? node.children.length : -1) + step
+
+        while (offset > -1 && offset < node.children.length) {
+          subresult = factory(node.children[offset], offset, grandparents)()
+
+          if (subresult[0] === EXIT) {
+            return subresult
+          }
+
+          offset =
+            typeof subresult[1] === 'number' ? subresult[1] : offset + step
+        }
+      }
+
+      return result
+    }
+  }
+}
+
+function toResult(value) {
+  if (value !== null && typeof value === 'object' && 'length' in value) {
+    return value
+  }
+
+  if (typeof value === 'number') {
+    return [CONTINUE, value]
+  }
+
+  return [value]
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/unist-util-visit/index.js":
+/*!************************************************!*\
+  !*** ./node_modules/unist-util-visit/index.js ***!
+  \************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = visit
+
+var visitParents = __webpack_require__(/*! unist-util-visit-parents */ "./node_modules/unist-util-visit-parents/index.js")
+
+var CONTINUE = visitParents.CONTINUE
+var SKIP = visitParents.SKIP
+var EXIT = visitParents.EXIT
+
+visit.CONTINUE = CONTINUE
+visit.SKIP = SKIP
+visit.EXIT = EXIT
+
+function visit(tree, test, visitor, reverse) {
+  if (typeof test === 'function' && typeof visitor !== 'function') {
+    reverse = visitor
+    visitor = test
+    test = null
+  }
+
+  visitParents(tree, test, overload, reverse)
+
+  function overload(node, parents) {
+    var parent = parents[parents.length - 1]
+    var index = parent ? parent.children.indexOf(node) : null
+    return visitor(node, index, parent)
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/vfile-message/index.js":
+/*!*********************************************!*\
+  !*** ./node_modules/vfile-message/index.js ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var stringify = __webpack_require__(/*! unist-util-stringify-position */ "./node_modules/unist-util-stringify-position/index.js")
+
+module.exports = VMessage
+
+// Inherit from `Error#`.
+function VMessagePrototype() {}
+VMessagePrototype.prototype = Error.prototype
+VMessage.prototype = new VMessagePrototype()
+
+// Message properties.
+var proto = VMessage.prototype
+
+proto.file = ''
+proto.name = ''
+proto.reason = ''
+proto.message = ''
+proto.stack = ''
+proto.fatal = null
+proto.column = null
+proto.line = null
+
+// Construct a new VMessage.
+//
+// Note: We cannot invoke `Error` on the created context, as that adds readonly
+// `line` and `column` attributes on Safari 9, thus throwing and failing the
+// data.
+function VMessage(reason, position, origin) {
+  var parts
+  var range
+  var location
+
+  if (typeof position === 'string') {
+    origin = position
+    position = null
+  }
+
+  parts = parseOrigin(origin)
+  range = stringify(position) || '1:1'
+
+  location = {
+    start: {line: null, column: null},
+    end: {line: null, column: null}
+  }
+
+  // Node.
+  if (position && position.position) {
+    position = position.position
+  }
+
+  if (position) {
+    // Position.
+    if (position.start) {
+      location = position
+      position = position.start
+    } else {
+      // Point.
+      location.start = position
+    }
+  }
+
+  if (reason.stack) {
+    this.stack = reason.stack
+    reason = reason.message
+  }
+
+  this.message = reason
+  this.name = range
+  this.reason = reason
+  this.line = position ? position.line : null
+  this.column = position ? position.column : null
+  this.location = location
+  this.source = parts[0]
+  this.ruleId = parts[1]
+}
+
+function parseOrigin(origin) {
+  var result = [null, null]
+  var index
+
+  if (typeof origin === 'string') {
+    index = origin.indexOf(':')
+
+    if (index === -1) {
+      result[1] = origin
+    } else {
+      result[0] = origin.slice(0, index)
+      result[1] = origin.slice(index + 1)
+    }
+  }
+
+  return result
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/vfile/index.js":
+/*!*************************************!*\
+  !*** ./node_modules/vfile/index.js ***!
+  \*************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = __webpack_require__(/*! ./lib */ "./node_modules/vfile/lib/index.js")
+
+
+/***/ }),
+
+/***/ "./node_modules/vfile/lib/core.js":
+/*!****************************************!*\
+  !*** ./node_modules/vfile/lib/core.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var p = __webpack_require__(/*! ./minpath */ "./node_modules/vfile/lib/minpath.browser.js")
+var proc = __webpack_require__(/*! ./minproc */ "./node_modules/vfile/lib/minproc.browser.js")
+var buffer = __webpack_require__(/*! is-buffer */ "./node_modules/vfile/node_modules/is-buffer/index.js")
+
+module.exports = VFile
+
+var own = {}.hasOwnProperty
+
+// Order of setting (least specific to most), we need this because otherwise
+// `{stem: 'a', path: '~/b.js'}` would throw, as a path is needed before a
+// stem can be set.
+var order = ['history', 'path', 'basename', 'stem', 'extname', 'dirname']
+
+VFile.prototype.toString = toString
+
+// Access full path (`~/index.min.js`).
+Object.defineProperty(VFile.prototype, 'path', {get: getPath, set: setPath})
+
+// Access parent path (`~`).
+Object.defineProperty(VFile.prototype, 'dirname', {
+  get: getDirname,
+  set: setDirname
+})
+
+// Access basename (`index.min.js`).
+Object.defineProperty(VFile.prototype, 'basename', {
+  get: getBasename,
+  set: setBasename
+})
+
+// Access extname (`.js`).
+Object.defineProperty(VFile.prototype, 'extname', {
+  get: getExtname,
+  set: setExtname
+})
+
+// Access stem (`index.min`).
+Object.defineProperty(VFile.prototype, 'stem', {get: getStem, set: setStem})
+
+// Construct a new file.
+function VFile(options) {
+  var prop
+  var index
+
+  if (!options) {
+    options = {}
+  } else if (typeof options === 'string' || buffer(options)) {
+    options = {contents: options}
+  } else if ('message' in options && 'messages' in options) {
+    return options
+  }
+
+  if (!(this instanceof VFile)) {
+    return new VFile(options)
+  }
+
+  this.data = {}
+  this.messages = []
+  this.history = []
+  this.cwd = proc.cwd()
+
+  // Set path related properties in the correct order.
+  index = -1
+
+  while (++index < order.length) {
+    prop = order[index]
+
+    if (own.call(options, prop)) {
+      this[prop] = options[prop]
+    }
+  }
+
+  // Set non-path related properties.
+  for (prop in options) {
+    if (order.indexOf(prop) < 0) {
+      this[prop] = options[prop]
+    }
+  }
+}
+
+function getPath() {
+  return this.history[this.history.length - 1]
+}
+
+function setPath(path) {
+  assertNonEmpty(path, 'path')
+
+  if (this.path !== path) {
+    this.history.push(path)
+  }
+}
+
+function getDirname() {
+  return typeof this.path === 'string' ? p.dirname(this.path) : undefined
+}
+
+function setDirname(dirname) {
+  assertPath(this.path, 'dirname')
+  this.path = p.join(dirname || '', this.basename)
+}
+
+function getBasename() {
+  return typeof this.path === 'string' ? p.basename(this.path) : undefined
+}
+
+function setBasename(basename) {
+  assertNonEmpty(basename, 'basename')
+  assertPart(basename, 'basename')
+  this.path = p.join(this.dirname || '', basename)
+}
+
+function getExtname() {
+  return typeof this.path === 'string' ? p.extname(this.path) : undefined
+}
+
+function setExtname(extname) {
+  assertPart(extname, 'extname')
+  assertPath(this.path, 'extname')
+
+  if (extname) {
+    if (extname.charCodeAt(0) !== 46 /* `.` */) {
+      throw new Error('`extname` must start with `.`')
+    }
+
+    if (extname.indexOf('.', 1) > -1) {
+      throw new Error('`extname` cannot contain multiple dots')
+    }
+  }
+
+  this.path = p.join(this.dirname, this.stem + (extname || ''))
+}
+
+function getStem() {
+  return typeof this.path === 'string'
+    ? p.basename(this.path, this.extname)
+    : undefined
+}
+
+function setStem(stem) {
+  assertNonEmpty(stem, 'stem')
+  assertPart(stem, 'stem')
+  this.path = p.join(this.dirname || '', stem + (this.extname || ''))
+}
+
+// Get the value of the file.
+function toString(encoding) {
+  return (this.contents || '').toString(encoding)
+}
+
+// Assert that `part` is not a path (i.e., does not contain `p.sep`).
+function assertPart(part, name) {
+  if (part && part.indexOf(p.sep) > -1) {
+    throw new Error(
+      '`' + name + '` cannot be a path: did not expect `' + p.sep + '`'
+    )
+  }
+}
+
+// Assert that `part` is not empty.
+function assertNonEmpty(part, name) {
+  if (!part) {
+    throw new Error('`' + name + '` cannot be empty')
+  }
+}
+
+// Assert `path` exists.
+function assertPath(path, name) {
+  if (!path) {
+    throw new Error('Setting `' + name + '` requires `path` to be set too')
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/vfile/lib/index.js":
+/*!*****************************************!*\
+  !*** ./node_modules/vfile/lib/index.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var VMessage = __webpack_require__(/*! vfile-message */ "./node_modules/vfile-message/index.js")
+var VFile = __webpack_require__(/*! ./core.js */ "./node_modules/vfile/lib/core.js")
+
+module.exports = VFile
+
+VFile.prototype.message = message
+VFile.prototype.info = info
+VFile.prototype.fail = fail
+
+// Create a message with `reason` at `position`.
+// When an error is passed in as `reason`, copies the stack.
+function message(reason, position, origin) {
+  var message = new VMessage(reason, position, origin)
+
+  if (this.path) {
+    message.name = this.path + ':' + message.name
+    message.file = this.path
+  }
+
+  message.fatal = false
+
+  this.messages.push(message)
+
+  return message
+}
+
+// Fail: creates a vmessage, associates it with the file, and throws it.
+function fail() {
+  var message = this.message.apply(this, arguments)
+
+  message.fatal = true
+
+  throw message
+}
+
+// Info: creates a vmessage, associates it with the file, and marks the fatality
+// as null.
+function info() {
+  var message = this.message.apply(this, arguments)
+
+  message.fatal = null
+
+  return message
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/vfile/lib/minpath.browser.js":
+/*!***************************************************!*\
+  !*** ./node_modules/vfile/lib/minpath.browser.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+// A derivative work based on:
+// <https://github.com/browserify/path-browserify>.
+// Which is licensed:
+//
+// MIT License
+//
+// Copyright (c) 2013 James Halliday
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of
+// this software and associated documentation files (the "Software"), to deal in
+// the Software without restriction, including without limitation the rights to
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do so,
+// subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+// FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+// COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+// IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+// CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// A derivative work based on:
+//
+// Parts of that are extracted from Node’s internal `path` module:
+// <https://github.com/nodejs/node/blob/master/lib/path.js>.
+// Which is licensed:
+//
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+exports.basename = basename
+exports.dirname = dirname
+exports.extname = extname
+exports.join = join
+exports.sep = '/'
+
+function basename(path, ext) {
+  var start = 0
+  var end = -1
+  var index
+  var firstNonSlashEnd
+  var seenNonSlash
+  var extIndex
+
+  if (ext !== undefined && typeof ext !== 'string') {
+    throw new TypeError('"ext" argument must be a string')
+  }
+
+  assertPath(path)
+  index = path.length
+
+  if (ext === undefined || !ext.length || ext.length > path.length) {
+    while (index--) {
+      if (path.charCodeAt(index) === 47 /* `/` */) {
+        // If we reached a path separator that was not part of a set of path
+        // separators at the end of the string, stop now.
+        if (seenNonSlash) {
+          start = index + 1
+          break
+        }
+      } else if (end < 0) {
+        // We saw the first non-path separator, mark this as the end of our
+        // path component.
+        seenNonSlash = true
+        end = index + 1
+      }
+    }
+
+    return end < 0 ? '' : path.slice(start, end)
+  }
+
+  if (ext === path) {
+    return ''
+  }
+
+  firstNonSlashEnd = -1
+  extIndex = ext.length - 1
+
+  while (index--) {
+    if (path.charCodeAt(index) === 47 /* `/` */) {
+      // If we reached a path separator that was not part of a set of path
+      // separators at the end of the string, stop now.
+      if (seenNonSlash) {
+        start = index + 1
+        break
+      }
+    } else {
+      if (firstNonSlashEnd < 0) {
+        // We saw the first non-path separator, remember this index in case
+        // we need it if the extension ends up not matching.
+        seenNonSlash = true
+        firstNonSlashEnd = index + 1
+      }
+
+      if (extIndex > -1) {
+        // Try to match the explicit extension.
+        if (path.charCodeAt(index) === ext.charCodeAt(extIndex--)) {
+          if (extIndex < 0) {
+            // We matched the extension, so mark this as the end of our path
+            // component
+            end = index
+          }
+        } else {
+          // Extension does not match, so our result is the entire path
+          // component
+          extIndex = -1
+          end = firstNonSlashEnd
+        }
+      }
+    }
+  }
+
+  if (start === end) {
+    end = firstNonSlashEnd
+  } else if (end < 0) {
+    end = path.length
+  }
+
+  return path.slice(start, end)
+}
+
+function dirname(path) {
+  var end
+  var unmatchedSlash
+  var index
+
+  assertPath(path)
+
+  if (!path.length) {
+    return '.'
+  }
+
+  end = -1
+  index = path.length
+
+  // Prefix `--` is important to not run on `0`.
+  while (--index) {
+    if (path.charCodeAt(index) === 47 /* `/` */) {
+      if (unmatchedSlash) {
+        end = index
+        break
+      }
+    } else if (!unmatchedSlash) {
+      // We saw the first non-path separator
+      unmatchedSlash = true
+    }
+  }
+
+  return end < 0
+    ? path.charCodeAt(0) === 47 /* `/` */
+      ? '/'
+      : '.'
+    : end === 1 && path.charCodeAt(0) === 47 /* `/` */
+    ? '//'
+    : path.slice(0, end)
+}
+
+function extname(path) {
+  var startDot = -1
+  var startPart = 0
+  var end = -1
+  // Track the state of characters (if any) we see before our first dot and
+  // after any path separator we find.
+  var preDotState = 0
+  var unmatchedSlash
+  var code
+  var index
+
+  assertPath(path)
+
+  index = path.length
+
+  while (index--) {
+    code = path.charCodeAt(index)
+
+    if (code === 47 /* `/` */) {
+      // If we reached a path separator that was not part of a set of path
+      // separators at the end of the string, stop now.
+      if (unmatchedSlash) {
+        startPart = index + 1
+        break
+      }
+
+      continue
+    }
+
+    if (end < 0) {
+      // We saw the first non-path separator, mark this as the end of our
+      // extension.
+      unmatchedSlash = true
+      end = index + 1
+    }
+
+    if (code === 46 /* `.` */) {
+      // If this is our first dot, mark it as the start of our extension.
+      if (startDot < 0) {
+        startDot = index
+      } else if (preDotState !== 1) {
+        preDotState = 1
+      }
+    } else if (startDot > -1) {
+      // We saw a non-dot and non-path separator before our dot, so we should
+      // have a good chance at having a non-empty extension.
+      preDotState = -1
+    }
+  }
+
+  if (
+    startDot < 0 ||
+    end < 0 ||
+    // We saw a non-dot character immediately before the dot.
+    preDotState === 0 ||
+    // The (right-most) trimmed path component is exactly `..`.
+    (preDotState === 1 && startDot === end - 1 && startDot === startPart + 1)
+  ) {
+    return ''
+  }
+
+  return path.slice(startDot, end)
+}
+
+function join() {
+  var index = -1
+  var joined
+
+  while (++index < arguments.length) {
+    assertPath(arguments[index])
+
+    if (arguments[index]) {
+      joined =
+        joined === undefined
+          ? arguments[index]
+          : joined + '/' + arguments[index]
+    }
+  }
+
+  return joined === undefined ? '.' : normalize(joined)
+}
+
+// Note: `normalize` is not exposed as `path.normalize`, so some code is
+// manually removed from it.
+function normalize(path) {
+  var absolute
+  var value
+
+  assertPath(path)
+
+  absolute = path.charCodeAt(0) === 47 /* `/` */
+
+  // Normalize the path according to POSIX rules.
+  value = normalizeString(path, !absolute)
+
+  if (!value.length && !absolute) {
+    value = '.'
+  }
+
+  if (value.length && path.charCodeAt(path.length - 1) === 47 /* / */) {
+    value += '/'
+  }
+
+  return absolute ? '/' + value : value
+}
+
+// Resolve `.` and `..` elements in a path with directory names.
+function normalizeString(path, allowAboveRoot) {
+  var result = ''
+  var lastSegmentLength = 0
+  var lastSlash = -1
+  var dots = 0
+  var index = -1
+  var code
+  var lastSlashIndex
+
+  while (++index <= path.length) {
+    if (index < path.length) {
+      code = path.charCodeAt(index)
+    } else if (code === 47 /* `/` */) {
+      break
+    } else {
+      code = 47 /* `/` */
+    }
+
+    if (code === 47 /* `/` */) {
+      if (lastSlash === index - 1 || dots === 1) {
+        // Empty.
+      } else if (lastSlash !== index - 1 && dots === 2) {
+        if (
+          result.length < 2 ||
+          lastSegmentLength !== 2 ||
+          result.charCodeAt(result.length - 1) !== 46 /* `.` */ ||
+          result.charCodeAt(result.length - 2) !== 46 /* `.` */
+        ) {
+          if (result.length > 2) {
+            lastSlashIndex = result.lastIndexOf('/')
+
+            /* istanbul ignore else - No clue how to cover it. */
+            if (lastSlashIndex !== result.length - 1) {
+              if (lastSlashIndex < 0) {
+                result = ''
+                lastSegmentLength = 0
+              } else {
+                result = result.slice(0, lastSlashIndex)
+                lastSegmentLength = result.length - 1 - result.lastIndexOf('/')
+              }
+
+              lastSlash = index
+              dots = 0
+              continue
+            }
+          } else if (result.length) {
+            result = ''
+            lastSegmentLength = 0
+            lastSlash = index
+            dots = 0
+            continue
+          }
+        }
+
+        if (allowAboveRoot) {
+          result = result.length ? result + '/..' : '..'
+          lastSegmentLength = 2
+        }
+      } else {
+        if (result.length) {
+          result += '/' + path.slice(lastSlash + 1, index)
+        } else {
+          result = path.slice(lastSlash + 1, index)
+        }
+
+        lastSegmentLength = index - lastSlash - 1
+      }
+
+      lastSlash = index
+      dots = 0
+    } else if (code === 46 /* `.` */ && dots > -1) {
+      dots++
+    } else {
+      dots = -1
+    }
+  }
+
+  return result
+}
+
+function assertPath(path) {
+  if (typeof path !== 'string') {
+    throw new TypeError(
+      'Path must be a string. Received ' + JSON.stringify(path)
+    )
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/vfile/lib/minproc.browser.js":
+/*!***************************************************!*\
+  !*** ./node_modules/vfile/lib/minproc.browser.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+// Somewhat based on:
+// <https://github.com/defunctzombie/node-process/blob/master/browser.js>.
+// But I don’t think one tiny line of code can be copyrighted. 😅
+exports.cwd = cwd
+
+function cwd() {
+  return '/'
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/vfile/node_modules/is-buffer/index.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vfile/node_modules/is-buffer/index.js ***!
+  \************************************************************/
+/***/ ((module) => {
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+module.exports = function isBuffer (obj) {
+  return obj != null && obj.constructor != null &&
+    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/xtend/immutable.js":
+/*!*****************************************!*\
+  !*** ./node_modules/xtend/immutable.js ***!
+  \*****************************************/
+/***/ ((module) => {
+
+module.exports = extend
+
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+function extend() {
+    var target = {}
+
+    for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i]
+
+        for (var key in source) {
+            if (hasOwnProperty.call(source, key)) {
+                target[key] = source[key]
+            }
+        }
+    }
+
+    return target
+}
+
 
 /***/ })
 
